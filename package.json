@@ -1,0 +1,36 @@
+{
+	"name": "algrora-store",
+	"version": "1.0.0",
+	"description": "algrora store",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Altech-company/algrora-store.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Altech-company/algrora-store/issues"
+	},
+	"homepage": "https://github.com/Altech-company/algrora-store#readme",
+	"dependencies": {
+		"@graphql-tools/schema": "^8.3.1",
+		"apollo-server-express": "^3.5.0",
+		"aws-sdk": "^2.1044.0",
+		"bcrypt": "^5.0.1",
+		"cors": "^2.8.5",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"graphql": "^16.0.1",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^6.0.14"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.15"
+	}
+}
