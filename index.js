@@ -9,9 +9,9 @@ const dotenv = require("dotenv");
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolvers");
 
-// dotenv.config();
+dotenv.config();
 
-// const secret = process.env.SECRET_KEY;
+const secret = process.env.SECRET_KEY;
 
 const main = async () => {
 	const app = express();
@@ -30,8 +30,26 @@ const main = async () => {
 		resolvers,
 	});
 
+	const authorization = async (req) => {
+		const bearer = req.headers.authorization || "";
+		if (!bearer) return req.next();
+		const token = bearer.split(" ")[1];
+		try {
+			const user = await jwt.verify(token, secret);
+			req.user = user;
+		} catch (err) {
+			console.log(err);
+		}
+		req.next();
+	};
+
+	app.use(authorization);
+
 	const apolloServer = new ApolloServer({
 		schema,
+		contex: ({ req }) => {
+			return { secret, userData: req.user };
+		},
 	});
 
 	await apolloServer.start();
