@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const { s3Sign, s3Delete } = require("./s3");
+const { s3Sign, s3Delete } = require("./s3");
 
 const Product = require("./schema/Product");
 const User = require("./schema/User");
@@ -162,10 +162,10 @@ const resolvers = {
 				// console.log(err);
 			}
 		},
-		// signS3: async (parent, { filename, fileType }) => {
-		// 	const uploadUrl = await s3Sign(filename, fileType);
-		// 	return uploadUrl;
-		// },
+		signS3: async (parent, { filename, fileType }) => {
+			const uploadUrl = await s3Sign(filename, fileType);
+			return uploadUrl;
+		},
 		addStore: async (_, args, { userData }) => {
 			const { name, imageUri, description } = args;
 			const user = await User.findById(userData.id);
@@ -204,7 +204,7 @@ const resolvers = {
 				const imageUri = storeData.imageUri;
 				const imageUriList = imageUri.split("/");
 				const filename = `${imageUriList.at(-2)}/${imageUriList.at(-1)}`;
-				// await s3Delete(filename);
+				await s3Delete(filename);
 			}
 			for (p in store) {
 				if (store[p]) {
@@ -266,7 +266,7 @@ const resolvers = {
 				const imageUri = productData.imageUri;
 				const imageUriList = imageUri.split("/");
 				const filename = `${imageUriList.at(-2)}/${imageUriList.at(-1)}`;
-				// await s3Delete(filename);
+				await s3Delete(filename);
 			}
 			for (p in product) {
 				if (product[p]) {
@@ -296,7 +296,7 @@ const resolvers = {
 			const imageUri = product.imageUri;
 			const imageUriList = imageUri.split("/");
 			const filename = `${imageUriList.at(-2)}/${imageUriList.at(-1)}`;
-			// await s3Delete(filename);
+			await s3Delete(filename);
 			const store = await Store.findById(product.store);
 			// console.log("product _id", product.id);
 			// clean up store
