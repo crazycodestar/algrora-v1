@@ -1,0 +1,14 @@
+.searchBox-container {
+	// background-color: gold;
+	padding: 10px;
+	display: flex;
+	.input {
+		flex: 1;
+		padding: 10px;
+		border: none;
+		border-radius: 5px;
+		&::placeholder {
+			text-transform: capitalize;
+		}
+	}
+}

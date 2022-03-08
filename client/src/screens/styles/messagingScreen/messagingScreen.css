@@ -1,0 +1,324 @@
+.messagingScreen-container {
+  --message-container-height: 80vh;
+  --header-height: 56px;
+  width: 80%;
+  height: var(--message-container-height);
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--background-colour);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.messagingScreen-container .messages-container {
+  width: 300px;
+}
+
+.messagingScreen-container .messaging-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.messagingScreen-container .messaging-container .heading {
+  padding: 10px;
+  background-color: var(--accent-colour);
+}
+
+.messagingScreen-container .messaging-container .heading p.name,
+.messagingScreen-container .messaging-container .heading p.status {
+  color: var(--dark-colour);
+}
+
+.messagingScreen-container .messaging-container .heading p.status {
+  font-size: 14px;
+}
+
+.messagingScreen-container .messaging-container .messaging-wrapper {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  background-color: lightblue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-height: calc(var(--message-container-height) - var(--header-height));
+}
+
+.messagingScreen-container .messaging-container .messaging-wrapper .messages-section {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  overflow-x: auto;
+}
+
+.messagingScreen-container .messaging-container .messaging-wrapper .text-section {
+  background-color: var(--accent-colour);
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.messagingScreen-container .messaging-container .messaging-wrapper .text-section .text-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.messagingScreen-container .messaging-container .messaging-wrapper .text-section .replyMessage-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  padding-bottom: 0px;
+}
+
+.messagingScreen-container .messaging-container .messaging-wrapper .text-section .replyMessage-container .reply-details {
+  margin-right: auto;
+  margin-left: 15px;
+  padding-left: 10px;
+  padding: 5px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border-left: 2px solid var(--primary-colour);
+}
+
+.messagingScreen-container .messaging-container .messaging-wrapper .text-section .replyMessage-container .reply-details .reply-name {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.messagingScreen-container .messaging-container .messaging-wrapper .text-section .replyMessage-container .close-container {
+  width: 30px;
+  height: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.message-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.message-wrapper.sender-message-container {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+
+.message-wrapper.sender-message-container .reply-button-container {
+  position: relative;
+  right: 10px;
+}
+
+.message-wrapper.reciever-message-container .reply-button-container {
+  position: relative;
+  left: 10px;
+}
+
+.message-wrapper.reciever-message-container ~ .sender-message-container:last-of-type .message-container {
+  position: relative;
+  right: 10px;
+}
+
+.message-wrapper.reciever-message-container ~ .sender-message-container:last-of-type .message-container::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 8px solid;
+  border-color: transparent transparent var(--accent-colour) var(--accent-colour);
+  position: absolute;
+  bottom: 0;
+  right: -8px;
+}
+
+.message-wrapper.sender-message-container ~ .reciever-message-container:nth-of-type(3) .message-container {
+  position: relative;
+  left: 10px;
+}
+
+.message-wrapper.sender-message-container ~ .reciever-message-container:nth-of-type(3) .message-container::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 8px solid;
+  border-color: transparent var(--light-colour) var(--light-colour) transparent;
+  position: absolute;
+  bottom: 0;
+  left: -8px;
+}
+
+.message-wrapper:hover .reply-button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.message-wrapper .reply-button-container {
+  display: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: var(--light-colour);
+}
+
+.message-wrapper .reply-button-container:hover {
+  background-color: var(--accent-colour);
+}
+
+.message-wrapper .reply-button-container:active {
+  background-color: var(--secondary-colour);
+}
+
+.message-wrapper .message-container {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  max-width: 60%;
+  padding: 10px;
+  background-color: dodgerblue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border-radius: 5px;
+}
+
+.message-wrapper .message-container.sender-message {
+  background-color: var(--accent-colour);
+  margin-left: 10px;
+  position: relative;
+  right: 10px;
+}
+
+.message-wrapper .message-container.reciever-message {
+  margin-right: 10px;
+  position: relative;
+  left: 10px;
+  background-color: var(--light-colour);
+}
+
+.message-wrapper .message-container .message-reply {
+  padding: 5px;
+  border-left: 2px solid var(--primary-colour);
+  background-color: var(--accent-colour);
+  margin-bottom: 5px;
+}
+
+.message-wrapper .message-container .message-reply .initial-header {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.message-wrapper .message-container .message {
+  width: 100%;
+  overflow: hidden;
+}
+
+.message-wrapper .message-container .bottom-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+}
+
+.message-wrapper .message-container .bottom-details p.timeOfUpload {
+  margin-right: 5px;
+}
+
+.active-animation {
+  -webkit-animation: blinker 2s linear normal;
+          animation: blinker 2s linear normal;
+  -webkit-animation-iteration-count: 2;
+          animation-iteration-count: 2;
+}
+
+@-webkit-keyframes blinker {
+  0% {
+    background-color: transparent;
+  }
+  25% {
+    background-color: var(--secondary-colour);
+  }
+  50% {
+    background-color: transparent;
+  }
+  75% {
+    background-color: var(--secondary-colour);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes blinker {
+  0% {
+    background-color: transparent;
+  }
+  25% {
+    background-color: var(--secondary-colour);
+  }
+  50% {
+    background-color: transparent;
+  }
+  75% {
+    background-color: var(--secondary-colour);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+/*# sourceMappingURL=messagingScreen.css.map */

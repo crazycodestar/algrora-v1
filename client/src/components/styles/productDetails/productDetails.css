@@ -1,0 +1,31 @@
+.productDetails {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.productDetails-image-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-item-align: center;
+      align-self: center;
+  background-color: dodgerblue;
+  width: 100%;
+}
+
+.productDetails-product-image {
+  --productDetails-width: calc(var(--tab-width) * 2 / 3);
+  width: var(--productDetails-width);
+  height: calc(var(--productDetails-width) * 3 / 2);
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+/*# sourceMappingURL=productDetails.css.map */

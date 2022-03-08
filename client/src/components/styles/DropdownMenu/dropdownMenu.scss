@@ -1,0 +1,31 @@
+.dropdownMenu-container {
+	width: 30px;
+	height: 30px;
+	background-color: var(--background-colour);
+	// overflow: hidden;
+	border-radius: 100%;
+	position: relative;
+	z-index: 50;
+	.options-container {
+		position: absolute;
+		top: 35px;
+		right: 0;
+		background-color: var(--background-colour);
+		width: auto;
+		min-width: 95px;
+		display: block;
+		border-radius: 5px;
+		overflow: hidden;
+		li {
+			text-align: left;
+			padding: 10px;
+			text-transform: capitalize;
+			font-size: 18;
+			font-weight: bold;
+			white-space: nowrap;
+			&:hover {
+				background-color: var(--accent-colour);
+			}
+		}
+	}
+}

@@ -1,0 +1,31 @@
+.addComment {
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
+	width: 100%;
+	flex: 1;
+	img.accountImage {
+		--account-image-size: 40px;
+		min-width: var(--account-image-size);
+		height: var(--account-image-size);
+		border-radius: calc(var(--account-image-size) / 2);
+		object-fit: cover;
+		margin-right: 10px;
+	}
+	.details-container {
+		flex-direction: column;
+		width: 100%;
+		div:first-of-type {
+			display: flex;
+			justify-content: space-between;
+			.account-name {
+				text-transform: capitalize;
+				font-size: 18px;
+				font-weight: 600;
+			}
+		}
+	}
+	.button-container {
+		margin-left: auto;
+	}
+}

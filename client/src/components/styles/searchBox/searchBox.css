@@ -1,0 +1,32 @@
+.searchBox-container {
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.searchBox-container .input {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.searchBox-container .input::-webkit-input-placeholder {
+  text-transform: capitalize;
+}
+
+.searchBox-container .input:-ms-input-placeholder {
+  text-transform: capitalize;
+}
+
+.searchBox-container .input::-ms-input-placeholder {
+  text-transform: capitalize;
+}
+
+.searchBox-container .input::placeholder {
+  text-transform: capitalize;
+}
+/*# sourceMappingURL=searchBox.css.map */

@@ -1,0 +1,41 @@
+.button {
+	padding: 10px;
+	border-radius: 4px;
+	margin: 5px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.indicator-container {
+		width: 18px;
+		height: 18px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		right: 4px;
+		bottom: 2px;
+		// background-color: black;
+	}
+	// max-height: 46px;
+	// font-family: roboto;
+}
+
+.button:active {
+	// background-color: #e9e9fa;
+	opacity: 0.1;
+}
+
+.button:focus {
+	box-shadow: 0 0 5px #e9e9fa;
+}
+
+.button-primary {
+	color: #fff;
+	background-color: #000080;
+}
+
+.button-secondary {
+	color: #000080;
+	background-color: transparent;
+}

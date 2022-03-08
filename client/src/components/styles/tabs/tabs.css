@@ -1,0 +1,95 @@
+.tabs-cart-container {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10px;
+  height: calc(100vh - var(--navigationBar-height) - 60px);
+  width: var(--tab-width);
+  background-color: var(--light-colour);
+  -webkit-box-shadow: 0 0 15px var(--accent-colour);
+          box-shadow: 0 0 15px var(--accent-colour);
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.tabs-cart-container > p {
+  text-transform: capitalize;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.tabs-header-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.tabs-action-section {
+  margin-top: auto;
+}
+
+.tabs-price-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px;
+}
+
+.tabs-price-container > p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.tabs-content-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.tabs-content-container > div {
+  min-width: var(--tab-width);
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.header-container {
+  padding: 5px;
+  background-color: var(--accent-colour);
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 20px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.header-container p {
+  text-transform: capitalize;
+  color: var(--primary-colour);
+}
+/*# sourceMappingURL=tabs.css.map */

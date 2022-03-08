@@ -1,0 +1,118 @@
+.cartScreen {
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	// background-color: dodgerblue;
+	&-main-container {
+		display: flex;
+		align-items: flex-start;
+	}
+	&-feedback-container {
+		margin-top: 10px;
+		padding: 10px;
+		padding-left: 0;
+		padding-right: 0;
+		> p {
+			font-size: 20px;
+			// text-decoration: underline;
+			border-bottom: 1px solid var(--primary-colour);
+			padding-bottom: 5px;
+			margin-bottom: 10px;
+			font-weight: 600;
+			text-transform: capitalize;
+			// background-color: dodgerblue;
+		}
+		div {
+			display: flex;
+			.comment-section {
+				flex: 1;
+				flex-direction: column;
+				display: flex;
+				padding: 10px;
+			}
+			.comment-section-heading {
+				font-size: 18px;
+				text-transform: capitalize;
+				font-weight: 600;
+			}
+		}
+	}
+	&-image-container {
+		display: flex;
+		justify-content: center;
+		align-self: center;
+		max-width: 400px;
+		background-color: gold;
+		margin-bottom: auto;
+	}
+	&-product-image {
+		// align-self: center;
+		--productDetails-width: calc(var(--tab-width) * 2 / 3);
+		width: var(--productDetails-width);
+		height: calc(var(--productDetails-width) * 3 / 2);
+		object-fit: cover;
+		border-radius: 6px;
+	}
+	&-details-container {
+		// background-color: dodgerblue;
+		padding: 10px;
+	}
+	&-product-name {
+		font-size: 24px;
+		text-transform: capitalize;
+		font-weight: 500;
+	}
+	&-account-container {
+		display: flex;
+		align-items: center;
+		img {
+			--image-size: 30px;
+			width: var(--image-size);
+			height: var(--image-size);
+			border-radius: calc(var(--image-size) / 2);
+		}
+		p {
+			margin-left: 6px;
+			text-transform: capitalize;
+			font-weight: 500;
+		}
+	}
+	&-description {
+		margin-top: 20px;
+		margin-bottom: 20px;
+		padding: 10px;
+		border-left: 2pt solid var(--primary-colour);
+		// background-color: var(--background-colour);
+	}
+	&-product-price {
+		font-size: 18px;
+		font-weight: 500;
+	}
+	&-price-container {
+		padding: 4px;
+		padding-left: 0px;
+		.cartScreen-product-price {
+			font-size: 20px;
+			font-weight: 600;
+		}
+		> div {
+			display: flex;
+			align-self: center;
+			.cartScreen-product-old-price {
+				text-align: center;
+				text-decoration: line-through;
+				margin-right: 8px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.cartScreen-product-discount {
+				background-color: gold;
+				padding: 6px;
+				border-radius: 5px;
+			}
+		}
+	}
+}

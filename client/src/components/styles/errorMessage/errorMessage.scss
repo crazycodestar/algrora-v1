@@ -1,0 +1,10 @@
+.error {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin-top: 2px;
+	color: var(--danger-colour);
+	p {
+		font-weight: normal !important;
+	}
+}

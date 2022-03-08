@@ -1,0 +1,298 @@
+.orders {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.orders .header-container {
+  width: 50vw;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.orders .header-container h2 {
+  margin-right: auto;
+}
+
+.orders .no-result-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.orders .no-result-container .no-result {
+  width: 25vw;
+  height: 25vw;
+}
+
+.orders .modal-container {
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 99;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.orders .section {
+  height: auto;
+  padding: 20px;
+  border-radius: 12px;
+  -webkit-box-shadow: 0 0 5px 1px #06209320;
+          box-shadow: 0 0 5px 1px #06209320;
+  margin-bottom: 20px;
+  width: 50vw;
+}
+
+.orders .order {
+  overflow-x: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 20px;
+}
+
+.orders .order .account {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.orders .order .account img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.orders .order .account:hover {
+  opacity: 0.5;
+}
+
+.orders .order .account .avatar-wrapper {
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.orders .order .account .read::after {
+  content: "";
+  bottom: -2px;
+  right: -5px;
+  display: block;
+  position: absolute;
+  padding: 5px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background-color: var(--success-colour);
+}
+
+.orders .accountDetails-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.orders .accountDetails-container img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.orders .accountDetails-container div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.orders .accountDetails-container div .shortForms-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.orders .accountDetails-container div .shortForms-wrapper .shortForm-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.orders .accountDetails-container div .shortForms-wrapper .shortForm-container span {
+  text-transform: lowercase;
+}
+
+.orders .accountDetails-container div .shortForms-wrapper .shortForm-container span:first-of-type {
+  margin-right: 5px;
+}
+
+.orders .accountDetails-container div .shortForms-wrapper .shortForm-container .dot {
+  background-color: #000;
+  border-radius: 100%;
+  width: 5px;
+  height: 5px;
+  margin: 0 5px;
+}
+
+.orders .product-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.orders .product-section img {
+  margin-right: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.orders .product-section div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 2px;
+}
+
+.orders .product-section div .productName-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-direction: row !important;
+          flex-direction: row !important;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.orders .product-section div .productName-container > h3 {
+  margin-right: auto;
+}
+
+.orders .product-section div .pricing-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  gap: 5px;
+}
+
+.orders .product-section div .pricing-container span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: var(--border-radius);
+  background-color: var(--background-colour);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.orders .product-section div .read::before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  margin-right: 5px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: var(--success-colour);
+}
+
+.orders .product-section div p {
+  margin-right: auto;
+}
+
+.orders .product-section div .store-container {
+  margin-top: 20px;
+}
+
+.orders .product-section div hr {
+  margin: 10px 0;
+}
+
+.orders .product-section div .timeRead-container {
+  margin-left: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+/*# sourceMappingURL=ordersScreen.css.map */

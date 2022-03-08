@@ -1,0 +1,29 @@
+.categoryPicker-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+.categoryPicker-container .picker-wrapper {
+  position: absolute;
+  top: 60px;
+  right: 2px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--secondary-colour);
+  max-height: 400px;
+  overflow-x: auto;
+}
+
+.categoryPicker-container .picker-wrapper li {
+  list-style: none;
+  padding: 10px;
+  text-transform: capitalize;
+}
+
+.categoryPicker-container .picker-wrapper li:hover {
+  border-radius: 2px;
+  background-color: var(--accent-colour);
+}
+/*# sourceMappingURL=categoryPicker.css.map */

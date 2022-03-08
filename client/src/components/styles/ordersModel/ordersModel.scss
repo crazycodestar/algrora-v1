@@ -1,0 +1,48 @@
+.orderModal {
+	z-index: 99;
+	padding: 5px;
+	background-color: #fff;
+	border-radius: 10px;
+	width: fit-content;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	div.status {
+		margin-bottom: 8px;
+	}
+	div.status,
+	div.date-picker {
+		display: flex;
+		align-items: center;
+		margin-left: 10px;
+		span {
+			position: relative;
+			top: 5px;
+		}
+	}
+	div.date-picker {
+		margin-bottom: 10px;
+		.picker {
+			margin-left: 10px;
+			position: relative;
+			top: 5px;
+		}
+	}
+	select {
+		display: flex;
+		margin: 10px;
+		margin-bottom: 0px;
+		padding: 5px;
+		width: fit-content;
+		border: none;
+		background-color: #f3f3f3;
+		border-radius: 100px;
+		padding: 8px 5px;
+		text-transform: uppercase;
+	}
+	.buttons {
+		width: fit-content;
+		margin-right: 5px;
+		margin-left: auto;
+	}
+}

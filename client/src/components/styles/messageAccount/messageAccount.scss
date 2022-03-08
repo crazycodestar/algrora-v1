@@ -1,0 +1,57 @@
+.messageAccount-container {
+	display: flex;
+	box-sizing: border-box;
+	cursor: pointer;
+	width: 100%;
+	padding: 10px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	&:hover {
+		background-color: var(--accent-colour);
+	}
+	&:active {
+		background-color: var(--primary-colour);
+		.details-container {
+			p.lastMessage {
+				color: var(--lightgrey-colour);
+			}
+			div:first-of-type {
+				p.name,
+				p.time {
+					color: var(--light-colour);
+				}
+			}
+		}
+	}
+	.image-container {
+		--image-size: 30px;
+		width: var(--image-size);
+		max-width: var(--image-size);
+		height: var(--image-size);
+		min-height: var(--image-size);
+		max-height: var(--image-size);
+		background-color: var(--grey-colour);
+		border-radius: calc(var(--image-size) / 2);
+		outline: none;
+	}
+	.details-container {
+		margin-left: 10px;
+		width: 100%;
+		div:first-of-type {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			p.name {
+				font-size: 17px;
+				color: var(--dark-colour);
+			}
+			p.time {
+				font-size: 14px;
+			}
+		}
+		p.lastMessage {
+			font-size: 14px;
+			color: var(--secondary-colour);
+		}
+	}
+}

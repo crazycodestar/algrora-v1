@@ -1,0 +1,264 @@
+.navigationBar-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  z-index: 99;
+  position: -webkit-sticky;
+  position: sticky;
+  width: calc(100% - 140px);
+  top: 0px;
+  left: 0px;
+  padding: 20px 70px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #fff;
+}
+
+.navigationBar-container > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  margin-left: 32px;
+}
+
+.navigationBar-container > div > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navigationBar-container .search-box-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.navigationBar-container .logo-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navigationBar-container .logo-container img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.navigationBar-container .logo-container .brandName {
+  font-weight: bold;
+  font-size: var(--fontSize-large);
+}
+
+.navigationBar-container .options-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-right: 32px;
+  gap: 32px;
+}
+
+.navigationBar-container .account-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 5px;
+}
+
+.navigationBar-container .account-container .details {
+  position: relative;
+}
+
+.navigationBar-container .account-container .details div:nth-of-type(1) {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 5px;
+}
+
+.navigationBar-brand-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.navigationBar-category-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navigationBar-tab-wrapper {
+  padding: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  border-radius: 4px;
+}
+
+.navigationBar-tab-wrapper .navigationBar-tab-text {
+  font-size: 1.1rem;
+  text-transform: capitalize;
+}
+
+.navigationBar-search-btn {
+  padding: 10px;
+  background-color: transparent;
+}
+
+.navigationBar-account-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navigationBar-account-container text {
+  margin-right: 10px;
+  text-transform: capitalize;
+  font-size: 1.1rem;
+}
+
+.accountDropdown-container {
+  z-index: 99;
+  background-color: red;
+  padding: 10px;
+  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  top: 45px;
+  background-color: var(--light-colour);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 0 2px 2px var(--lightgrey-colour);
+          box-shadow: 0 0 2px 2px var(--lightgrey-colour);
+  padding: 10px;
+}
+
+.accountDropdown-container::after {
+  content: "";
+  width: 0px;
+  height: 0px;
+  border: 10px solid white;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  position: absolute;
+  top: -9px;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  -webkit-box-shadow: -1px -1px 2px 0px var(--lightgrey-colour);
+          box-shadow: -1px -1px 2px 0px var(--lightgrey-colour);
+}
+
+.accountDropdown-container .main-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.accountDropdown-container .main-container div:nth-of-type(2) {
+  cursor: auto;
+  margin-left: 8px;
+}
+
+.accountDropdown-container .main-container p:nth-of-type(2) {
+  font-size: var(--fontSize-small);
+}
+
+.accountDropdown-container .main-container .edit {
+  background-color: var(--background-colour);
+  width: 32px;
+  height: 32px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 50%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.accountDropdown-container hr {
+  margin: 8px 0;
+}
+
+.accountDropdown-container .option {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  padding: 10px 5px;
+  margin: 2px;
+  border-radius: 6px;
+}
+
+.accountDropdown-container .option:hover {
+  background-color: var(--background-colour);
+}
+
+.accountDropdown-container .option p {
+  margin-left: 10px;
+}
+/*# sourceMappingURL=navigationBar.css.map */

@@ -1,0 +1,23 @@
+.input-container {
+	display: flex;
+	align-items: center;
+	background-color: #e9e9fa;
+	border-radius: 4px;
+	padding: 10px;
+	// margin: 10px;
+	.container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-right: 10px;
+	}
+	.input {
+		display: flex;
+		background-color: #ffffff00;
+		border: none;
+		width: 310px;
+		&::placeholder {
+			text-transform: lowercase;
+		}
+	}
+}

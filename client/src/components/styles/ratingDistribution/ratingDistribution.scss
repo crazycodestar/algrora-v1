@@ -1,0 +1,56 @@
+.ratingDistribution-container {
+	--productDetails-width: calc(var(--tab-width) * 2 / 3);
+	flex: 0.4;
+	width: var(--productDetails-width);
+	// background-color: dodgerblue;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	.header {
+		align-self: flex-start;
+		font-size: 18px;
+		text-transform: capitalize;
+		font-weight: 600;
+	}
+	.totalRating-wrapper {
+		margin: 10px;
+		padding: 10px;
+		// background-color: gold;
+		// width: 100%;
+		// height: 100px;
+		p {
+			font-size: 32px;
+			font-weight: 600;
+		}
+	}
+	.individual-rating-container {
+		align-self: flex-start;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+}
+
+.rating-wrapper {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	.text-container {
+		display: flex;
+		width: 50px;
+	}
+	.rating-container {
+		display: flex;
+	}
+	.rating-container,
+	.rating-value {
+		height: 5px;
+		flex: 1;
+		border-radius: 2.5px;
+		background-color: var(--accent-colour);
+	}
+	.rating-value {
+		background-color: var(--primary-colour);
+		width: 50%;
+	}
+}

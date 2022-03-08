@@ -1,0 +1,18 @@
+.productDetails {
+	display: flex;
+	flex-direction: column;
+	&-image-container {
+		display: flex;
+		justify-content: center;
+		align-self: center;
+		background-color: dodgerblue;
+		width: 100%;
+	}
+	&-product-image {
+		// align-self: center;
+		--productDetails-width: calc(var(--tab-width) * 2 / 3);
+		width: var(--productDetails-width);
+		height: calc(var(--productDetails-width) * 3 / 2);
+		object-fit: cover;
+	}
+}

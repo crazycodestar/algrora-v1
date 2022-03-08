@@ -1,0 +1,106 @@
+.signInScreen-wrapper {
+	display: flex;
+	padding: 0 70px;
+	// background-color: tomato;
+	flex: 1;
+	flex-direction: row;
+	align-items: center;
+	height: 100vh;
+
+	.sign-section {
+		h1 {
+			font-size: 64px;
+		}
+		p {
+			font-weight: normal;
+		}
+		.proceedWithoutSigning {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			p {
+				margin-right: 5px;
+			}
+		}
+		.form-container {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			.button-container {
+				margin-left: auto;
+			}
+		}
+		// background-color: red;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	.style-image {
+		width: 460px;
+		height: 460px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+.signInScreen-sign-section {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	// background-color: dodgerblue;
+}
+
+.signInScreen-sign-wrapper {
+	width: 50vw;
+	display: flex;
+	// justify-content: center;
+	flex-direction: column;
+}
+
+.signInScreen-welcome-text {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 32px;
+	text-transform: capitalize;
+	font-weight: bold;
+	color: #000080;
+	width: 200px;
+	text-align: center;
+	// background-color: red;
+	align-self: center;
+}
+
+.signInScreen-info-section {
+	display: flex;
+	flex-direction: column;
+}
+
+.signInScreen-button {
+	display: flex;
+	justify-content: center;
+}
+
+.signInScreen-images-section {
+	background-color: dodgerblue;
+	flex: 1.2;
+	height: 100vh;
+	overflow: hidden;
+	// display: flex;
+}
+
+// images design
+.signInScreen-image-vertical,
+.signInScreen-image-horizontal-large,
+.signInScreen-image-vertical-large,
+.signInScreen-image-square {
+	// flex: 1;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	object-fit: cover;
+}
+
+// img {
+// 	width: 100px;
+// 	height: 100px;
+// }

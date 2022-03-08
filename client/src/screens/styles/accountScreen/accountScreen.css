@@ -1,0 +1,119 @@
+.accountScreen {
+  margin-top: 92px;
+  height: 100vh;
+  padding: 0 70px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.accountScreen .messageAlert-container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.accountScreen .messageAlert-container p {
+  text-align: center;
+}
+
+.accountScreen .accountImage {
+  width: 90px;
+  min-width: 90px;
+  height: 90px;
+  border-radius: 6px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.accountScreen .account-wrapper {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.accountScreen .account-wrapper .details {
+  max-width: 530px;
+  position: relative;
+  margin-bottom: 40px;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.accountScreen .account-wrapper .details div {
+  margin-left: 10px;
+}
+
+.accountScreen .account-wrapper .details div div {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.accountScreen .account-wrapper .details div div .store {
+  font-weight: bold;
+  font-size: var(--fontSize-large);
+}
+
+.accountScreen .account-wrapper .details div .description {
+  font-weight: normal;
+}
+
+.accountScreen .account-wrapper .product-section h1 {
+  font-size: var(--fontSize-large);
+  margin-bottom: 10px;
+}
+
+.accountScreen .category-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  width: 60vw;
+}
+
+.accountScreen-productDetails-container {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  width: 100vw;
+  height: 100vh;
+  background-color: dodgerblue;
+}
+/*# sourceMappingURL=accountScreen.css.map */

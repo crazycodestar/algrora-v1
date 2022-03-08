@@ -1,0 +1,73 @@
+.messageAccount-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.messageAccount-container:hover {
+  background-color: var(--accent-colour);
+}
+
+.messageAccount-container:active {
+  background-color: var(--primary-colour);
+}
+
+.messageAccount-container:active .details-container p.lastMessage {
+  color: var(--lightgrey-colour);
+}
+
+.messageAccount-container:active .details-container div:first-of-type p.name,
+.messageAccount-container:active .details-container div:first-of-type p.time {
+  color: var(--light-colour);
+}
+
+.messageAccount-container .image-container {
+  --image-size: 30px;
+  width: var(--image-size);
+  max-width: var(--image-size);
+  height: var(--image-size);
+  min-height: var(--image-size);
+  max-height: var(--image-size);
+  background-color: var(--grey-colour);
+  border-radius: calc(var(--image-size) / 2);
+  outline: none;
+}
+
+.messageAccount-container .details-container {
+  margin-left: 10px;
+  width: 100%;
+}
+
+.messageAccount-container .details-container div:first-of-type {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.messageAccount-container .details-container div:first-of-type p.name {
+  font-size: 17px;
+  color: var(--dark-colour);
+}
+
+.messageAccount-container .details-container div:first-of-type p.time {
+  font-size: 14px;
+}
+
+.messageAccount-container .details-container p.lastMessage {
+  font-size: 14px;
+  color: var(--secondary-colour);
+}
+/*# sourceMappingURL=messageAccount.css.map */

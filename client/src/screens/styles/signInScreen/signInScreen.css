@@ -1,0 +1,154 @@
+.signInScreen-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 70px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+}
+
+.signInScreen-wrapper .sign-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+}
+
+.signInScreen-wrapper .sign-section h1 {
+  font-size: 64px;
+}
+
+.signInScreen-wrapper .sign-section p {
+  font-weight: normal;
+}
+
+.signInScreen-wrapper .sign-section .proceedWithoutSigning {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.signInScreen-wrapper .sign-section .proceedWithoutSigning p {
+  margin-right: 5px;
+}
+
+.signInScreen-wrapper .sign-section .form-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+}
+
+.signInScreen-wrapper .sign-section .form-container .button-container {
+  margin-left: auto;
+}
+
+.signInScreen-wrapper .style-image {
+  width: 460px;
+  height: 460px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.signInScreen-sign-section {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.signInScreen-sign-wrapper {
+  width: 50vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.signInScreen-welcome-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 32px;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #000080;
+  width: 200px;
+  text-align: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.signInScreen-info-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.signInScreen-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.signInScreen-images-section {
+  background-color: dodgerblue;
+  -webkit-box-flex: 1.2;
+      -ms-flex: 1.2;
+          flex: 1.2;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.signInScreen-image-vertical,
+.signInScreen-image-horizontal-large,
+.signInScreen-image-vertical-large,
+.signInScreen-image-square {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+/*# sourceMappingURL=signInScreen.css.map */

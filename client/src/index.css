@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+:root {
+	--primary-colour: #061f93;
+	--secondary-colour: #7373b8;
+	--accent-colour: #e9e9fa;
+	--light-colour: #fff;
+	--dark-colour: #000;
+	--danger-colour: #df4759;
+	--success-colour: #90ee90;
+	--grey-colour: #808080;
+	--lightgrey-colour: #d3d3d3;
+	--background-colour: #f4f4f4;
+	--product-width: 200px;
+	--product-height: 300px;
+	--navigationBar-height: 80px;
+	--tab-width: 400px;
+	--side-navigationBar-width: 200px;
+	--fontSize-small: 14px;
+	--fontSize-medium: 18px;
+	--fontSize-large: 24px;
+	--border-radius: 6px;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu,
+		Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	font-size: var(--fontSize-medium);
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	text-transform: lowercase;
+}
+
+h1 {
+	font-size: 64px;
+	font-weight: bold;
+}
+h2 {
+	font-size: 32px;
+	font-weight: bold;
+}
+h3 {
+	font-size: var(--fontSize-medium);
+}
+h4 {
+	font-size: var(--fontSize-medium);
+	font-weight: normal;
+}
+h5 {
+	font-size: var(--fontSize-small);
+	font-weight: normal;
+}
+
+p {
+	font-size: var(--fontSize-medium);
+	font-weight: normal;
+}
+
+body {
+	margin: 0;
+	/* font-family: -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", "Oxygen",
+		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif; */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*:focus {
+	outline: none;
+}
+
+button {
+	border: none;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
+}
+
+.message-error {
+	color: red;
+}
+.inline-container {
+	padding: 5px 8px;
+	background-color: var(--primary-colour);
+	color: var(--light-colour);
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 6px;
+	font-size: var(--fontSize-small);
+}
+
+.product-wrapper {
+	display: grid;
+	grid-template-columns: repeat(6, var(--product-width));
+	width: 100%;
+	justify-content: space-between;
+}
+
+.navbar-adjustment {
+	margin-top: 90px;
+}

@@ -1,0 +1,52 @@
+.button {
+  padding: 10px;
+  border-radius: 4px;
+  margin: 5px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.button .indicator-container {
+  width: 18px;
+  height: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  right: 4px;
+  bottom: 2px;
+}
+
+.button:active {
+  opacity: 0.1;
+}
+
+.button:focus {
+  -webkit-box-shadow: 0 0 5px #e9e9fa;
+          box-shadow: 0 0 5px #e9e9fa;
+}
+
+.button-primary {
+  color: #fff;
+  background-color: #000080;
+}
+
+.button-secondary {
+  color: #000080;
+  background-color: transparent;
+}
+/*# sourceMappingURL=button.css.map */

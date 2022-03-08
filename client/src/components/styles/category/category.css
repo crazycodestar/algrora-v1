@@ -1,0 +1,94 @@
+.category-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 50%;
+  overflow-x: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.category-container::after {
+  content: "";
+  pointer-events: none;
+  width: 40%;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  background-image: -webkit-gradient(linear, right top, left top, from(white), to(transparent));
+  background-image: linear-gradient(to left, white, transparent);
+  right: 0;
+}
+
+.category-opacity {
+  width: 30%;
+  height: 50px;
+  position: absolute;
+  top: 0;
+}
+
+.category-opacity-right {
+  background-image: -webkit-gradient(linear, left top, right top, from(white), to(transparent));
+  background-image: linear-gradient(to right, white, transparent);
+  left: 0;
+}
+
+.category-opacity-left {
+  background-image: -webkit-gradient(linear, right top, left top, from(white), to(transparent));
+  background-image: linear-gradient(to left, white, transparent);
+  right: 0;
+}
+
+.categoryCard-container {
+  margin-right: 5px;
+  margin-left: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 20px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 13px;
+  background-color: var(--accent-colour);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.categoryCard-container:active {
+  opacity: 0.2;
+}
+
+.categoryCard-container:hover {
+  background-color: var(--secondary-colour);
+}
+
+.categoryCard-container:hover p {
+  color: var(--light-colour);
+}
+
+.categoryCard-selected {
+  background-color: var(--primary-colour);
+}
+
+.categoryCard-selected p {
+  color: var(--light-colour);
+}
+
+.categoryCard-text {
+  font-size: 0.9rem;
+  color: var(--primary-colour);
+  text-transform: capitalize;
+}
+/*# sourceMappingURL=category.css.map */

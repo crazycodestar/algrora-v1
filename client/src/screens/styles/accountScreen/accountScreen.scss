@@ -1,0 +1,73 @@
+.accountScreen {
+	margin-top: 92px;
+	height: 100vh;
+	padding: 0 70px;
+	display: flex;
+	.messageAlert-container {
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 50vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		p {
+			text-align: center;
+		}
+	}
+	.accountImage {
+		width: 90px;
+		min-width: 90px;
+		height: 90px;
+		border-radius: 6px;
+		object-fit: cover;
+	}
+
+	.account-wrapper {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		.details {
+			max-width: 530px;
+			position: relative;
+			margin-bottom: 40px;
+			width: 50%;
+			display: flex;
+			flex-direction: row;
+			align-items: flex-start;
+			div {
+				margin-left: 10px;
+				div {
+					margin: 0;
+					display: flex;
+					justify-content: space-between;
+					.store {
+						font-weight: bold;
+						font-size: var(--fontSize-large);
+					}
+				}
+				.description {
+					font-weight: normal;
+				}
+			}
+		}
+		.product-section {
+			h1 {
+				font-size: var(--fontSize-large);
+				margin-bottom: 10px;
+			}
+		}
+	}
+	.category-container {
+		flex: 1;
+		width: 60vw;
+	}
+	&-productDetails-container {
+		position: absolute;
+		display: flex;
+		flex: 1;
+		width: 100vw;
+		height: 100vh;
+		background-color: dodgerblue;
+	}
+}

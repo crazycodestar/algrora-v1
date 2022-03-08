@@ -1,0 +1,51 @@
+.fileInput-container {
+  --image-size: 120px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-direction: row !important;
+          flex-direction: row !important;
+}
+
+.fileInput-container .addImage-container {
+  width: var(--image-size);
+  max-width: var(--image-size);
+  height: calc(var(--image-size) * 3 / 2);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: var(--background-colour);
+  margin-right: auto;
+}
+
+.fileInput-container .image-container {
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+.fileInput-container .image-container .close-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.fileInput-container .image-container img {
+  width: var(--image-size);
+  height: calc(var(--image-size) * 3 / 2);
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+/*# sourceMappingURL=fileInput.css.map */

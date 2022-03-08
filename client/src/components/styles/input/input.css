@@ -1,0 +1,50 @@
+.input-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #e9e9fa;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.input-container .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 10px;
+}
+
+.input-container .input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #ffffff00;
+  border: none;
+  width: 310px;
+}
+
+.input-container .input::-webkit-input-placeholder {
+  text-transform: lowercase;
+}
+
+.input-container .input:-ms-input-placeholder {
+  text-transform: lowercase;
+}
+
+.input-container .input::-ms-input-placeholder {
+  text-transform: lowercase;
+}
+
+.input-container .input::placeholder {
+  text-transform: lowercase;
+}
+/*# sourceMappingURL=input.css.map */

@@ -1,0 +1,36 @@
+.fileInput-container {
+	--image-size: 120px;
+	// padding: 10px;
+	display: flex;
+	// background-color: red;
+	flex-direction: row !important;
+	.addImage-container {
+		width: var(--image-size);
+		max-width: var(--image-size);
+		height: calc(var(--image-size) * 3 / 2);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 5px;
+		margin: 10px;
+		background-color: var(--background-colour);
+		margin-right: auto;
+	}
+	.image-container {
+		// width: var(--image-size);
+		// max-width: var(--image-size);
+		padding: 10px;
+		display: flex;
+		position: relative;
+		.close-container {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+		img {
+			width: var(--image-size);
+			height: calc(var(--image-size) * 3 / 2);
+			object-fit: cover;
+		}
+	}
+}

@@ -1,0 +1,33 @@
+.product-container {
+	flex-basis: var(--product-width) !important;
+	.details-container {
+		display: flex;
+		.details-text {
+			display: flex;
+			flex-direction: column;
+			// background-color: red;
+			margin-right: auto;
+			text {
+				text-transform: capitalize;
+			}
+			.productname {
+				font-weight: 700;
+			}
+		}
+	}
+
+	.image {
+		width: 100%;
+		// height: calc(var(--height) * 2.3 / 3);
+		height: var(--product-height);
+		border-radius: 5px;
+		object-fit: cover;
+	}
+
+	.brandImage {
+		width: 25px;
+		height: 25px;
+		border-radius: 20px;
+		object-fit: cover;
+	}
+}
