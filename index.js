@@ -6,16 +6,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
-const typeDefs = gql`
-	type Query {
-		hello: String!
-	}
-`;
-const resolvers = {
-	Query: {
-		hello: () => "sup",
-	},
-};
+const typeDefs = require("./typeDefs");
+const resolvers = require("./resolvers");
 
 // dotenv.config();
 
