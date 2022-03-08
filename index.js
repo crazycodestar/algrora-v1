@@ -5,6 +5,7 @@ const { makeExecutableSchema } = require("@graphql-tools/schema");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const path = require("path");
 
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolvers");
