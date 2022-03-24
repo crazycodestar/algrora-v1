@@ -1,11 +1,13 @@
 import {
 	ADD_STORE_PRODUCT,
+	CREATE_STORE,
 	REMOVE_STORE_PRODUCT,
 	UPDATE_STORE,
 } from "../actions/types";
 
 const initialState = {
 	storeProducts: [],
+	createStoreData: {},
 };
 
 const storeReducer = (state = initialState, action) => {
@@ -28,6 +30,10 @@ const storeReducer = (state = initialState, action) => {
 					(product) => product !== action.key
 				),
 			};
+		case CREATE_STORE:
+			console.log("store reducer");
+			console.log(action.data);
+			return { ...state, createStoreData: { ...action.data } };
 		default:
 			return state;
 	}

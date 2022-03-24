@@ -8,10 +8,19 @@ const orderSchema = new Schema({
 		ref: "user",
 		required: true,
 	},
+	activated: {
+		type: Boolean,
+		required: true,
+		default: false,
+	},
 	product: {
 		type: Schema.Types.ObjectId,
 		ref: "product",
 		required: true,
+	},
+	orderKey: {
+		type: String,
+		require: true,
 	},
 	quantity: {
 		type: Number,

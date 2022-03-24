@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
 	imageUri: String,
+	activated: {
+		type: Boolean,
+		required: true,
+		default: false,
+	},
 	username: {
 		type: String,
 		index: true,
@@ -51,7 +56,22 @@ const userSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "store",
 	},
+	unReadOrder: {
+		type: Number,
+		required: true,
+		default: 0,
+	},
+	unReadInbox: {
+		type: Number,
+		default: 0,
+	},
 });
+
+// userSchema.pre("save", (next) => {
+// 	console.log("saving happening here in users section");
+// 	next();
+// });
+
 const User = mongoose.model("user", userSchema);
 
 module.exports = User;

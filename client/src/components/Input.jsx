@@ -1,5 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "./styles/input/input.css";
+
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export default function Input({
 	style,
@@ -13,6 +16,7 @@ export default function Input({
 	Icon,
 	...others
 }) {
+	const [passwordVisible, setPasswordVisible] = useState(false);
 	const input = useRef();
 	useEffect(() => {
 		if (triggerFocus) {
@@ -37,7 +41,7 @@ export default function Input({
 			<input
 				style={style}
 				ref={input}
-				type={type}
+				type={type === "password" && passwordVisible ? "text" : type}
 				onChange={onChange}
 				onSubmit={onEnter}
 				value={value}
@@ -48,6 +52,18 @@ export default function Input({
 					if (e.key === "Enter" && onEnter) onEnter();
 				}}
 			/>
+			{type === "password" ? (
+				<div
+					className="password-container"
+					onClick={() => setPasswordVisible(!passwordVisible)}
+				>
+					{passwordVisible ? (
+						<VisibilityOffIcon sx={{ fontSize: 18 }} />
+					) : (
+						<VisibilityIcon sx={{ fontSize: 18 }} />
+					)}
+				</div>
+			) : null}
 		</div>
 	);
 }

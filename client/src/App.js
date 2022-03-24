@@ -22,43 +22,53 @@ import SearchScreen from "./screens/SearchScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import AdministrativePanel from "./screens/AdministrativePanel";
 import OrdersScreen from "./screens/OrdersScreen";
+import PricingScreen from "./screens/PricingScreen";
+import CategoryScreen from "./screens/CategoryScreen";
+import ConfirmEmailScreen from "./screens/ConfirmEmailScreen";
+import ActivateSuccessScreen from "./screens/ActivateSuccessScreen";
 
 function App() {
 	const accountReducer = useSelector((state) => state.accountReducer);
 	const isAuthenticated = accountReducer.token;
 	return (
 		<Router>
-			<NavigationBar search />
-			<Switch>
-				<Route path="/" exact component={HomeScreen} />
-				<Route path="/Auth" component={AdministrativePanel} />
-				<Route path="/product/:id" component={ProductDetailScreen} />
-				<Route path="/cart" component={CartScreen} />
-				<Route path="/signIn" component={SignInScreen} />
-				<Route path="/signUp" component={SignUpScreen} />
-				<Route path="/search" component={SearchScreen} />
-				<Route
-					path="/store/:id"
-					component={StoreScreen}
-					key="store-component"
-				/>
-				{isAuthenticated ? (
-					<>
-						<Route
-							path="/account"
-							component={StoreScreen}
-							key="account-component"
-						/>
-						<Route path="/messages" component={MessagingScreen} />
-						<Route path="/orders" component={OrdersScreen} key="orders" />
-						<Route path="/inbox" component={OrdersScreen} key="inbox" />
-						<Route path="/addProduct" component={AddProductScreen} />
-						<Route path="/addStore" component={AddStoreScreen} />
-					</>
-				) : (
-					<Redirect to="/signIn" />
-				)}
-			</Switch>
+			<div className="super-container">
+				<NavigationBar search />
+				<Switch>
+					<Route path="/" exact component={HomeScreen} />
+					<Route path="/Auth" component={AdministrativePanel} />
+					<Route path="/product/:id" component={ProductDetailScreen} />
+					<Route path="/cart" component={CartScreen} />
+					<Route path="/signIn" component={SignInScreen} />
+					<Route path="/signUp" component={SignUpScreen} />
+					<Route path="/search" component={SearchScreen} />
+					<Route path="/pricing" component={PricingScreen} />
+					<Route path="/category" component={CategoryScreen} />
+					<Route path="/confirmEmail" component={ConfirmEmailScreen} />
+					<Route path="/success" component={ActivateSuccessScreen} />
+					<Route
+						path="/store/:id"
+						component={StoreScreen}
+						key="store-component"
+					/>
+					{isAuthenticated ? (
+						<>
+							<Route
+								path="/account"
+								component={StoreScreen}
+								key="account-component"
+							/>
+							<Route path="/messages" component={MessagingScreen} />
+							<Route path="/orders" component={OrdersScreen} key="orders" />
+							<Route path="/inbox" component={OrdersScreen} key="inbox" />
+							<Route path="/addProduct" component={AddProductScreen} />
+							<Route path="/addStore" component={AddStoreScreen} />
+						</>
+					) : (
+						<Redirect to="/signIn" />
+					)}
+				</Switch>
+			</div>
 		</Router>
 	);
 }

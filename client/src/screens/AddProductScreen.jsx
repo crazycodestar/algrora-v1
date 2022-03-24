@@ -16,7 +16,7 @@ import { useLocation } from "react-router-dom";
 
 //redux
 import { useSelector } from "react-redux";
-import { generateFilename } from "../utilityFunctions";
+import { generateFilename, uploadImage } from "../utilityFunctions";
 // graphql
 import { url } from "../config";
 import request, { gql } from "graphql-request";
@@ -83,7 +83,8 @@ export default function AddProductScreen({ history }) {
 							}
 						`;
 						const variables = {
-							filename: generateFilename(fileData.name, fileData.type),
+							// filename: generateFilename(fileData.name, fileData.type),
+							filename: fileData.name,
 							fileType: fileData.type,
 						};
 						const { signS3 } = await request(url, query, variables, {
@@ -91,18 +92,7 @@ export default function AddProductScreen({ history }) {
 						});
 						if (signS3) {
 							// http request to post image
-							try {
-								await fetch(signS3, {
-									method: "PUT",
-									headers: {
-										"Content-Type": "multipart/form=data",
-									},
-									body: fileData,
-								});
-							} catch (err) {
-								console.log("err");
-								console.log(err);
-							}
+							await uploadImage(signS3, fileData);
 							imageUri = signS3.split("?")[0];
 						}
 					}
@@ -159,26 +149,6 @@ export default function AddProductScreen({ history }) {
 					const returnValue = await request(url, query, variables, {
 						Authorization: `bearer ${accountReducer.token}`,
 					});
-
-					// console.log(returnValue);
-					// const headers = new Headers();
-					// // headers.append("Content-Type", "multipart/form-data");
-					// headers.append("authorization", `bearer ${accountReducer.token}`);
-
-					// const body = new FormData();
-					// // body.append("image", fileData);
-					// body.append("productName", data.productName);
-					// body.append("productPrice", data.productPrice);
-					// body.append("productDescription", data.productDescription);
-					// body.append("productCategory", data.productCategory);
-
-					// const uri = "http://localhost:5000/api/product";
-					// fetch(uri, {
-					// 	method: "POST",
-					// 	headers,
-					// 	body,
-					// }).catch(console.error);
-
 					setSubmitting(false);
 					history.push("/account");
 				}}
@@ -195,14 +165,6 @@ export default function AddProductScreen({ history }) {
 								onChangeField={setFieldValue}
 							/>
 						</div>
-						{/* <ImageSelector
-							name="images"
-							type="data"
-							values={values}
-							setFieldValue={setFieldValue}
-							error={errors.images}
-							touched={touched.images}
-						/> */}
 						<InputValidation
 							placeholder="name"
 							type="text"

@@ -1,4 +1,9 @@
-import { ADD_STORE_PRODUCT, REMOVE_STORE_PRODUCT, UPDATE_STORE } from "./types";
+import {
+	ADD_STORE_PRODUCT,
+	REMOVE_STORE_PRODUCT,
+	UPDATE_STORE,
+	CREATE_STORE,
+} from "./types";
 
 export const updateStore = (data) => ({
 	type: UPDATE_STORE,
@@ -13,4 +18,9 @@ export const addStoreProduct = (product) => ({
 export const removeProductStore = (key) => ({
 	type: REMOVE_STORE_PRODUCT,
 	key,
+});
+
+export const createStore = (data) => ({
+	type: CREATE_STORE,
+	data,
 });

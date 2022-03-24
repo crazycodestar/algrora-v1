@@ -2,6 +2,7 @@
 export const LOG_IN = "LOG_IN";
 export const LOG_OUT = "LOG_OUT";
 export const UPDATE_ACCOUNT_DATA = "UPDATE_ACCOUNT_DATA";
+export const UPDATE_IMAGE = "UPDATE_IMAGE";
 // export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
 
 // CART
@@ -15,3 +16,7 @@ export const CLEAR_CART = "CLEAR_CART";
 export const UPDATE_STORE = "UPDATE_STORE";
 export const ADD_STORE_PRODUCT = "ADD_STORE_PRODUCT";
 export const REMOVE_STORE_PRODUCT = "REMOVE_STORE_PRODUCT";
+export const CREATE_STORE = "CREATE_STORE";
+
+// NAVIGATION BAR
+export const UPDATE_UNREAD = "UPDATE_UNREAD";

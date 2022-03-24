@@ -11,6 +11,8 @@ import Button from "../components/Button";
 import Category from "../components/Category";
 import Tabs from "../components/Tabs";
 
+import image1 from "../images/undraw_empty_re_opql.svg";
+
 // redux
 import { useSelector } from "react-redux";
 
@@ -58,26 +60,43 @@ export default function HomeScreen() {
 
 		setIsLoading(false);
 	}, []);
-	const handleProductRender = () => {
-		if (isLoading == true && products.length == 0) {
-			return <p>loading Products</p>;
-		} else {
-			return products.map((item) => (
-				<Product
-					product={item}
-					key={uuidv4()}
-					style={{
-						marginBottom: 10,
-					}}
-				/>
-			));
-		}
-	};
+
+	if (isLoading)
+		return (
+			<div className="empty-container">
+				<div class="lds-ring">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+		);
+
+	if (!products.length)
+		return (
+			<div className="empty-container">
+				<div className="no-results">
+					<img src={image1} alt="no results" />
+					<h4>no results</h4>
+				</div>
+			</div>
+		);
 	return (
 		<div className="homeScreen">
 			<div className="main-container">
 				<div className="product-section">
-					<div className="product-wrapper">{handleProductRender()}</div>
+					<div className="product-wrapper">
+						{products.map((item) => (
+							<Product
+								product={item}
+								key={uuidv4()}
+								style={{
+									marginBottom: 10,
+								}}
+							/>
+						))}
+					</div>
 				</div>
 			</div>
 		</div>

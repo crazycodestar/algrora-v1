@@ -45,15 +45,11 @@ export default function SignInScreen() {
 				</Link>
 				<Formik
 					initialValues={{
-						username: "seriousfaceman",
-						username: "Olalekan",
 						username: "rober",
-						password: "seriouslyfacing.",
-						password: "lekanisboss",
 						password: "koblerwer",
 					}}
 					validationSchema={SignInSchema}
-					onSubmit={(data, { setSubmitting }) => {
+					onSubmit={async (data, { setSubmitting }) => {
 						setSubmitting(true);
 						const query = gql`
 							mutation Login($username: String!, $password: String!) {
@@ -70,20 +66,24 @@ export default function SignInScreen() {
 								}
 							}
 						`;
-						request("/graphql", query, data).then((res) => {
-							if (res.login.status == "failed") return console.log(res);
+
+						const { login } = await request("/graphql", query, data);
+						if (login.status === "success") {
 							signIn({
-								token: res.login.message,
-								userData: res.login.user,
+								token: login.message,
+								userData: login.user,
 							});
-							localStorage.setItem("token", JSON.stringify(res.login.message));
-							localStorage.setItem("userData", JSON.stringify(res.login.user));
 							history.push("/");
-						});
+						}
+						if (login.status === "unactivated") {
+							console.log(login);
+							history.push(`/confirmEmail?id=${login.user.id}`);
+						}
 						setSubmitting(false);
+						setErrorMessage(login.message);
 					}}
 				>
-					{({ values, isSubmitting }) => (
+					{({ isSubmitting }) => (
 						<Form className="form-container">
 							<InputValidation
 								name="username"
@@ -96,6 +96,9 @@ export default function SignInScreen() {
 								type="password"
 								placeholder="password"
 							/>
+							{errorMessage ? (
+								<p className="message-error">{errorMessage}</p>
+							) : null}
 							<div className="button-container">
 								<Button secondary onClick={() => history.push("/signUp")}>
 									sign up

@@ -6,23 +6,14 @@ import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { useField } from "formik";
 import DescriptionInput from "../DescriptionInput";
+import ErrorMessage from "./ErrorMessage";
 
 export default function TextBoxValidation({ ...props }) {
 	const [field, meta] = useField(props);
 	return (
 		<>
 			<DescriptionInput {...field} {...props} />
-			{meta.touched && meta.error ? (
-				<div className="error">
-					<p className="message-error">
-						<FontAwesomeIcon
-							style={{ marginRight: 5 }}
-							icon={faExclamationCircle}
-						/>
-						{meta.error}
-					</p>
-				</div>
-			) : null}
+			{meta.touched && meta.error ? <ErrorMessage error={meta.error} /> : null}
 		</>
 	);
 }

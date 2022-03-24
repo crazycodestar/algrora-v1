@@ -33,3 +33,18 @@ export const generateFilename = (filename, filetype) => {
 	const newFilename = `images/${date}~${randomString}~${cleanFileName}`;
 	return newFilename;
 };
+
+export const uploadImage = async (signS3, fileData) => {
+	try {
+		await fetch(signS3, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "multipart/form=data",
+			},
+			body: fileData,
+		});
+	} catch (err) {
+		console.log("err");
+		console.log(err);
+	}
+};

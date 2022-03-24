@@ -15,10 +15,25 @@ const s3 = new aws.S3({
 	signatureVersion: "v4",
 });
 
+const generateFilename = (filename, filetype) => {
+	const type = filetype.split("/")[1];
+	const date = new Date().toUTCString();
+	const randomString = Math.random().toString(36).substring(2, 7);
+	const cleanFileName = filename
+		.toLowerCase()
+		.replace(/[---]/g, "_")
+		.replace(/[0-9]/g, "")
+		.substr(0, 20)
+		.split(".")[0]
+		.concat(`.${type}`);
+	const newFilename = `images/${date}~${randomString}~${cleanFileName}`;
+	return newFilename;
+};
+
 const s3Sign = async (filename, fileType) => {
 	const params = {
 		Bucket: bucketName,
-		Key: filename,
+		Key: generateFilename(filename, fileType),
 		ContentType: fileType,
 		Expires: 60 * 5,
 	};

@@ -1,0 +1,48 @@
+.categoryScreen {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	padding: 0 70px;
+	.main-container {
+		margin-bottom: 50px;
+		display: flex;
+		justify-content: space-between;
+	}
+	.category-section {
+		display: grid;
+		grid-template-columns: repeat(6, 200px);
+		width: 100%;
+		justify-content: space-between;
+		.category-item-container {
+			margin-bottom: 30px;
+			position: relative;
+			.marked-read {
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 20px;
+				height: 20px;
+				background-color: #fff;
+				border-radius: 100%;
+				padding: 5px;
+				z-index: 1;
+			}
+			.category-image-container {
+				width: 200px;
+				height: 200px;
+				margin-bottom: 10px;
+				cursor: pointer;
+
+				img {
+					border-radius: var(--border-radius);
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+		}
+	}
+}

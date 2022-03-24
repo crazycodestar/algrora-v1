@@ -15,12 +15,14 @@ import { useHistory } from "react-router";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
+import zxcvbn from "zxcvbn";
+
 // graphql
 import request, { gql } from "graphql-request";
 import { Link } from "react-router-dom";
 
 const SignUpSchema = Yup.object().shape({
-	username: Yup.string().min(2).max(50).required(),
+	username: Yup.string().min(2).max(15).required(),
 	emailAddress: Yup.string().email().required(),
 	password: Yup.string().min(8).max(16).required(),
 });
@@ -29,10 +31,11 @@ export default function SignInScreen() {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const signIn = (data) => dispatch(login(data));
+	const [errorMessage, setErrorMessage] = useState("");
 
-	const handleSignUp = (values) => {
+	const handleSignUp = async (values) => {
 		const query = gql`
-			mutation AddUser(
+			mutation Mutation(
 				$username: String!
 				$emailAddress: String!
 				$password: String!
@@ -52,14 +55,63 @@ export default function SignInScreen() {
 				}
 			}
 		`;
-		// const data = await client(query, values);
-		request("/graphql", query, values).then((res) => {
-			if (res.status == "failed") return console.log(res);
-			signIn({ token: res.addUser.message, userData: res.addUser.user });
-			localStorage.setItem("token", JSON.stringify(res.addUser.message));
-			localStorage.setItem("userData", JSON.stringify(res.addUser.user));
-			history.push("/");
-		});
+		const { addUser } = await request("/graphql", query, values);
+		if (addUser.status == "success") {
+			return history.push(
+				`/confirmEmail?email=${values.emailAddress}&&id=${addUser.message}`
+			);
+		}
+		setErrorMessage(addUser.message);
+	};
+
+	const evaluatePassword = (value) => {
+		if (value) {
+			const score = zxcvbn(value).score;
+			let colour = "";
+			let info = "";
+			switch (score) {
+				case 0:
+					info = "very weak";
+					colour = "#CC3333";
+					break;
+				case 1:
+					colour = "#CC3333";
+					info = "weak";
+					break;
+				case 2:
+					colour = "#FFBF00";
+					info = "good";
+					break;
+				case 3:
+					colour = "#4BB543";
+					info = "strong";
+				default:
+					break;
+			}
+			return (
+				<div className="password-score-container">
+					<div style={{ height: 5, width: "100%", backgroundColor: "#f3f3f3" }}>
+						<div
+							style={{
+								height: 5,
+								width: `${(score / 3) * 100}%`,
+								backgroundColor: colour,
+							}}
+						/>
+					</div>
+					<p style={{ color: colour }}>{info}</p>
+				</div>
+			);
+		}
+	};
+
+	const passwordValidation = (value) => {
+		let error;
+		const score = zxcvbn(value).score;
+		if (score < 2) {
+			error = "password too weak";
+		}
+		return error;
 	};
 
 	return (
@@ -74,16 +126,16 @@ export default function SignInScreen() {
 				</Link>
 				<Formik
 					initialValues={{
-						username: "",
-						emailAddress: "",
-						password: "",
+						username: "user_4",
+						emailAddress: "zzq87724@jiooq.com",
+						password: "Password1234..",
 					}}
 					validationSchema={SignUpSchema}
 					onSubmit={async (values) => {
 						handleSignUp(values);
 					}}
 				>
-					{({ values, error, isSubmitting }) => (
+					{({ values, errors, isSubmitting }) => (
 						<Form className="form-container">
 							<InputValidation
 								name="username"
@@ -100,7 +152,13 @@ export default function SignInScreen() {
 								name="password"
 								type="password"
 								placeholder="password"
+								validate={passwordValidation}
 							/>
+							{/* <pre>{json}</pre> */}
+							{evaluatePassword(values.password)}
+							{errorMessage ? (
+								<p className="message-error">{errorMessage}</p>
+							) : null}
 							<div className="button-container">
 								<Button secondary onClick={() => history.push("./signIn")}>
 									sign in
@@ -109,8 +167,6 @@ export default function SignInScreen() {
 									sign up
 								</Button>
 							</div>
-							{/* <pre>{JSON.stringify(values, null, 2)}</pre>
-							<pre>{JSON.stringify(error, null, 2)}</pre> */}
 						</Form>
 					)}
 				</Formik>

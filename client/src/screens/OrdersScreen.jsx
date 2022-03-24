@@ -1,4 +1,4 @@
-import React, { isValidElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./styles/ordersScreen/ordersScreen.css";
 // graphql
@@ -8,33 +8,16 @@ import DropdownMenu from "../components/DropdownMenu";
 import OrdersModel from "../components/OrdersModel";
 import Button from "../components/Button";
 import { url } from "../config";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Avatar from "../components/Avatar";
 import DoneIcon from "@mui/icons-material/Done";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
+import { updateUnread } from "../actions/navigation";
 
 // images
 import image1 from "../images/undraw_empty_re_opql.svg";
 
 import { v4 as uuidV4 } from "uuid";
-
-const DATA = [
-	{
-		name: "Olalekan Adekanmbi",
-		image:
-			"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-		productName: "smart watch",
-		productImage:
-			"https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-		quantity: "5",
-		uploadTime: "2021-12-27T01:01:20Z",
-		updatedTime: "2021-12-27T01:01:20Z",
-		meetTime: "2021-12-31T12:05:00Z",
-		details: "In front of the john hall by the caf 1 doors",
-		status: "PENDING",
-		message: "",
-	},
-];
 
 export default function OrdersScreen({ match: { path } }) {
 	const [activeAccountIndex, setActiveAccountIndex] = useState(null);
@@ -42,10 +25,26 @@ export default function OrdersScreen({ match: { path } }) {
 	const [orders, setOrders] = useState([]);
 	const [modelVisible, setModelVisible] = useState(false);
 	const [isUser, setIsUser] = useState();
+	const dispatch = useDispatch();
 	const accountReducer = useSelector((state) => state.accountReducer);
+	const navigationReducer = useSelector((state) => state.navigationReducer);
+	const unread = (data) => dispatch(updateUnread(data));
 	useEffect(async () => {
 		let isDefault = true;
-		if (path == "/inbox") isDefault = false;
+		if (path == "/inbox") {
+			isDefault = false;
+			unread({
+				unReadOrder: navigationReducer.dropdownOptions[1].count,
+				unReadInbox: 0,
+				isStore: accountReducer.userData.store,
+			});
+		} else {
+			unread({
+				unReadOrder: 0,
+				unReadInbox: navigationReducer.dropdownOptions[2].count,
+				isStore: accountReducer.userData.store,
+			});
+		}
 
 		const query = gql`
 			query GetOrders($getOrdersType: Type!) {
@@ -85,6 +84,7 @@ export default function OrdersScreen({ match: { path } }) {
 		const { getOrders } = await request(url, query, variables, {
 			Authorization: `bearer ${accountReducer.token}`,
 		});
+		console.log(getOrders);
 		const orderData = [];
 
 		// console.log(getOrders);
@@ -121,6 +121,7 @@ export default function OrdersScreen({ match: { path } }) {
 				message: values.description,
 				lastActive: isUser ? "USER" : "STORE",
 				uploadTime: getTime(),
+				read: false,
 			};
 		} else {
 			newProduct = {
@@ -130,6 +131,7 @@ export default function OrdersScreen({ match: { path } }) {
 				details: values.description,
 				lastActive: isUser ? "USER" : "STORE",
 				uploadTime: getTime(),
+				read: false,
 			};
 		}
 
@@ -169,6 +171,7 @@ export default function OrdersScreen({ match: { path } }) {
 		const newProduct = {
 			...orders[activeAccountIndex].products[activeProductIndex],
 			status: "CANCEL",
+			read: false,
 		};
 
 		// const index = orders.findIndex((v) => v.id == payload[0]);
@@ -357,7 +360,6 @@ const OrderDetails = ({ item, onOption, isUser }) => {
 	}, []);
 	const handleRead = () => {
 		if (isLastActiveUser) {
-			console.log(typeof read);
 			if (read == true) return <DoneAllIcon sx={{ fontSize: "18px" }} />;
 			return <DoneIcon sx={{ fontSize: "18px" }} />;
 		}

@@ -10,6 +10,25 @@ const Comment = require("./schema/Comment");
 const Order = require("./schema/Order");
 
 const { getTime } = require("./utilities");
+const {
+	addStore,
+	getPricing,
+	buyClients,
+} = require("./resolvers/storeResolvers");
+const {
+	isOrder,
+	placeOrder,
+	markRead,
+	getOrders,
+	updateOrder,
+	cancelOrder,
+} = require("./resolvers/orderResolvers");
+const {
+	addUser,
+	updateUser,
+	login,
+	register,
+} = require("./resolvers/userResolver");
 
 const resolvers = {
 	Product: {
@@ -87,114 +106,21 @@ const resolvers = {
 		getCategories: async () => {
 			return await Category.find({});
 		},
-		getOrders: async (_, { type }, { userData }) => {
-			// console.log("type", type);
-			if (type == "USER") return await Order.find({ user: userData.id });
-			return await Order.find({ store: userData.storeId });
-		},
+		getOrders: getOrders,
+		isOrder: isOrder,
+		getPricing: getPricing,
 	},
 	Mutation: {
-		addUser: async (_, args, { secret }) => {
-			// console.log("adding user");
-			const password = await bcrypt.hash(args.password, 12);
-			const user = new User({
-				username: args.username,
-				password: password,
-				emailAddress: args.emailAddress,
-			});
-			try {
-				const userData = await user.save();
-				const token = jwt.sign(
-					{
-						id: userData.id,
-						username: userData.username,
-						storeId: userData.store,
-					},
-					secret
-				);
-				return {
-					status: "success",
-					message: `${token}`,
-					user: userData,
-				};
-			} catch (err) {
-				if (err.code == 11000)
-					return {
-						status: "failed",
-						message: "user already exists",
-					};
-				const base = err.errors;
-				const keys = Object.keys(base);
-				const message = base[keys[0]].properties.message;
-				return {
-					status: "failed",
-					message: `${keys[0]} ${message}`,
-				};
-			}
-		},
-		login: async (parent, args, { secret }) => {
-			console.log("logging in user");
-			try {
-				const user = await User.findOne({ username: args.username });
-				// console.log("testing going on here");
-				if (!user)
-					return {
-						status: "failed",
-						message: "invalid username or password",
-					};
-				const isValid = await bcrypt.compare(args.password, user.password);
-				if (!isValid)
-					return {
-						status: "failed",
-						message: "incorrect username or password",
-					};
-
-				const token = jwt.sign(
-					{ id: user.id, username: user.username, storeId: user.store },
-					secret
-				);
-				return {
-					status: "success",
-					message: `${token}`,
-					user,
-				};
-			} catch (err) {
-				// console.log(err);
-			}
-		},
+		addUser: addUser,
+		register: register,
+		updateUser: updateUser,
+		buyClients: buyClients,
+		login: login,
 		signS3: async (parent, { filename, fileType }) => {
 			const uploadUrl = await s3Sign(filename, fileType);
 			return uploadUrl;
 		},
-		addStore: async (_, args, { userData }) => {
-			const { name, imageUri, description } = args;
-			const user = await User.findById(userData.id);
-			if (user.store)
-				return { status: "failed", message: "user already has a store" };
-			const store = new Store({
-				name,
-				imageUri,
-				description,
-			});
-			try {
-				const storeData = await store.save();
-				user.store = storeData._id;
-				await user.save();
-				return {
-					status: "success",
-					message: `${storeData._id}`,
-					store: storeData,
-				};
-			} catch (err) {
-				const base = err.errors;
-				const keys = Object.keys(base);
-				const message = base[keys[0]].properties.message;
-				return {
-					status: "failed",
-					message: `${keys[0]} ${message}`,
-				};
-			}
-		},
+		addStore: addStore,
 		updateStore: async (_, { id, store }, { userData }) => {
 			// console.log("updating store");
 			const user = User.findById(userData.id);
@@ -302,18 +228,19 @@ const resolvers = {
 			// clean up store
 			const products = [];
 			for (p of store.products) {
-				const pData = await Product.findOne({ _id: p });
-				if (pData.id !== product.id) products.push(pData._id);
+				// const pData = await Product.findOne({ _id: p });
+				const pData = await Product.findById(p);
+				if (pData.id !== product.id) products.push(pData.id);
 			}
 			store.products = products;
 			// clean up comments
 			for (comment of product.comments) {
-				Comment.findOneAndDelete({ _id: comment });
+				Comment.findOneAndDelete({ id: comment });
 			}
 			try {
 				await store.save();
 				// clean up orders
-				await Order.deleteMany({ product: product._id });
+				await Order.deleteMany({ product: product.id });
 				await Product.findByIdAndDelete(product.id);
 				return { status: "success" };
 			} catch (err) {
@@ -323,7 +250,7 @@ const resolvers = {
 		addComment: async (_, { id, comment }, { userData }) => {
 			const user = await User.findById(userData.id);
 			const commentData = new Comment({
-				user: user._id,
+				user: user.id,
 				uploadTime: getTime(),
 				comment,
 			});
@@ -347,115 +274,10 @@ const resolvers = {
 				};
 			}
 		},
-		placeOrder: async (_, { orders }, { userData }) => {
-			// console.log("placing order");
-			const preOrdersList = await Order.find({});
-			// console.log(preOrdersList);
-			const user = await User.findById(userData.id);
-			if (!user) return { status: "failed" };
-			const orderList = [];
-			for (item of orders) {
-				const { productId, storeId, quantity } = item;
-				const product = await Product.findById(productId);
-				const store = await Store.findById(storeId);
-
-				const newOrder = new Order({
-					user: user._id,
-					product: product._id,
-					store: store._id,
-					quantity,
-					uploadTime: getTime(),
-					updatedTime: getTime(),
-					lastActive: "USER",
-					read: false,
-				});
-
-				orderList.push(newOrder);
-			}
-			try {
-				await Order.insertMany(orderList);
-				// console.log("here");
-				return { status: "success" };
-			} catch (err) {
-				const base = err.errors;
-				const keys = Object.keys(base);
-				const message = base[keys[0]].properties.message;
-				return {
-					status: "failed",
-					message: `${keys[0]} ${message}`,
-				};
-			}
-		},
-		updateOrder: async (_, { orderId, order, type }, { userData }) => {
-			const user = await User.findById(userData.id);
-			if (!user) return { status: "failed", message: "unauthorized user" };
-			let orderData = await Order.findById(orderId);
-			for (key in order) {
-				// type - "STORE", "USER" = functionality is not implemented yet
-				orderData.read = false;
-				if (type == "USER") {
-					orderData.lastActive = "USER";
-				} else {
-					orderData.lastActive = "STORE";
-				}
-				orderData.updatedTime = getTime();
-				if (order[key]) orderData[key] = order[key];
-			}
-			try {
-				await orderData.save();
-				return { status: "success", orders: [orderData] };
-			} catch (err) {
-				const base = err.errors;
-				const keys = Object.keys(base);
-				const message = base[keys[0]].properties.message;
-				return {
-					status: "failed",
-					message: `${keys[0]} ${message}`,
-				};
-			}
-		},
-		cancelOrder: async (_, { id }, { userData }) => {
-			const user = await User.findById(userData.id);
-			if (!user) return { status: "failed", message: "unauthorized user" };
-			const order = await Order.findById(id);
-			if (!order) return { status: "failed", message: "invalid order" };
-			order.status = "CANCEL";
-			// console.log("here", order);
-			try {
-				await order.save();
-				return { status: "success", orders: [order] };
-			} catch (err) {
-				const base = err.errors;
-				const keys = Object.keys(base);
-				const message = base[keys[0]].properties.message;
-				return {
-					status: "failed",
-					message: `${keys[0]} ${message}`,
-				};
-			}
-		},
-		markRead: async (_, { type, ids }, { userData }) => {
-			const user = await User.findById(userData.id);
-			if (!user) return { status: "failed", message: "unauthorized uers" };
-			let errorMessage = "";
-			for (const id of ids) {
-				const order = await Order.findById(id);
-				if (order.lastActive !== type) {
-					order.read = true;
-				}
-				await order.save();
-				try {
-					await order.save();
-				} catch (err) {
-					const base = err.errors;
-					const keys = Object.keys(base);
-					const message = base[keys[0]].properties.message;
-					errorMessage += message; // don't actually know if it works
-				}
-			}
-			if (errorMessage) return { status: "failed", message: errorMessage };
-			return { status: "success" };
-		},
+		placeOrder: placeOrder,
+		updateOrder: updateOrder,
+		cancelOrder: cancelOrder,
+		markRead: markRead,
 	},
 };
 

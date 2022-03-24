@@ -18,14 +18,17 @@ export default function Button({
 		<button
 			{...others}
 			onClick={onClick}
-			className={`button ${isSecondary(secondary)}`}
+			disabled={disabled}
+			className={`button ${isSecondary(secondary)} ${
+				disabled ? "button-disabled" : ""
+			} `}
 			style={style}
 		>
-			{disabled && (
+			{/* {disabled && (
 				<div className="indicator-container">
 					<Indicator />
 				</div>
-			)}
+			)} */}
 			{children}
 		</button>
 	);

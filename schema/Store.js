@@ -2,6 +2,20 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 const storeSchema = new Schema({
+	activated: {
+		type: Boolean,
+		required: true,
+		default: false,
+	},
+	plan: {
+		type: String,
+		enum: ["basic", "premium"],
+	},
+	clientLimit: {
+		type: Number,
+		required: true,
+		default: 0,
+	},
 	name: {
 		type: String,
 		minLength: [3, "store name can't be less than 3 characters"],

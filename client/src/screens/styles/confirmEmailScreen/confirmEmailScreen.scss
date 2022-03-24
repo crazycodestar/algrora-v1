@@ -1,0 +1,38 @@
+.confirmEmail {
+	flex: 1;
+	background-color: var(--secondary-colour);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.mail-container {
+		background-color: var(--light-colour);
+		width: 40vw;
+		height: 30vw;
+		border-radius: var(--border-radius);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		.circle {
+			--size: 150px;
+			width: var(--size);
+			height: var(--size);
+			border-radius: 100%;
+			background-color: var(--primary-colour);
+			display: flex;
+
+			justify-content: center;
+			align-items: center;
+			.image {
+				width: var(--size);
+				height: var(--size);
+				position: relative;
+				bottom: calc(var(--size) / 5);
+			}
+		}
+		.input-details-container {
+			display: flex;
+			gap: 5px;
+		}
+	}
+}

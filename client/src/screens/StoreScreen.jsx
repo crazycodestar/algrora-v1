@@ -23,6 +23,8 @@ import DropdownMenu from "../components/DropdownMenu";
 import request, { gql } from "graphql-request";
 import { url } from "../config";
 
+import image1 from "../images/undraw_empty_re_opql.svg";
+
 const accountData = {
 	image: "https://picsum.photos/200",
 	username: "olalekan adekanmbi",
@@ -65,7 +67,7 @@ export default function AccountScreen({
 	},
 }) {
 	const [store, setStore] = useState({});
-	const [loading, setLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(true);
 
 	// redux
 	const accountReducer = useSelector((state) => state.accountReducer);
@@ -77,7 +79,7 @@ export default function AccountScreen({
 	// display product details modal
 	const [showProductDetails, setShowProductDetails] = useState(false);
 	const [isStore, setIsStore] = useState(true);
-	useEffect(() => {
+	useEffect(async () => {
 		const storeId = id || accountReducer.userData.store;
 		if (storeId) {
 			const query = gql`
@@ -89,6 +91,7 @@ export default function AccountScreen({
 							name
 							description
 							imageUri
+							activated
 							products {
 								id
 								imageUri
@@ -105,46 +108,50 @@ export default function AccountScreen({
 					}
 				}
 			`;
-			request("/graphql", query, {
+
+			const variables = {
 				getStoreId: storeId,
-			}).then((res) => {
-				setStore(res.getStore.store);
-			});
+			};
+
+			const { getStore } = await request(url, query, variables);
+			if (getStore.status === "success") {
+				console.log(getStore);
+				setStore(getStore.store);
+			}
 		}
 		// if there is no id and dosen't have a store display addStore option
 		if (!id && !accountReducer.userData.store) {
-			return setIsStore(false);
+			setIsStore(false);
 		}
-		// fetch(`http://localhost:5000/api/stores/${storeId}`)
-		// 	.then((res) => res.json())
-		// 	.then((data) => {
-		// 		setStore(data);
-		// 	});
-		setLoading(false);
+		setIsLoading(false);
 	}, []);
 	const handleProductRender = () => {
-		if (loading == false && store.products && !store.products.length) {
-			return <p>no avaliable internet</p>;
-		} else {
-			if (!store.products) {
-				return;
-			} else {
-				return store.products.map((item) => (
-					<Product
-						product={item}
-						key={uuidv4()}
-						style={{
-							marginBottom: 10,
-							position: "relative",
-						}}
-						account
-						options={!handledropdown()}
-						optionDetails={productOptions}
-						optionAction={(action) => handleOption(action, item)}
-					/>
-				));
-			}
-		}
+		if (store.products && !store.products.length)
+			return (
+				<div className="empty-container">
+					<h4>you have no products</h4>
+					<Button onClick={() => handleOption(types.addProduct)}>
+						add Product
+					</Button>
+				</div>
+			);
+		return (
+			store.products &&
+			store.products.map((item) => (
+				<Product
+					product={item}
+					key={uuidv4()}
+					style={{
+						marginBottom: 10,
+						position: "relative",
+					}}
+					account
+					options={!handledropdown()}
+					optionDetails={productOptions}
+					optionAction={(action) => handleOption(action, item)}
+				/>
+			))
+		);
 	};
 	const handleOption = async (type, payload) => {
 		switch (type) {
@@ -212,43 +219,66 @@ export default function AccountScreen({
 		}
 		return true;
 	};
+
+	if (isLoading)
+		return (
+			<div className="empty-container">
+				<div class="lds-ring">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+		);
+
+	if (!isStore) {
+		return (
+			<div className="messageAlert-container">
+				<h2>oops, you seem to not own a store would you like to create one</h2>
+				<Button onClick={() => history.push("/addStore")}>create store</Button>
+			</div>
+		);
+	}
+
+	if (!store.activated)
+		return (
+			<div className="messageAlert-container">
+				<h2>
+					oops, your store isn't not activated kindly choose a plan to activate
+					your store
+				</h2>
+				<Button onClick={() => history.push("/pricing")}>see pricing</Button>
+			</div>
+		);
+
 	return (
 		<div className="accountScreen">
-			{isStore ? (
-				<div className="account-wrapper">
-					{/* account section */}
-					<div className="details">
-						<img
-							src={store.imageUri}
-							alt="account-image"
-							className="accountImage"
-						/>
+			<div className="account-wrapper">
+				{/* account section */}
+				<div className="details">
+					<img
+						src={store.imageUri}
+						alt="account-image"
+						className="accountImage"
+					/>
+					<div>
 						<div>
-							<div>
-								<p className="store">{store.name}</p>
-								<DropdownMenu
-									disabled={handledropdown()}
-									onOption={handleOption}
-									options={accountOptions}
-								/>
-							</div>
-							<p className="description">{store.description}</p>
+							<p className="store">{store.name}</p>
+							<DropdownMenu
+								disabled={handledropdown()}
+								onOption={handleOption}
+								options={accountOptions}
+							/>
 						</div>
-					</div>
-					<div className="product-section">
-						<h1>Products</h1>
-						<div className="product-wrapper">{handleProductRender()}</div>
+						<p className="description">{store.description}</p>
 					</div>
 				</div>
-			) : (
-				<div className="messageAlert-container">
-					<p>oops, you seem to not own a store would you like to create one</p>
-					<Button onClick={() => history.push("/addStore")}>
-						{" "}
-						create store{" "}
-					</Button>
+				<div className="product-section">
+					<h1>Products</h1>
+					<div className="product-wrapper">{handleProductRender()}</div>
 				</div>
-			)}
+			</div>
 		</div>
 	);
 }

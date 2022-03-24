@@ -1,7 +1,6 @@
 .button {
   padding: 10px;
   border-radius: 4px;
-  margin: 5px;
   cursor: pointer;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -12,6 +11,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  white-space: nowrap;
 }
 
 .button .indicator-container {
@@ -48,5 +48,11 @@
 .button-secondary {
   color: #000080;
   background-color: transparent;
+}
+
+.button-disabled {
+  background-color: #f3f3f3;
+  color: #555555;
+  cursor: not-allowed;
 }
 /*# sourceMappingURL=button.css.map */

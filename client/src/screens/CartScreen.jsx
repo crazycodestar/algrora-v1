@@ -69,7 +69,6 @@ export default function CartScreen() {
 	};
 	const handleSubmit = async () => {
 		if (!accountReducer.token) {
-			console.log("need to login before buying");
 			history.push("/login");
 			return;
 		}

@@ -39,7 +39,7 @@ export default function DescriptionInput({
 		// input.current.style.height = `${input.current.scrollHeight}px`;
 		// console.log("here");
 		// console.log(input.current.scrollHeight);
-		setHeight(input.current.scrollHeight);
+		// setHeight(input.current.scrollHeight);
 		onChange(e);
 	};
 	return (
@@ -47,7 +47,6 @@ export default function DescriptionInput({
 			ref={input}
 			rows={rows}
 			style={style}
-			ref={input}
 			type={type}
 			onChange={handleInputChange}
 			value={value}

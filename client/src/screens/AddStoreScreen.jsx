@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // css
 import "./styles/addProductScreen/addProductScreen.css";
@@ -19,9 +19,14 @@ import { update } from "../actions/account";
 
 import { useLocation } from "react-router-dom";
 
+import { createStore } from "../actions/store";
+
 // graphql
 import { url } from "../config";
 import request, { gql } from "graphql-request";
+
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function AddStoreScreen({ history }) {
 	const [activeData, setActiveData] = useState(null);
@@ -41,8 +46,9 @@ export default function AddStoreScreen({ history }) {
 	useEffect(() => {
 		const params = new URLSearchParams(init.search);
 		if (!params.get("id")) return;
+		const images = JSON.parse(params.get("images"));
 		const updateParams = {
-			images: [],
+			images,
 			storeName: params.get("storeName"),
 			storeDescription: params.get("storeDescription"),
 		};
@@ -51,6 +57,7 @@ export default function AddStoreScreen({ history }) {
 	}, []);
 	const accountReducer = useSelector((state) => state.accountReducer);
 	const dispatch = useDispatch();
+	const makeStore = (data) => dispatch(createStore(data));
 	const updateAccount = (data) => dispatch(update(data));
 	return (
 		<div className="addProduct-container">
@@ -69,7 +76,8 @@ export default function AddStoreScreen({ history }) {
 							}
 						`;
 						const variables = {
-							filename: generateFilename(fileData.name, fileData.type),
+							// filename: generateFilename(fileData.name, fileData.type),
+							filename: fileData.name,
 							fileType: fileData.type,
 						};
 						const { signS3 } = await request(url, query, variables, {
@@ -81,7 +89,7 @@ export default function AddStoreScreen({ history }) {
 								await fetch(signS3, {
 									method: "PUT",
 									headers: {
-										"Content-Type": "multipart/form=data",
+										"Content-Type": "multipart/formdata",
 									},
 									body: fileData,
 								});
@@ -141,30 +149,27 @@ export default function AddStoreScreen({ history }) {
 						Authorization: `bearer ${accountReducer.token}`,
 					});
 
-					const details = returnValue.addStore || returnValue.updateStore;
-
-					if (returnValue.status === "success" && !storeId) {
-						const newState = { ...accountReducer };
-						newState.userData.store = returnValue.message;
-						updateAccount(newState);
+					const details = returnValue.addStore || returnValue.updateStxore;
+					if (details.status === "success" && !storeId) {
+						updateAccount({ store: details.message });
 					}
 					setSubmitting(false);
-					history.push("/account");
+					history.push("/pricing");
 				}}
 			>
 				{({ values, setFieldValue, errors, touched, isSubmitting }) => (
 					<Form>
 						{/* <Field type="file" name="images" as="input" /> */}
-						<pre>{JSON.stringify(storeId, null, 2)}</pre>
-						<pre>{JSON.stringify(activeData, null, 2)}</pre>
-						<ImageSelector
-							name="images"
-							type="data"
-							values={values}
-							setFieldValue={setFieldValue}
-							error={errors.images}
-							touched={touched.images}
-						/>
+						{/* <pre>{JSON.stringify(storeId, null, 2)}</pre>
+						<pre>{JSON.stringify(activeData, null, 2)}</pre> */}
+						<div className="imageselector-container">
+							<ImageViewer images={values.images} onClose={setFieldValue} />
+							<ImagePicker
+								name="images"
+								values={values.images}
+								onChangeField={setFieldValue}
+							/>
+						</div>
 						<InputValidation placeholder="name" type="text" name="storeName" />
 						<TextBoxValidation
 							placeholder="description"
@@ -188,3 +193,72 @@ export default function AddStoreScreen({ history }) {
 		</div>
 	);
 }
+
+const ImageViewer = ({ images, onClose }) => {
+	const cleanedUpImages = images.map((image) => {
+		if (typeof image === "object") {
+			return URL.createObjectURL(image);
+		}
+		return image;
+	});
+	const handleRemove = (index) => {
+		const updatedImages = images.filter((_, i) => i != index);
+		onClose("images", updatedImages);
+	};
+	return (
+		<div className="imageViewer">
+			{cleanedUpImages.map((image, index) => (
+				<div>
+					{/* <p>{JSON.stringify(image, null, 2)}</p> */}
+					<img
+						className="image-item"
+						width="50px"
+						height="100px"
+						src={image}
+						alt="image not compatible"
+					/>
+					<button
+						className="button"
+						type="button"
+						onClick={() => handleRemove(index)}
+					>
+						<CloseIcon sx={{ fontSize: "18px" }} />
+						{/* <FontAwesomeIcon icon={faTimes} size="xs" /> */}
+					</button>
+				</div>
+			))}
+		</div>
+	);
+};
+
+const ImagePicker = ({ values, onChangeField }) => {
+	// const [field, meta] = useField(props);
+	const addImage = useRef();
+	const handleFieldChange = (e) => {
+		const image = e.target.files[0];
+		if (!image) return;
+		const newValues = [...values, image];
+		onChangeField("images", newValues);
+	};
+	const handleCleanUp = (e) => {
+		console.log("handling");
+		const newValues = values.filter((image) => typeof image != undefined);
+		onChangeField("images", newValues);
+	};
+	return (
+		<div className="imagePicker-container">
+			<div className="image-container" onClick={() => addImage.current.click()}>
+				<CameraAltIcon sx={{ fontSize: "32px" }} />
+			</div>
+			<input
+				ref={addImage}
+				type="file"
+				onChange={(e) => handleFieldChange(e)}
+				onBlur={(e) => handleCleanUp(e)}
+				style={{ display: "none" }}
+			/>
+		</div>
+	);
+};
+
+const safeKeeping = async () => {};

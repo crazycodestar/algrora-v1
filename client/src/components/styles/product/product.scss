@@ -1,5 +1,6 @@
 .product-container {
 	flex-basis: var(--product-width) !important;
+	max-width: var(--product-width) !important;
 	.details-container {
 		display: flex;
 		.details-text {

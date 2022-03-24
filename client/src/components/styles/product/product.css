@@ -1,6 +1,7 @@
 .product-container {
   -ms-flex-preferred-size: var(--product-width) !important;
       flex-basis: var(--product-width) !important;
+  max-width: var(--product-width) !important;
 }
 
 .product-container .details-container {

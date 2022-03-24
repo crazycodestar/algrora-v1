@@ -1,7 +1,7 @@
 .navigationBar-container {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
   z-index: 99;
   position: -webkit-sticky;
   position: sticky;
@@ -91,19 +91,38 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 5px;
 }
 
 .navigationBar-container .account-container .details {
   position: relative;
 }
 
-.navigationBar-container .account-container .details div:nth-of-type(1) {
+.navigationBar-container .account-container .details .shortForm-info-container {
   cursor: pointer;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 5px;
+}
+
+.unRead-bubble {
+  width: 20px;
+  height: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: var(--success-colour);
+  border-radius: 100%;
+  line-height: 100%;
 }
 
 .navigationBar-brand-text {
@@ -168,6 +187,7 @@
   background-color: red;
   padding: 10px;
   display: inline-block;
+  min-width: 300px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -200,6 +220,9 @@
 }
 
 .accountDropdown-container .main-container {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -212,29 +235,84 @@
           flex: 1;
 }
 
-.accountDropdown-container .main-container div:nth-of-type(2) {
+.accountDropdown-container .main-container .details-container {
   cursor: auto;
   margin-left: 8px;
 }
 
-.accountDropdown-container .main-container p:nth-of-type(2) {
-  font-size: var(--fontSize-small);
-}
-
-.accountDropdown-container .main-container .edit {
-  background-color: var(--background-colour);
-  width: 32px;
-  height: 32px;
+.accountDropdown-container .main-container .details-container .options-minor-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  border-radius: 50%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.accountDropdown-container .main-container .details-container .accountName-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.accountDropdown-container .main-container .details-container .accountName-container .accountName-wrapper {
+  position: relative;
+}
+
+.accountDropdown-container .main-container .details-container .accountName-container .accountName-wrapper .editUsername-input {
+  border: none;
+  border-bottom: 1px solid var(--dark-colour);
+}
+
+.accountDropdown-container .main-container .details-container .accountName-container .accountName-wrapper .mini-loader {
+  width: 10px;
+  height: 10px;
+  background-color: var(--dark-colour);
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  -webkit-animation: loader 1s ease-in-out infinite;
+          animation: loader 1s ease-in-out infinite;
+}
+
+.accountDropdown-container .main-container .details-container p {
+  font-size: var(--fontSize-small);
+}
+
+.accountDropdown-container .main-container .camera-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--grey-colour);
+  border-radius: 50%;
+  margin: 0 !important;
+}
+
+.accountDropdown-container .main-container .edit {
+  color: var(--edit-colour);
+  font-size: var(--fontSize-small);
+  background-color: transparent;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.accountDropdown-container .main-container .edit:hover {
+  text-decoration: underline;
 }
 
 .accountDropdown-container hr {
@@ -252,13 +330,48 @@
   padding: 10px 5px;
   margin: 2px;
   border-radius: 6px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.accountDropdown-container .option .option-details-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  gap: 5px;
 }
 
 .accountDropdown-container .option:hover {
   background-color: var(--background-colour);
 }
 
-.accountDropdown-container .option p {
-  margin-left: 10px;
+@-webkit-keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 /*# sourceMappingURL=navigationBar.css.map */

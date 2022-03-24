@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, UPDATE_ACCOUNT_DATA } from "./types";
+import { LOG_IN, LOG_OUT, UPDATE_ACCOUNT_DATA, UPDATE_IMAGE } from "./types";
 
 export const login = (data) => ({
 	type: LOG_IN,
@@ -12,4 +12,9 @@ export const update = (data) => ({
 
 export const logOut = () => ({
 	type: LOG_OUT,
+});
+
+export const updateImage = (data) => ({
+	type: UPDATE_IMAGE,
+	data,
 });

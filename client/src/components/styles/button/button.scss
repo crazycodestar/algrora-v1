@@ -1,11 +1,11 @@
 .button {
 	padding: 10px;
 	border-radius: 4px;
-	margin: 5px;
 	cursor: pointer;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	white-space: nowrap;
 	.indicator-container {
 		width: 18px;
 		height: 18px;
@@ -38,4 +38,10 @@
 .button-secondary {
 	color: #000080;
 	background-color: transparent;
+}
+
+.button-disabled {
+	background-color: #f3f3f3;
+	color: #555555;
+	cursor: not-allowed;
 }

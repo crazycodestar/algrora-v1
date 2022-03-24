@@ -7,15 +7,17 @@
 	--light-colour: #fff;
 	--dark-colour: #000;
 	--danger-colour: #df4759;
-	--success-colour: #90ee90;
+	--success-colour: #42ba96;
 	--grey-colour: #808080;
 	--lightgrey-colour: #d3d3d3;
 	--background-colour: #f4f4f4;
+	--edit-colour: #00acee;
 	--product-width: 200px;
 	--product-height: 300px;
 	--navigationBar-height: 80px;
 	--tab-width: 400px;
 	--side-navigationBar-width: 200px;
+	--fontSize-xs: 11px;
 	--fontSize-small: 14px;
 	--fontSize-medium: 18px;
 	--fontSize-large: 24px;

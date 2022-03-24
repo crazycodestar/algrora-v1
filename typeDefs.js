@@ -1,5 +1,24 @@
 const { gql } = require("apollo-server-express");
 
+// type SubData {
+// 	id: Int!
+// 	key: String
+// 	value: Int
+// }
+
+// type Content {
+// 	info: String!
+// 	status: Int!
+// 	subData: [SubData]
+// }
+
+// type Pricing {
+// 	plan: String!
+// 	description: String!
+// 	pricing: Int
+// 	content: [Content]!
+// }
+
 const typeDefs = gql`
 	type User {
 		id: ID!
@@ -51,9 +70,12 @@ const typeDefs = gql`
 		rating: [Rating]!
 		comments: [Comment]!
 	}
+
 	type Category {
 		name: String!
-		description: String!
+		description: String
+		imageUri: String
+		popularity: Int!
 	}
 	type KeyValue {
 		key: String
@@ -65,6 +87,7 @@ const typeDefs = gql`
 		imageUri: String
 		description: String!
 		products: [Product]!
+		activated: Boolean!
 	}
 	type Order {
 		id: String!
@@ -110,6 +133,23 @@ const typeDefs = gql`
 		status: String!
 		message: String
 	}
+	type IsOrderMessage {
+		status: Int!
+		message: String
+	}
+	type PricingMessage {
+		plans: String!
+		isNew: Boolean
+	}
+	type OrderMessage {
+		status: String!
+		unPaid: Int
+		orders: [orders]!
+	}
+	input UserInput {
+		imageUri: String
+		username: String
+	}
 	input ProductInput {
 		imageUri: String
 		name: String!
@@ -144,16 +184,20 @@ const typeDefs = gql`
 		user: User
 		getStore(id: ID!): StoreMessage!
 		getCategories: [Category]!
-		getOrders(type: Type!): [Order]!
+		getOrders(type: Type!): OrderMessage!
 		search(search: String!): [Product]!
+		isOrder: IsOrderMessage!
+		getPricing: PricingMessage
 	}
 	type Mutation {
 		addUser(
 			username: String!
 			emailAddress: String!
 			password: String!
-		): UserMessage
-		login(username: String!, password: String!): UserMessage
+		): UserMessage!
+		register(email: String!, id: String!): UserMessage!
+		updateUser(data: UserInput): UserMessage!
+		login(username: String!, password: String!): UserMessage!
 		signS3(filename: String!, fileType: String!): String!
 
 		addStore(
@@ -178,6 +222,7 @@ const typeDefs = gql`
 		): OrdersMessage!
 		markRead(type: Type!, ids: [ID]!): ReadMessage!
 		cancelOrder(type: Type!, id: ID!): OrdersMessage!
+		buyClients(ref: String!): Int!
 	}
 `;
 
