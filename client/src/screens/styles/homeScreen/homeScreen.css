@@ -4,6 +4,21 @@
   padding: 0 70px;
 }
 
+@media (max-width: 768px) {
+  .homeScreen {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    width: 100%;
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 320px) {
+  .homeScreen {
+    padding: 0 10px;
+  }
+}
+
 .homeScreen .main-container {
   display: -webkit-box;
   display: -ms-flexbox;

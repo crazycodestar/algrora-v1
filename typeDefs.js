@@ -1,24 +1,5 @@
 const { gql } = require("apollo-server-express");
 
-// type SubData {
-// 	id: Int!
-// 	key: String
-// 	value: Int
-// }
-
-// type Content {
-// 	info: String!
-// 	status: Int!
-// 	subData: [SubData]
-// }
-
-// type Pricing {
-// 	plan: String!
-// 	description: String!
-// 	pricing: Int
-// 	content: [Content]!
-// }
-
 const typeDefs = gql`
 	type User {
 		id: ID!
@@ -34,7 +15,39 @@ const typeDefs = gql`
 		quantity: Int!
 		extraData: [KeyValue]!
 	}
+
+	type SubData {
+		id: Int!
+		key: String
+		amount: Int
+		value: Int
+	}
+
+	type Content {
+		info: String!
+		status: Int!
+		subData: [SubData]
+	}
+
+	type Pricing {
+		plan: String!
+		description: String!
+		pricing: Int
+		content: [Content]!
+	}
+
 	# rating functionality to be resolved
+	type Transaction {
+		status: Boolean!
+		message: String!
+		reference: String!
+		amount: Int!
+		paidAt: String!
+		userId: ID!
+		storeId: ID!
+		plan: Pricing!
+		subPlan: SubData
+	}
 	type RatingDist {
 		_5: Int!
 		_4: Int!
@@ -72,6 +85,7 @@ const typeDefs = gql`
 	}
 
 	type Category {
+		id: ID!
 		name: String!
 		description: String
 		imageUri: String
@@ -86,6 +100,7 @@ const typeDefs = gql`
 		name: String!
 		imageUri: String
 		description: String!
+		clientLimit: Int!
 		products: [Product]!
 		activated: Boolean!
 	}
@@ -113,6 +128,7 @@ const typeDefs = gql`
 		status: String!
 		message: String
 		user: User
+		isInterest: Boolean
 	}
 	type ProductMessage {
 		status: String!
@@ -144,7 +160,12 @@ const typeDefs = gql`
 	type OrderMessage {
 		status: String!
 		unPaid: Int
-		orders: [orders]!
+		orders: [Order!]
+	}
+	type TransactionMessage {
+		status: String!
+		message: String
+		transactions: [Transaction]
 	}
 	input UserInput {
 		imageUri: String
@@ -187,7 +208,8 @@ const typeDefs = gql`
 		getOrders(type: Type!): OrderMessage!
 		search(search: String!): [Product]!
 		isOrder: IsOrderMessage!
-		getPricing: PricingMessage
+		getPricing: PricingMessage!
+		getTransactions: TransactionMessage!
 	}
 	type Mutation {
 		addUser(
@@ -195,6 +217,7 @@ const typeDefs = gql`
 			emailAddress: String!
 			password: String!
 		): UserMessage!
+		addInterests(interests: [ID!]!): String!
 		register(email: String!, id: String!): UserMessage!
 		updateUser(data: UserInput): UserMessage!
 		login(username: String!, password: String!): UserMessage!
@@ -205,6 +228,7 @@ const typeDefs = gql`
 			imageUri: String
 			description: String!
 		): StoreMessage
+		initStore: StoreMessage!
 		updateStore(id: ID!, store: StoreInput!): StoreMessage!
 		deleteStore(id: ID!): StoreMessage!
 

@@ -29,6 +29,7 @@ export default function ConfirmEmailScreen({}) {
 	let queryparmas = useQuery();
 
 	const activateAccount = async (email, id) => {
+		console.log("working");
 		const query = gql`
 			mutation Register($email: String!, $registerId: String!) {
 				register(email: $email, id: $registerId) {
@@ -41,10 +42,11 @@ export default function ConfirmEmailScreen({}) {
 			email,
 			registerId: id,
 		};
-		// const { register } = await request("/graphql", query, variables);
-		// if (register.status == "failed") {
-		// 	setErrorMessage(register.message);
-		// }
+		const { register } = await request("/graphql", query, variables);
+		console.log(register);
+		if (register.status == "failed") {
+			setErrorMessage(register.message);
+		}
 	};
 
 	useEffect(async () => {
@@ -66,6 +68,7 @@ export default function ConfirmEmailScreen({}) {
 	}, []);
 
 	const handleResend = async () => {
+		console.log("handling");
 		await activateAccount(value, userId);
 	};
 

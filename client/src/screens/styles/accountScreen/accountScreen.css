@@ -1,14 +1,13 @@
-.accountScreen {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+@media (max-width: 768px) {
+  .accountScreen {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 320px) {
+  .accountScreen {
+    padding: 0 10px;
+  }
 }
 
 .accountScreen .messageAlert-container {
@@ -36,9 +35,8 @@
 }
 
 .accountScreen .accountImage {
-  width: 90px;
-  min-width: 90px;
-  height: 90px;
+  width: 100%;
+  height: 200px;
   border-radius: 6px;
   -o-object-fit: cover;
      object-fit: cover;
@@ -58,27 +56,84 @@
 }
 
 .accountScreen .account-wrapper .details {
-  max-width: 530px;
   position: relative;
   margin-bottom: 40px;
-  width: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
 }
 
-.accountScreen .account-wrapper .details div {
-  margin-left: 10px;
+.accountScreen .account-wrapper .details .name-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
-.accountScreen .account-wrapper .details div div {
+@media (max-width: 320px) {
+  .accountScreen .account-wrapper .details .name-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+  }
+}
+
+.accountScreen .account-wrapper .details .name-container h2 {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.accountScreen .account-wrapper .details .name-container > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-left: auto;
+}
+
+.accountScreen .account-wrapper .details .name-container > div .clientLimit-container {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 5px;
+  border-radius: var(--border-radius);
+  background-color: var(--background-colour);
+  margin-right: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 5px;
+}
+
+.accountScreen .account-wrapper .details .content-container {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.accountScreen .account-wrapper .details .content-container div {
   margin: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -88,12 +143,7 @@
           justify-content: space-between;
 }
 
-.accountScreen .account-wrapper .details div div .store {
-  font-weight: bold;
-  font-size: var(--fontSize-large);
-}
-
-.accountScreen .account-wrapper .details div .description {
+.accountScreen .account-wrapper .details .content-container .description {
   font-weight: normal;
 }
 
@@ -116,19 +166,6 @@
       align-self: flex-start;
   font-size: var(--fontSize-large);
   margin-bottom: 10px;
-}
-
-.accountScreen .account-wrapper .product-section .product-wrapper {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
 }
 
 .accountScreen .account-wrapper .product-section .empty-container {
@@ -169,5 +206,31 @@
   width: 100vw;
   height: 100vh;
   background-color: dodgerblue;
+}
+
+.tagPicker .option-wrapper {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  background-color: var(--background-colour);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.tagPicker .options {
+  margin: 5px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 5px;
 }
 /*# sourceMappingURL=accountScreen.css.map */

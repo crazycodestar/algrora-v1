@@ -1,6 +1,7 @@
 .textarea-container {
   resize: none;
+  border: none;
   max-height: 200px !important;
-  width: 500px;
+  width: 100%;
 }
 /*# sourceMappingURL=descriptionInput.css.map */

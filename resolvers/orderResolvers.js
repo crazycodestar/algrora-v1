@@ -28,25 +28,37 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 	}
 	// store return
 	if (!user.store) return { status: "failed" };
+	const store = await Store.findById(user.store);
 	const orders = await Order.find({ store: user.store });
 	const activatedOrders = orders.filter((order) => order.activated);
-	const unPaid = 0;
+	let unPaid = 0;
 	// use avaliable clients to activate new orders
 	for (order of orders) {
-		const toActivate = activatedOrders.find((item) => item.key === order.key);
-		if (toActivate) {
-			activatedOrders.push();
+		if (order.activated) {
+			console.log("continue");
 			continue;
 		}
-		if (user.clientLimit > 0) {
-			user.clientLimit -= 1;
+		const toActivate = activatedOrders.find(
+			(item) => item.orderKey === order.orderKey
+		);
+		if (toActivate) {
+			order.activated = true;
+			order.save();
+			activatedOrders.push(order);
+			continue;
+		}
+		if (store.clientLimit > 0) {
+			store.clientLimit -= 1;
+			store.save();
+			order.activated = true;
+			order.save();
 			activatedOrders.push(order);
 			continue;
 		}
 
 		unPaid += 1;
 	}
-	return { status: "success", orders, unPaid };
+	return { status: "success", orders: activatedOrders, unPaid };
 };
 
 // mutations
@@ -59,18 +71,22 @@ module.exports.placeOrder = async (_, { orders }, { userData }) => {
 
 	const orderKey = crypto.randomBytes(8).toString("hex");
 	const orderList = [];
-	const activated = false;
-
-	if (user.clientLimit > 0) {
-		user.clientLimit--;
-		activated = true;
-		user.save();
-	}
-
 	for (item of orders) {
 		const { productId, storeId, quantity } = item;
 		const product = await Product.findById(productId);
 		const store = await Store.findById(storeId);
+
+		let activated = false;
+		const shouldActivate = orderList.find(
+			(orderItem) => orderItem.store === store.id
+		);
+		if (shouldActivate) {
+			activated = true;
+		} else if (store.clientLimit > 0) {
+			store.clientLimit--;
+			store.save();
+			activated = true;
+		}
 
 		const newOrder = new Order({
 			user: user.id,

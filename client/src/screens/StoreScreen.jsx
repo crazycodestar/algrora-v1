@@ -43,16 +43,20 @@ const types = {
 	addProduct: "add product",
 	editAccount: "edit account",
 	removeAccount: "remove account",
-	signOut: "sign out",
 	removeProduct: "remove product",
 	updateProduct: "update product",
+	transactions: "transactions",
+	pricing: "pricing",
+	signOut: "sign out",
 };
 
 const accountOptions = [
 	{ name: types.addProduct },
 	{ name: types.editAccount },
 	// { name: types.removeAccount, type: "danger" },
-	{ name: types.signOut },
+	{ name: types.transactions },
+	{ name: types.pricing },
+	{ name: types.signOut, type: "danger" },
 ];
 
 const productOptions = [
@@ -66,6 +70,7 @@ export default function AccountScreen({
 		params: { id: id },
 	},
 }) {
+	const [errorMessage, setErrorMessage] = useState("");
 	const [store, setStore] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -92,6 +97,7 @@ export default function AccountScreen({
 							description
 							imageUri
 							activated
+							clientLimit
 							products {
 								id
 								imageUri
@@ -156,8 +162,17 @@ export default function AccountScreen({
 	const handleOption = async (type, payload) => {
 		switch (type) {
 			case types.addProduct:
+				if (store.products.length >= 5) {
+					setErrorMessage("you have maxed out your product storage");
+					break;
+				}
 				history.push("/addProduct");
-				console.log("product-added");
+				break;
+			case types.transactions:
+				history.push("/transactions");
+				break;
+			case types.pricing:
+				history.push("/pricing");
 				break;
 			case types.updateProduct:
 				// const imageUri = payload.imageUri.split("/").at(-1);
@@ -174,7 +189,9 @@ export default function AccountScreen({
 				history.push(
 					`/addStore?id=${
 						id || accountReducer.userData.store
-					}&isUpdate=true&storeName=${store.name}&storeDescription=${
+					}&images=${JSON.stringify([
+						store.imageUri,
+					])}&isUpdate=true&storeName=${store.name}&storeDescription=${
 						store.description
 					}`
 				);
@@ -234,7 +251,7 @@ export default function AccountScreen({
 
 	if (!isStore) {
 		return (
-			<div className="messageAlert-container">
+			<div className="messageAlert-container body-container">
 				<h2>oops, you seem to not own a store would you like to create one</h2>
 				<Button onClick={() => history.push("/addStore")}>create store</Button>
 			</div>
@@ -243,7 +260,7 @@ export default function AccountScreen({
 
 	if (!store.activated)
 		return (
-			<div className="messageAlert-container">
+			<div className="messageAlert-container body-container">
 				<h2>
 					oops, your store isn't not activated kindly choose a plan to activate
 					your store
@@ -253,7 +270,7 @@ export default function AccountScreen({
 		);
 
 	return (
-		<div className="accountScreen">
+		<div className="accountScreen content-body body-container">
 			<div className="account-wrapper">
 				{/* account section */}
 				<div className="details">
@@ -262,20 +279,27 @@ export default function AccountScreen({
 						alt="account-image"
 						className="accountImage"
 					/>
-					<div>
-						<div>
-							<p className="store">{store.name}</p>
-							<DropdownMenu
-								disabled={handledropdown()}
-								onOption={handleOption}
-								options={accountOptions}
-							/>
+					<div className="content-container">
+						<div className="name-container">
+							<h2>{store.name}</h2>
+							<div>
+								<div className="clientLimit-container">
+									<p>clients</p>
+									<p>{store.clientLimit}</p>
+								</div>
+								<DropdownMenu
+									disabled={handledropdown()}
+									onOption={handleOption}
+									options={accountOptions}
+								/>
+							</div>
 						</div>
-						<p className="description">{store.description}</p>
+						<p className="description">{store.description} </p>
 					</div>
 				</div>
 				<div className="product-section">
 					<h1>Products</h1>
+					{errorMessage && <p className="message-error">{errorMessage}</p>}
 					<div className="product-wrapper">{handleProductRender()}</div>
 				</div>
 			</div>

@@ -23,22 +23,24 @@ import request, { gql } from "graphql-request";
 
 import CloseIcon from "@mui/icons-material/Close";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { Close } from "@material-ui/icons";
 
 export default function AddProductScreen({ history }) {
 	const [activeData, setActiveData] = useState(null);
 	const [productId, setProductId] = useState();
+	const [errorMessage, setErrorMessage] = useState("");
 	const init = useLocation();
 	const ProductValidationSchema = Yup.object().shape({
 		images: productId ? Yup.array() : Yup.array().min(1).max(3).required(),
 		productName: Yup.string().min(3).max(100).required(),
 		productPrice: Yup.number().required().positive().integer(),
 		productDescription: Yup.string().min(20).max(400).required(),
-		productCategory: Yup.array().min(2).required(),
+		productCategory: Yup.array().min(1).required(),
 	});
 	const initialValues = {
 		images: [],
 		productName: "",
-		productPrice: 0,
+		productPrice: "",
 		productDescription: "",
 		productCategory: [],
 	};
@@ -52,7 +54,7 @@ export default function AddProductScreen({ history }) {
 			productName: params.get("productName"),
 			productPrice: params.get("productPrice"),
 			productDescription: params.get("productDescription"),
-			productCategory: tags, // to be solved
+			productCategory: tags,
 		};
 		// console.log(updateParams);
 		setProductId(params.get("id"));
@@ -60,7 +62,7 @@ export default function AddProductScreen({ history }) {
 	}, []);
 	const accountReducer = useSelector((state) => state.accountReducer);
 	return (
-		<div className="addProduct-container">
+		<div className="addProduct-container body-container">
 			<Formik
 				initialValues={activeData || initialValues}
 				enableReinitialize
@@ -73,7 +75,6 @@ export default function AddProductScreen({ history }) {
 						productDescription: description,
 						productCategory,
 					} = data;
-					const tags = productCategory.filter((tag) => tag !== "others");
 					const fileData = data.images[0];
 					let imageUri = null;
 					if (fileData) {
@@ -92,7 +93,16 @@ export default function AddProductScreen({ history }) {
 						});
 						if (signS3) {
 							// http request to post image
-							await uploadImage(signS3, fileData);
+							try {
+								await uploadImage(signS3, fileData);
+							} catch (err) {
+								console.log("cancelling");
+								setErrorMessage(
+									"unable to upload due to poor connection try again later"
+								);
+								setSubmitting(false);
+								return;
+							}
 							imageUri = signS3.split("?")[0];
 						}
 					}
@@ -119,7 +129,7 @@ export default function AddProductScreen({ history }) {
 								name,
 								price,
 								description,
-								tags,
+								tags: productCategory,
 							},
 						};
 					} else {
@@ -141,22 +151,29 @@ export default function AddProductScreen({ history }) {
 								name,
 								description,
 								price,
-								tags,
+								tags: productCategory,
 							},
 						};
 					}
 					// return console.log(variables);
-					const returnValue = await request(url, query, variables, {
+					const { addProduct } = await request(url, query, variables, {
 						Authorization: `bearer ${accountReducer.token}`,
 					});
+
 					setSubmitting(false);
-					history.push("/account");
+					console.log(addProduct);
+					if (addProduct.status === "success") {
+						history.push("/account");
+					} else {
+						console.log("failed");
+						console.log(addProduct);
+					}
 				}}
 			>
 				{({ values, setFieldValue, errors, touched, isSubmitting }) => (
 					<Form>
 						{/* <Field type="file" name="images" as="input" /> */}
-						<pre>{JSON.stringify(values, null, 2)}</pre>
+						{/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
 						<div className="imageselector-container">
 							<ImageViewer images={values.images} onClose={setFieldValue} />
 							<ImagePicker
@@ -165,41 +182,50 @@ export default function AddProductScreen({ history }) {
 								onChangeField={setFieldValue}
 							/>
 						</div>
-						<InputValidation
-							placeholder="name"
-							type="text"
-							name="productName"
-						/>
-						<div
-							className="price-container"
-							style={{
-								width: 50,
-							}}
-						>
+						<div className="name-price-container">
+							<InputValidation
+								placeholder="name"
+								type="text"
+								name="productName"
+							/>
 							<InputValidation
 								placeholder="price"
 								type="number"
+								min="0"
 								name="productPrice"
 							/>
 						</div>
-						<Tags
+						{/* <Tags
 							name="productCategory"
 							type="input"
 							values={values}
 							setFieldValue={setFieldValue}
 							error={errors.productCategory}
 							touched={touched.productCategory}
+						/> */}
+						<TagPicker
+							name="productCategory"
+							values={values.productCategory}
+							onChange={setFieldValue}
 						/>
 						<TextBoxValidation
 							placeholder="description"
 							type="text"
 							name="productDescription"
 						/>
+						{/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+						{errorMessage ? (
+							<p className="message-error">{errorMessage}</p>
+						) : null}
 						<div className="button-container">
 							<Button type="submit" disabled={isSubmitting}>
 								add product
 							</Button>
-							<Button secondary onClick={history.goBack}>
+							<Button
+								disabled={isSubmitting}
+								secondary
+								onClick={history.goBack}
+							>
 								cancel
 							</Button>
 						</div>
@@ -209,6 +235,79 @@ export default function AddProductScreen({ history }) {
 		</div>
 	);
 }
+
+const TagPicker = ({ name, values, onChange }) => {
+	const [categories, setCategories] = useState([]);
+
+	useEffect(async () => {
+		const query = gql`
+			query Query {
+				getCategories {
+					id
+					name
+					description
+				}
+			}
+		`;
+		const { getCategories } = await request("/graphql", query);
+		setCategories(getCategories);
+	}, []);
+
+	const handleClick = (option) => {
+		const updatedOptions = [...values, option.id];
+		onChange(name, updatedOptions);
+	};
+
+	const handleRemove = (option) => {
+		const updatedOptions = values.filter((item) => item !== option.id);
+		onChange(name, updatedOptions);
+	};
+
+	const handleCategories = () => {
+		const updatedCategories = categories.filter((item) => {
+			const isUsed = values.find((v) => v === item.id);
+			if (isUsed) return false;
+			return true;
+		});
+		return (
+			<>
+				{updatedCategories.map((option) => {
+					return (
+						<div className="option-wrapper" onClick={() => handleClick(option)}>
+							<p>{option.name}</p>
+						</div>
+					);
+				})}
+			</>
+		);
+	};
+
+	return (
+		<div className="tagPicker">
+			<div className="options">
+				{values.length
+					? values.map((cat) => {
+							const option = categories.find((item) => item.id === cat);
+							return (
+								<div
+									className="option-wrapper"
+									onClick={() => handleRemove(option)}
+								>
+									<p>{option.name}</p>
+									<Close fontSize="small" />
+								</div>
+							);
+					  })
+					: null}
+			</div>
+			<h3>tags</h3>
+			<p>select tags that fit your product from the options provided below</p>
+			<div className="options">
+				{categories.length ? handleCategories() : null}
+			</div>
+		</div>
+	);
+};
 
 const ImageViewer = ({ images, onClose }) => {
 	const cleanedUpImages = images.map((image) => {
@@ -222,17 +321,19 @@ const ImageViewer = ({ images, onClose }) => {
 		onClose("images", updatedImages);
 	};
 	return (
-		<div className="imageViewer">
+		<>
 			{cleanedUpImages.map((image, index) => (
-				<div>
+				<div className="imageViewer">
 					{/* <p>{JSON.stringify(image, null, 2)}</p> */}
-					<img
-						className="image-item"
-						width="50px"
-						height="100px"
-						src={image}
-						alt="image not compatible"
-					/>
+					<div className="image-container">
+						<img
+							className="image-item"
+							width="50px"
+							height="100px"
+							src={image}
+							alt="image not compatible"
+						/>
+					</div>
 					<button
 						className="button"
 						type="button"
@@ -243,7 +344,7 @@ const ImageViewer = ({ images, onClose }) => {
 					</button>
 				</div>
 			))}
-		</div>
+		</>
 	);
 };
 

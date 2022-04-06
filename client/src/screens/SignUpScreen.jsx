@@ -115,7 +115,7 @@ export default function SignInScreen() {
 	};
 
 	return (
-		<div className="signInScreen-wrapper">
+		<div className="signInScreen-wrapper body-container">
 			<div className="sign-section">
 				<h1>sign up</h1>
 				<Link to="/">

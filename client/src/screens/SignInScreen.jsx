@@ -34,7 +34,7 @@ export default function SignInScreen() {
 	const storeDispatch = useDispatch();
 	const signIn = (data) => dispatch(login(data));
 	return (
-		<div className="signInScreen-wrapper">
+		<div className="signInScreen-wrapper body-container">
 			<div className="sign-section">
 				<h1>sign in</h1>
 				<Link to="/">
@@ -63,6 +63,7 @@ export default function SignInScreen() {
 										username
 										store
 									}
+									isInterest
 								}
 							}
 						`;
@@ -71,8 +72,14 @@ export default function SignInScreen() {
 						if (login.status === "success") {
 							signIn({
 								token: login.message,
-								userData: login.user,
+								userData: { ...login.user, interests: undefined },
 							});
+							console.log(login.user);
+							console.log("after logging");
+							if (!login.isInterest) {
+								console.log("if statement");
+								return history.push("/category");
+							}
 							history.push("/");
 						}
 						if (login.status === "unactivated") {

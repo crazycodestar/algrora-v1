@@ -21,6 +21,12 @@
   margin-right: auto;
 }
 
+@media (max-width: 768px) {
+  .orders .header-container {
+    width: 80vw;
+  }
+}
+
 .orders .no-result-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -37,6 +43,13 @@
 .orders .no-result-container .no-result {
   width: 25vw;
   height: 25vw;
+}
+
+@media (max-width: 320px) {
+  .orders .no-result-container .no-result {
+    width: 60vw;
+    height: 60vw;
+  }
 }
 
 .orders .modal-container {
@@ -67,6 +80,13 @@
           box-shadow: 0 0 5px 1px #06209320;
   margin-bottom: 20px;
   width: 50vw;
+}
+
+@media (max-width: 768px) {
+  .orders .section {
+    width: 80vw;
+    padding: 10px;
+  }
 }
 
 .orders .order {
@@ -155,6 +175,8 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .orders .accountDetails-container div .shortForms-wrapper .shortForm-container {
@@ -184,6 +206,50 @@
   width: 5px;
   height: 5px;
   margin: 0 5px;
+}
+
+.orders .outstanding-clients {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #df475970;
+}
+
+.orders .outstanding-clients .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.orders .outstanding-clients .wrapper .outstanding-client-count {
+  padding: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: var(--border-radius);
+  font-size: var(--fontSize-small);
+  line-height: 100%;
+  padding: 5px 10px;
+  margin-right: 10px;
+  background-color: var(--danger-colour);
 }
 
 .orders .product-section {
@@ -237,6 +303,8 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;

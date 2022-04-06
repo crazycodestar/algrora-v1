@@ -1,0 +1,186 @@
+.transactionScreen {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80vw;
+  margin: 0 auto;
+  gap: 10px;
+  padding-bottom: 100px;
+}
+
+@media (max-width: 768px) {
+  .transactionScreen {
+    width: 90vw;
+  }
+}
+
+.transactionScreen i {
+  color: var(--edit-colour);
+}
+
+.transactionScreen .transaction-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 5px;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-summary {
+  -webkit-box-shadow: 0 0 2px 2px var(--lightgrey-colour);
+          box-shadow: 0 0 2px 2px var(--lightgrey-colour);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-radius: var(--border-radius);
+  height: 40px;
+  padding: 20px 50px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 320px) {
+  .transactionScreen .transaction-container .transaction-wrapper .trans-summary {
+    padding: 10px 20px;
+  }
+  .transactionScreen .transaction-container .transaction-wrapper .trans-summary .parts {
+    display: none;
+  }
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-summary .extra-parts {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-summary .extra-parts p {
+  white-space: nowrap;
+}
+
+@media (max-width: 320px) {
+  .transactionScreen .transaction-container .transaction-wrapper .trans-summary .extra-parts {
+    width: 100%;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-summary .extra-parts .chevron-container {
+  margin-left: 20px;
+  padding: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 100%;
+  background-color: var(--background-colour);
+  -webkit-transition: -webkit-transform 100ms ease-in-out 0s;
+  transition: -webkit-transform 100ms ease-in-out 0s;
+  transition: transform 100ms ease-in-out 0s;
+  transition: transform 100ms ease-in-out 0s, -webkit-transform 100ms ease-in-out 0s;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-summary .extra-parts .chevron-container.active {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-breakdown {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 0px;
+  width: calc(100% - 100px);
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: var(--background-colour);
+  gap: 10px;
+  padding: 0 50px;
+  overflow: hidden;
+  pointer-events: none;
+  margin-top: 0px;
+  -webkit-transition: 100ms ease-in-out 0s;
+  transition: 100ms ease-in-out 0s;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-breakdown.active {
+  padding: 20px 50px;
+  margin-top: 10px;
+  max-height: 410px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  pointer-events: auto;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-breakdown .sub-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-breakdown .sub-container .header {
+  width: 100px;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-breakdown .sub-container .content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-breakdown .second-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+}
+
+.transactionScreen .transaction-container .transaction-wrapper .trans-breakdown .second-container .sub-container {
+  margin-left: 50px;
+}
+/*# sourceMappingURL=transactionScreen.css.map */

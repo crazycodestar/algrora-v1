@@ -52,8 +52,23 @@ export default function PricingScreen({ history }) {
 		const response = request;
 		if (response.status === 200) return history.push("/account");
 	};
+
+	const activateStore = async () => {
+		const query = gql`
+			mutation Mutation {
+				initStore {
+					status
+					message
+				}
+			}
+		`;
+		const { initStore } = await request(url, query, {}, header(token));
+		if (initStore.status === "success") {
+			history.push("/account");
+		}
+	};
 	return (
-		<div className="pricingScreen">
+		<div className="pricingScreen body-container">
 			<div className="heading-container">
 				<p>pricing</p>
 				<h1>start selling today with plans that suit your wallet</h1>
@@ -132,7 +147,7 @@ export default function PricingScreen({ history }) {
 																<div>
 																	<div>
 																		<p>{item.key}</p>
-																		{isNew ? <p>+2 free</p> : null}
+																		{isNew !== 8000 ? <p>+2 free</p> : null}
 																	</div>
 																	<span>₦{item.value}</span>
 																</div>
@@ -145,13 +160,16 @@ export default function PricingScreen({ history }) {
 									);
 								})}
 								<div className="button-container">
-									<PayStackPurchase
-										isNew={isNew}
-										details={evaluated.plan}
-										isSecondary={evaluated.isSecondary}
-										style={evaluated.style}
-										onSuccess={handleSuccess}
-									/>
+									{isNew && evaluated.plan.amount !== 8000 ? (
+										<Button onClick={activateStore}>2 clients free</Button>
+									) : (
+										<PayStackPurchase
+											details={evaluated.plan}
+											isSecondary={evaluated.isSecondary}
+											style={evaluated.style}
+											onSuccess={handleSuccess}
+										/>
+									)}
 								</div>
 							</div>
 						);
@@ -161,13 +179,7 @@ export default function PricingScreen({ history }) {
 	);
 }
 
-const PayStackPurchase = ({
-	isNew,
-	details,
-	isSecondary,
-	style,
-	onSuccess,
-}) => {
+const PayStackPurchase = ({ details, isSecondary, style, onSuccess }) => {
 	const accountReducer = useSelector((state) => state.accountReducer);
 
 	const handleClick = (e) => {
@@ -191,6 +203,8 @@ const PayStackPurchase = ({
 	};
 	if (!details || !details.amount)
 		return <Button disabled>select a plan</Button>;
+	if (details && details.amount === 8000)
+		return <Button disabled>coming soon</Button>;
 	return (
 		<Button onClick={handleClick} secondary={isSecondary} style={style}>
 			₦{details && details.amount}

@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Category = require("../schema/Category");
 
 const User = require("../schema/User");
 
@@ -7,8 +8,13 @@ const { generateErrorsMessage } = require("../utilities");
 
 module.exports.login = async (parent, args, { secret }) => {
 	console.log("logging in user");
-	const user = await User.findOne({ username: args.username });
+	let user;
+	user = await User.findOne({ username: args.username });
+	if (!user) {
+		user = await User.findOne({ emailAddress: args.username });
+	}
 	// console.log("testing going on here");
+	// console.log(user);
 	if (!user)
 		return {
 			status: "failed",
@@ -36,10 +42,12 @@ module.exports.login = async (parent, args, { secret }) => {
 		{ id: user.id, username: user.username, storeId: user.store },
 		secret
 	);
+
 	return {
 		status: "success",
 		message: `${token}`,
 		user,
+		isInterest: user.interests.length ? true : false,
 	};
 };
 
@@ -130,10 +138,37 @@ module.exports.register = async (
 	return { status: "success" };
 };
 
+module.exports.addInterests = async (_, { interests }, { userData }) => {
+	const user = await User.findById(userData.id);
+	if (!user) return "failed";
+
+	const categories = await Category.find({});
+
+	interests.forEach((interest) => {
+		user.interests.push(
+			categories.find((category) => category.id === interest)
+		);
+	});
+	try {
+		user.save();
+		return "success";
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 module.exports.updateUser = async (_, { data }, { userData }) => {
 	if (!userData.id) return { status: "failed", message: "unauthorized access" };
 	const user = await User.findById(userData.id);
 	if (!user) return { status: "failed", message: "user does not exist" };
+
+	if (data.imageUri) {
+		const imageUri = data.imageUri;
+		const imageUriList = imageUri.split("/");
+		const filename = `${imageUriList.at(-2)}/${imageUriList.at(-1)}`;
+		await s3Delete(filename);
+	}
+
 	for (key in data) {
 		user[key] = data[key];
 	}

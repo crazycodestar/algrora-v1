@@ -18,18 +18,22 @@ import { updateUnread } from "../actions/navigation";
 import image1 from "../images/undraw_empty_re_opql.svg";
 
 import { v4 as uuidV4 } from "uuid";
+import { useHistory } from "react-router-dom";
 
-export default function OrdersScreen({ match: { path } }) {
+export default function OrdersScreen({ match: { path }, ...others }) {
 	const [activeAccountIndex, setActiveAccountIndex] = useState(null);
 	const [activeProductIndex, setActiveProductIndex] = useState(null);
 	const [orders, setOrders] = useState([]);
+	const [unpaid, setUnpaid] = useState(0);
 	const [modelVisible, setModelVisible] = useState(false);
 	const [isUser, setIsUser] = useState();
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const accountReducer = useSelector((state) => state.accountReducer);
 	const navigationReducer = useSelector((state) => state.navigationReducer);
 	const unread = (data) => dispatch(updateUnread(data));
 	useEffect(async () => {
+		// console.log(others);
 		let isDefault = true;
 		if (path == "/inbox") {
 			isDefault = false;
@@ -47,49 +51,52 @@ export default function OrdersScreen({ match: { path } }) {
 		}
 
 		const query = gql`
-			query GetOrders($getOrdersType: Type!) {
-				getOrders(type: $getOrdersType) {
-					id
-					user {
-						id
-						imageUri
-						username
-					}
-					product {
-						id
-						imageUri
-						name
-						price
-					}
-					quantity
-					store {
-						id
-						name
-						imageUri
-					}
-					uploadTime
-					updatedTime
-					meetTime
-					read
-					lastActive
-					details
+			query GetOrders($type: Type!) {
+				getOrders(type: $type) {
 					status
-					message
+					unPaid
+					orders {
+						id
+						user {
+							id
+							imageUri
+							username
+						}
+						product {
+							id
+							imageUri
+							name
+							price
+						}
+						quantity
+						store {
+							id
+							name
+							imageUri
+						}
+						uploadTime
+						updatedTime
+						meetTime
+						read
+						lastActive
+						details
+						status
+						message
+					}
 				}
 			}
 		`;
 		const variables = {
-			getOrdersType: isDefault ? "USER" : "STORE",
+			type: isDefault ? "USER" : "STORE",
 		};
 		const { getOrders } = await request(url, query, variables, {
 			Authorization: `bearer ${accountReducer.token}`,
 		});
-		console.log(getOrders);
 		const orderData = [];
 
-		// console.log(getOrders);
+		setUnpaid(getOrders.unPaid);
 		const header = isDefault ? "store" : "user";
-		for (const item of getOrders) {
+		for (const item of getOrders.orders) {
 			const order = orderData.find((order) => item[header].id === order.id);
 			if (!order) {
 				orderData.push({ ...item[header], products: [item] });
@@ -242,7 +249,7 @@ export default function OrdersScreen({ match: { path } }) {
 		);
 	};
 	return (
-		<div className="orders">
+		<div className="orders body-container">
 			{/* <pre> {JSON.stringify(activeOrder, null, 10)} </pre> */}
 			{/* <pre> {JSON.stringify(orders, null, 2)} </pre> */}
 			{modelVisible && (
@@ -259,6 +266,15 @@ export default function OrdersScreen({ match: { path } }) {
 			<div className="header-container">
 				<h2>{path.split("/")[1]}</h2>
 			</div>
+			{unpaid ? (
+				<div className="outstanding-clients section">
+					<div className="wrapper">
+						<div className="outstanding-client-count">{unpaid}</div>
+						<p>pending clients</p>
+					</div>
+					<Button onClick={() => history.push("/pricing")}>buy clients</Button>
+				</div>
+			) : null}
 			{orders.length ? (
 				<div className="order section">
 					{orders.map((order, index) => (
@@ -364,6 +380,9 @@ const OrderDetails = ({ item, onOption, isUser }) => {
 			return <DoneIcon sx={{ fontSize: "18px" }} />;
 		}
 	};
+	const paidAt = new Date(meetTime).toLocaleString(undefined, {
+		timeZone: "UTC",
+	});
 	return (
 		<div className="product-section section">
 			{/* <pre>{JSON.stringify(item, null, 2)}</pre> */}
@@ -401,7 +420,7 @@ const OrderDetails = ({ item, onOption, isUser }) => {
 				{meetTime && (
 					<div className="store-container">
 						<h3>{isUser ? "store" : "me"},</h3>
-						<h2>{formatTime(meetTime)}</h2>
+						<h2>{paidAt}</h2>
 						<p>{details}</p>
 					</div>
 				)}
@@ -413,7 +432,7 @@ const OrderDetails = ({ item, onOption, isUser }) => {
 					</div>
 				)}
 				<div className="timeRead-container">
-					<h5>{formatTime(updatedTime)}</h5>
+					<h5>{formatTime(+updatedTime)}</h5>
 					{handleRead()}
 				</div>
 			</div>

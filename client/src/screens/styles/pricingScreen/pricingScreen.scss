@@ -1,3 +1,16 @@
+@mixin respond($breakpoint) {
+	@if ($breakpoint == medium) {
+		@media (max-width: 768px) {
+			@content;
+		}
+	}
+	@if ($breakpoint == small) {
+		@media (max-width: 320px) {
+			@content;
+		}
+	}
+}
+
 .pricingScreen {
 	display: flex;
 	flex: 1;
@@ -7,10 +20,22 @@
 		width: 60vw;
 		text-align: center;
 		margin: 20px 0;
+		@include respond(medium) {
+			width: 80vw;
+		}
+		@include respond(small) {
+			width: 100vw;
+		}
 	}
 	.pricing-container {
 		display: flex;
 		gap: 50px;
+		@include respond(medium) {
+			gap: 20px;
+		}
+		@include respond(small) {
+			flex-direction: column;
+		}
 		.pricing-wrapper {
 			display: flex;
 			flex-direction: column;
@@ -19,6 +44,10 @@
 			width: 300px;
 			border: 0.5px solid black;
 			border-radius: var(--border-radius);
+			@include respond(small) {
+				width: 250px;
+				padding: 10px 20px;
+			}
 			&.premium {
 				border: none;
 				background-color: var(--primary-colour);

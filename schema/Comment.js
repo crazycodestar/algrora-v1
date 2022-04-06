@@ -15,7 +15,7 @@ const commentSchema = new Schema({
 		required: [true, "commment is required"],
 	},
 	uploadTime: {
-		type: String,
+		type: Date,
 		required: [true, "upload time is required"],
 	},
 	likes: {

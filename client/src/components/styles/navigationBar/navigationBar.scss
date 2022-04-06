@@ -1,3 +1,16 @@
+@mixin respond($breakpoint) {
+	@if ($breakpoint == medium) {
+		@media (max-width: 768px) {
+			@content;
+		}
+	}
+	@if ($breakpoint == small) {
+		@media (max-width: 320px) {
+			@content;
+		}
+	}
+}
+
 .navigationBar-container {
 	flex-grow: 0;
 	z-index: 99;
@@ -12,58 +25,132 @@
 	justify-content: space-between;
 	align-items: center;
 	background-color: #fff;
-	// background-color: purple;
-	& > div {
+	@include respond(medium) {
+		position: fixed;
+		box-shadow: 0 1px 5px 0px var(--grey-colour);
+		box-sizing: border-box;
+		width: 100vw;
+		padding: 10px;
+		flex-direction: column;
+	}
+	.dropdown-container {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
 		margin-left: 32px;
+		@include respond(medium) {
+			flex-direction: column-reverse;
+			align-items: flex-start;
+			justify-content: flex-start;
+			max-height: 0;
+			opacity: 0;
+			pointer-events: none;
+			margin: 0;
+			transition: 100ms ease-in-out;
+			&.active {
+				margin: 10px 0 0;
+				pointer-events: auto;
+				opacity: 1;
+				max-height: 1000px;
+			}
+			.search-container {
+				width: 100%;
+			}
+		}
 		& > div {
 			display: flex;
 			align-items: center;
+			@include respond(medium) {
+				width: 100%;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: flex-start;
+			}
+			.options-container {
+				display: flex;
+				padding-right: 32px;
+				gap: 32px;
+				& > div {
+					cursor: pointer;
+				}
+				@include respond(medium) {
+					flex-direction: column;
+					gap: 5px;
+					margin: 5px 0;
+					width: 100%;
+					padding: 0px;
+					& > div {
+						box-sizing: border-box;
+						padding: 10px;
+						width: 100%;
+					}
+				}
+			}
+			.account-container {
+				display: flex;
+				cursor: pointer;
+				align-items: center;
+				@include respond(medium) {
+					padding: 10px;
+					box-sizing: border-box;
+					width: 100%;
+					svg {
+						margin-left: auto;
+					}
+				}
+				.details {
+					position: relative;
+					@include respond(medium) {
+						width: 100%;
+					}
+					.shortForm-info-container {
+						@include respond(medium) {
+							width: 100%;
+						}
+						cursor: pointer;
+						display: flex;
+						align-items: center;
+						gap: 5px;
+
+						// .account-image,
+						// .account-placeholder {
+						// 	width: 24px;
+						// 	height: 24px;
+						// }
+					}
+				}
+			}
 		}
-	}
-	.search-box-container {
-		display: flex;
-		padding-left: 5px;
-		padding-right: 5px;
 	}
 	.logo-container {
 		display: flex;
 		align-items: center;
-		img {
-			width: 40px;
-			height: 40px;
-			margin-right: 10px;
+		@include respond(medium) {
+			flex-direction: row;
+			width: 100%;
+			justify-content: space-between;
 		}
-		.brandName {
-			font-weight: bold;
-			font-size: var(--fontSize-large);
-		}
-	}
-	.options-container {
-		display: flex;
-		padding-right: 32px;
-		gap: 32px;
-	}
-	.account-container {
-		display: flex;
-		align-items: center;
-		.details {
-			position: relative;
-			.shortForm-info-container {
-				cursor: pointer;
-				display: flex;
-				align-items: center;
-				gap: 5px;
-
-				// .account-image,
-				// .account-placeholder {
-				// 	width: 24px;
-				// 	height: 24px;
-				// }
+		div {
+			display: flex;
+			align-items: center;
+			img {
+				width: 40px;
+				height: 40px;
+				margin-right: 10px;
 			}
+			.brandName {
+				font-weight: bold;
+				font-size: var(--fontSize-large);
+			}
+		}
+	}
+	.hambuger-menu {
+		display: none !important;
+		@include respond(medium) {
+			display: flex !important;
+			margin-left: auto;
+			flex-basis: content;
 		}
 	}
 }
@@ -122,7 +209,6 @@
 
 .accountDropdown-container {
 	z-index: 99;
-	background-color: red;
 	padding: 10px;
 	display: inline-block;
 	min-width: 300px;
@@ -149,6 +235,20 @@
 	border-radius: 6px;
 	box-shadow: 0 0 2px 2px var(--lightgrey-colour);
 	padding: 10px;
+	@include respond(medium) {
+		position: static;
+		width: 100%;
+		min-width: 100%;
+		box-sizing: border-box;
+		box-shadow: none;
+		// background-color: red;
+		padding: 5px;
+		margin: 10px 0;
+		background-color: var(--background-colour);
+		&::after {
+			display: none;
+		}
+	}
 	.main-container {
 		// cursor: pointer;
 		// display: flex;

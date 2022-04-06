@@ -1,7 +1,26 @@
+@mixin respond($breakpoint) {
+	@if ($breakpoint == medium) {
+		@media (max-width: 768px) {
+			@content;
+		}
+	}
+	@if ($breakpoint == small) {
+		@media (max-width: 520px) {
+			@content;
+		}
+	}
+}
+
 .product-container {
 	flex-basis: var(--product-width) !important;
 	max-width: var(--product-width) !important;
+	@include respond(small) {
+		// background-color: red;
+		flex-basis: var(--product-width-small) !important;
+		max-width: var(--product-width-small) !important;
+	}
 	.details-container {
+		margin-top: 10px;
 		display: flex;
 		.details-text {
 			display: flex;
@@ -16,12 +35,19 @@
 			}
 		}
 	}
-
+	.image-container {
+		width: 100%;
+		height: var(--product-height);
+		border-radius: var(--border-radius);
+		overflow: hidden;
+		background-color: var(--background-colour);
+		@include respond(small) {
+			height: var(--product-height-small);
+		}
+	}
 	.image {
 		width: 100%;
-		// height: calc(var(--height) * 2.3 / 3);
-		height: var(--product-height);
-		border-radius: 5px;
+		height: 100%;
 		object-fit: cover;
 	}
 

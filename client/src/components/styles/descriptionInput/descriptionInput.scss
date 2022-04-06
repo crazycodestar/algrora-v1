@@ -1,6 +1,7 @@
 .textarea-container {
 	resize: none;
 	// width: calc(100% - 40px);
+	border: none;
 	max-height: 200px !important;
-	width: 500px;
+	width: 100%;
 }

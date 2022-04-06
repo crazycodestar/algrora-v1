@@ -1,0 +1,21 @@
+.searchScreen {
+  height: calc(100vh - 92px);
+  width: calc(100% - 140px);
+  padding: 0 70px;
+}
+
+@media (max-width: 768px) {
+  .searchScreen {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    width: 100%;
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 320px) {
+  .searchScreen {
+    padding: 0 10px;
+  }
+}
+/*# sourceMappingURL=searchScreen.css.map */

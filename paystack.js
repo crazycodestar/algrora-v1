@@ -34,9 +34,7 @@ const verifyPayment = async (ref) => {
 				"cache-control": "no-cache",
 			},
 		});
-		// console.log("response.data");
-		// console.log(response.data);
-		if (response.data.status) return response.data.data.metadata;
+		if (response.data.status) return response.data;
 	} catch (err) {
 		console.log(err);
 	}

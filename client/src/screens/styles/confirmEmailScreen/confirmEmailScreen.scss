@@ -1,3 +1,16 @@
+@mixin respond($breakpoint) {
+	@if ($breakpoint == medium) {
+		@media (max-width: 768px) {
+			@content;
+		}
+	}
+	@if ($breakpoint == small) {
+		@media (max-width: 320px) {
+			@content;
+		}
+	}
+}
+
 .confirmEmail {
 	flex: 1;
 	background-color: var(--secondary-colour);
@@ -7,7 +20,17 @@
 	.mail-container {
 		background-color: var(--light-colour);
 		width: 40vw;
-		height: 30vw;
+		@include respond(medium) {
+			width: auto;
+			padding: 10px 30px;
+			margin: 0 10px;
+		}
+		@include respon(small) {
+			box-sizing: border-box;
+			padding: 10px;
+		}
+		// height: 30vw;
+		padding: 10px;
 		border-radius: var(--border-radius);
 		display: flex;
 		justify-content: center;
@@ -31,6 +54,9 @@
 			}
 		}
 		.input-details-container {
+			@include respond(medium) {
+				flex-direction: column;
+			}
 			display: flex;
 			gap: 5px;
 		}

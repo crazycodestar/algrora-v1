@@ -2,17 +2,23 @@ import { Check } from "@material-ui/icons";
 import request, { gql } from "graphql-request";
 import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
-import { url } from "../config";
+import { url, header } from "../config";
+
+import { useSelector } from "react-redux";
 
 import "./styles/categoryScreen/categoryScreen.css";
 
-export default function CategoryScreen() {
+export default function CategoryScreen({ history }) {
 	const [categories, setCategories] = useState([]);
 	const [selected, setSelected] = useState([]);
+
+	const accountReducer = useSelector((state) => state.accountReducer);
+
 	useEffect(async () => {
 		const query = gql`
 			query GetCategories {
 				getCategories {
+					id
 					name
 					description
 					imageUri
@@ -42,8 +48,33 @@ export default function CategoryScreen() {
 		return "proceed";
 	};
 
+	const handleSubmit = async () => {
+		const ids = selected.map((item) => item.id);
+
+		const query = gql`
+			mutation AddInterests($interests: [ID!]!) {
+				addInterests(interests: $interests)
+			}
+		`;
+		const variables = {
+			interests: ids,
+		};
+		const { addInterests } = await request(
+			"/graphql",
+			query,
+			variables,
+			header(accountReducer.token)
+		);
+
+		console.log(addInterests);
+
+		if (addInterests === "success") {
+			return history.push("/");
+		}
+	};
+
 	return (
-		<div className="categoryScreen">
+		<div className="categoryScreen body-container">
 			<div className="main-container">
 				<div>
 					<h1>Select your interest</h1>
@@ -51,6 +82,7 @@ export default function CategoryScreen() {
 				</div>
 				<Button
 					style={{ height: "fit-content" }}
+					onClick={handleSubmit}
 					disabled={selected.length < 3}
 				>
 					{handleButtonDisplay()}
@@ -72,7 +104,7 @@ export default function CategoryScreen() {
 										className="category-image"
 									/>
 								</div>
-								<h3>{category.name}</h3>
+								<h3 className="category-name">{category.name}</h3>
 							</div>
 					  ))
 					: null}

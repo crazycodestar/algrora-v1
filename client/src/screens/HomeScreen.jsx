@@ -83,7 +83,7 @@ export default function HomeScreen() {
 			</div>
 		);
 	return (
-		<div className="homeScreen">
+		<div className="homeScreen body-container">
 			<div className="main-container">
 				<div className="product-section">
 					<div className="product-wrapper">

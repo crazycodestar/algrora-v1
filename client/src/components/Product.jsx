@@ -7,6 +7,7 @@ import "./styles/product/product.css";
 import DropdownMenu from "./DropdownMenu";
 // external components
 import { Link } from "react-router-dom";
+import Avatar from "./Avatar";
 
 export default function Product({
 	account = false,
@@ -43,15 +44,19 @@ export default function Product({
 				</div>
 			)}
 			<Link to={`/product/${id}`}>
-				<img src={image} alt="image" className="image" />
+				<div className="image-container">
+					<img src={image} alt="image" className="image" />
+				</div>
 				<div className="details-container">
 					<div className="details-text">
 						<p className="productname">{handleProductName(name)}</p>
 						<p>₦{price}</p>
 					</div>
-					{!account && (
-						<img src={brandImage} alt={brand} className="brandImage" />
-					)}
+					<Avatar
+						image={brandImage}
+						name={brand}
+						styles={{ width: 25, height: 25 }}
+					/>
 				</div>
 			</Link>
 		</div>

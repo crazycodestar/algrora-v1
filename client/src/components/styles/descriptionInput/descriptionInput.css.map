@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "AAAA,AAAA,mBAAmB,CAAC;EACnB,MAAM,EAAE,IAAI;EAEZ,UAAU,EAAE,gBAAgB;EAC5B,KAAK,EAAE,KAAK;CACZ",
+    "mappings": "AAAA,AAAA,mBAAmB,CAAC;EACnB,MAAM,EAAE,IAAI;EAEZ,MAAM,EAAE,IAAI;EACZ,UAAU,EAAE,gBAAgB;EAC5B,KAAK,EAAE,IAAI;CACX",
     "sources": [
         "descriptionInput.scss"
     ],

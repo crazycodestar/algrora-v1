@@ -87,11 +87,11 @@ const main = async () => {
 			const userData = await User.findById(user);
 			userData.activated = true;
 			userData.save();
-			res.redirect("http://localhost:3000/Success");
+			res.redirect("/Success");
 		} catch (err) {
 			console.log(err);
 			res.statusCode(401);
-			res.redirect("http://localhost:3000/error");
+			res.redirect("/error");
 		}
 	});
 

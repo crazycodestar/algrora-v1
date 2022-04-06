@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAaA,AAAA,aAAa,CAAC;EAEb,MAAM,EAAE,kBAAkB;EAC1B,KAAK,EAAE,kBAAkB;EACzB,OAAO,EAAE,MAAM;CASf;;AAxBC,MAAM,EAAE,SAAS,EAAE,KAAK;EAW1B,AAAA,aAAa,CAAC;IAMZ,UAAU,EAAE,UAAU;IACtB,KAAK,EAAE,IAAI;IACX,OAAO,EAAE,MAAM;GAKhB;;;AAnBC,MAAM,EAAE,SAAS,EAAE,KAAK;EAM1B,AAAA,aAAa,CAAC;IAWZ,OAAO,EAAE,MAAM;GAEhB",
+    "sources": [
+        "searchScreen.scss"
+    ],
+    "names": [],
+    "file": "searchScreen.css"
+}

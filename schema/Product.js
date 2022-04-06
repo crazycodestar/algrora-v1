@@ -32,10 +32,10 @@ const productSchema = new Schema({
 			validator: async (v) => {
 				if (!Array.isArray(v)) return false;
 				if (!v.length) return false;
-				for (let value of v) {
-					const category = await Category.find({ name: value });
-					if (!category) return false;
-				}
+				// for (let value of v) {
+				// 	const category = await Category.find({ name: value });
+				// 	if (!category) return false;
+				// }
 				return true;
 			},
 			message: (props) => `${props.value} is invalid`,

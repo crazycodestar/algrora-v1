@@ -1,18 +1,40 @@
+@mixin respond($breakpoint) {
+	@if ($breakpoint == medium) {
+		@media (max-width: 768px) {
+			@content;
+		}
+	}
+	@if ($breakpoint == small) {
+		@media (max-width: 520px) {
+			@content;
+		}
+	}
+}
+
 .cartScreen-container {
-	margin-top: 92px;
 	padding: 10px;
 	width: 60%;
 	margin-right: auto;
 	margin-left: auto;
 	display: flex;
 	flex-direction: row;
+	@include respond(medium) {
+		flex-direction: column;
+		width: 80%;
+	}
+	@include respond(small) {
+		box-sizing: border-box;
+		width: 100%;
+	}
 	> .cartProduct-container {
+		box-sizing: border-box;
 		flex-wrap: wrap;
 		display: flex;
 		flex: 1;
 		flex-direction: column;
 	}
 	.cartDetails-container {
+		box-sizing: border-box;
 		// background-color: dodgerblue;
 		padding: 10px;
 		border-radius: 5px;

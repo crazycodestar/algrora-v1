@@ -16,8 +16,7 @@
 
 .activateSuccess .container {
   background-color: var(--light-colour);
-  width: 40vw;
-  height: 30vw;
+  padding: 30px;
   border-radius: var(--border-radius);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -32,6 +31,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  text-align: center;
 }
 
 .activateSuccess .container .circle {

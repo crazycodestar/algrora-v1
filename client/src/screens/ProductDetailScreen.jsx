@@ -210,13 +210,29 @@ export default function ProductDetailScreen({
 			// return navigation.push("AddProductScreen");
 		}
 	};
+
+	const handleButtonDisplay = () => {
+		console.log("accountReducer");
+		console.log(accountReducer);
+		if (
+			Object.entries(accountReducer).length &&
+			accountReducer.userData.store === store.id
+		)
+			return <Button onClick={handleUpdate}>edit product</Button>;
+		return (
+			<CartButton
+				quantity={productData === undefined ? 0 : productData.quantity}
+				onChange={handleChange}
+			/>
+		);
+	};
 	return (
 		<>
 			{isLoading ? (
 				<p>loading</p>
 			) : (
 				<>
-					<div className="cartScreen">
+					<div className="cartScreen body-container">
 						<div className="cartScreen-main-container">
 							{/* <pre>{JSON.stringify(store, null, 2)}</pre>
 							<pre>{JSON.stringify(accountReducer, null, 2)}</pre> */}
@@ -261,16 +277,7 @@ export default function ProductDetailScreen({
 										<p className="cartScreen-product-discount">-5%</p>
 									</div> */}
 								</div>
-								{store.id !== accountReducer.userData.store ? (
-									<CartButton
-										quantity={
-											productData === undefined ? 0 : productData.quantity
-										}
-										onChange={handleChange}
-									/>
-								) : (
-									<Button onClick={handleUpdate}>edit product</Button>
-								)}
+								{handleButtonDisplay()}
 							</div>
 						</div>
 						{false && (

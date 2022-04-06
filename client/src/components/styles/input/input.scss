@@ -1,4 +1,6 @@
 .input-container {
+	width: 100%;
+	box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	background-color: #e9e9fa;
@@ -15,7 +17,7 @@
 		display: flex;
 		background-color: #ffffff00;
 		border: none;
-		width: 310px;
+		width: 100%;
 		&::placeholder {
 			text-transform: lowercase;
 		}

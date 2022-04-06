@@ -39,12 +39,13 @@ import Avatar from "./Avatar";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "./validation/ErrorMessage";
+import MenuIcon from "@mui/icons-material/Menu";
 import { uploadImage } from "../utilityFunctions";
 
 const content = [
-	{ name: "home", link: "/" },
+	{ name: "home" },
 	// { name: "account", link: "/account" },
-	{ name: "cart", link: "/cart" },
+	{ name: "cart" },
 	// { name: "messages", link: "/messages" },
 ];
 
@@ -52,6 +53,7 @@ export default function NavigationBar({ onClick }) {
 	const [searchValue, setSearchValue] = useState(null);
 	const [recommendations, setRecommendations] = useState([]);
 	const [dropdownVisible, setDropdownVisible] = useState(false);
+	const [mobileDropdown, setMobileDropdown] = useState(false);
 	const [showDropdown, setShowDropdown] = useState(false);
 	const accountReducer = useSelector((state) => state.accountReducer);
 	// const navigationReducer = useSelector((state) => state.navigationReducer)
@@ -126,12 +128,22 @@ export default function NavigationBar({ onClick }) {
 
 	const handleOption = (option) => {
 		setShowDropdown(false);
+		setMobileDropdown(false);
 		switch (option) {
 			case "My Account":
 				history.push("/account");
 				break;
 			case "Orders":
 				history.push("/orders");
+				break;
+			case "signIn":
+				history.push("/signIn");
+				break;
+			case "home":
+				history.push("/");
+				break;
+			case "cart":
+				history.push("/cart");
 				break;
 			case "Inbox":
 				history.push("/inbox");
@@ -144,25 +156,33 @@ export default function NavigationBar({ onClick }) {
 				history.push("/SignIn");
 		}
 	};
+
 	const total = [
 		navigationReducer.dropdownOptions[1].count,
 		navigationReducer.dropdownOptions[2].count,
 	].reduce((a, b) => a + b, 0);
 	return (
 		<div className="navigationBar-container">
-			<Link to="/">
-				<div className="logo-container">
+			<div className="logo-container">
+				<div onClick={() => handleOption("home")}>
 					<img src={logo} alt="algrora" />
 					<p className="brandName">algrora</p>
 				</div>
-			</Link>
-			<div>
+
+				<div
+					onClick={() => setMobileDropdown(!mobileDropdown)}
+					className="hambuger-menu"
+				>
+					<MenuIcon fontSize="medium" />
+				</div>
+			</div>
+			<div className={`dropdown-container ${mobileDropdown ? "active" : ""}`}>
 				<div>
 					<div className="options-container">
 						{content.map((item) => (
-							<Link to={item.link}>
+							<div onClick={() => handleOption(item.name)}>
 								<p>{item.name}</p>
-							</Link>
+							</div>
 						))}
 					</div>
 
@@ -207,9 +227,9 @@ export default function NavigationBar({ onClick }) {
 								)}
 							</div>
 						) : (
-							<Link to="/signin">
+							<div onClick={() => handleOption("signIn")}>
 								<p>sign in</p>
-							</Link>
+							</div>
 						)}
 					</div>
 				</div>
@@ -422,7 +442,11 @@ const CameraContainer = () => {
 			Authorization: `bearer ${accountReducer.token}`,
 		});
 		if (signS3) {
-			await uploadImage(signS3, fileData);
+			try {
+				await uploadImage(signS3, fileData);
+			} catch (err) {
+				return;
+			}
 			imageUri = signS3.split("?")[0];
 			// update database
 			const query = gql`

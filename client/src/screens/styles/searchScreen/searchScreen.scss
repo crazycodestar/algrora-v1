@@ -1,0 +1,27 @@
+@mixin respond($breakpoint) {
+	@if ($breakpoint == medium) {
+		@media (max-width: 768px) {
+			@content;
+		}
+	}
+	@if ($breakpoint == small) {
+		@media (max-width: 320px) {
+			@content;
+		}
+	}
+}
+
+.searchScreen {
+	// background-color: red;
+	height: calc(100vh - 92px);
+	width: calc(100% - 140px);
+	padding: 0 70px;
+	@include respond(medium) {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0 30px;
+	}
+	@include respond(small) {
+		padding: 0 10px;
+	}
+}

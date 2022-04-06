@@ -3,6 +3,8 @@ import dateFormat from "dateformat";
 export const formatTime = (currentTime) => {
 	if (!currentTime) return null;
 	const raw = new Date(currentTime);
+	console.log("raw");
+	console.log(raw);
 	const time = raw.getHours() + ":" + raw.getMinutes();
 
 	const rawTime = time.split(":");
@@ -44,7 +46,6 @@ export const uploadImage = async (signS3, fileData) => {
 			body: fileData,
 		});
 	} catch (err) {
-		console.log("err");
-		console.log(err);
+		throw err;
 	}
 };

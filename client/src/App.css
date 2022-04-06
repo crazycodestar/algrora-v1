@@ -3,3 +3,19 @@
 	flex-direction: column;
 	height: 100vh;
 }
+
+@media screen and (max-width: 768px) {
+	.super-container {
+		margin-top: 50px;
+	}
+}
+
+@media screen and (max-width: 320px) {
+	.super-container {
+		margin-top: 50px;
+	}
+}
+
+.body-container {
+	margin-top: 40px;
+}

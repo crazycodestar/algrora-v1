@@ -8,6 +8,12 @@ const userSchema = new Schema({
 		required: true,
 		default: false,
 	},
+	interests: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "category",
+		},
+	],
 	username: {
 		type: String,
 		index: true,

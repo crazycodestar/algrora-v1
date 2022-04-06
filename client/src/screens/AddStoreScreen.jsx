@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { update } from "../actions/account";
 
 import { useLocation } from "react-router-dom";
+import { uploadImage } from "../utilityFunctions";
 
 import { createStore } from "../actions/store";
 
@@ -30,6 +31,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 export default function AddStoreScreen({ history }) {
 	const [activeData, setActiveData] = useState(null);
+	const [errorMessage, setErrorMessage] = useState("");
 	const [storeId, setStoreId] = useState("");
 	const init = useLocation();
 	const storeValidationSchema = Yup.object().shape({
@@ -60,7 +62,7 @@ export default function AddStoreScreen({ history }) {
 	const makeStore = (data) => dispatch(createStore(data));
 	const updateAccount = (data) => dispatch(update(data));
 	return (
-		<div className="addProduct-container">
+		<div className="addProduct-container body-container">
 			<Formik
 				initialValues={activeData || initialValues}
 				enableReinitialize
@@ -86,16 +88,14 @@ export default function AddStoreScreen({ history }) {
 						if (signS3) {
 							// http request to post image
 							try {
-								await fetch(signS3, {
-									method: "PUT",
-									headers: {
-										"Content-Type": "multipart/formdata",
-									},
-									body: fileData,
-								});
+								await uploadImage(signS3, fileData);
 							} catch (err) {
-								console.log("err");
-								console.log(err);
+								console.log("cancelling");
+								setErrorMessage(
+									"unable to upload due to poor connection try again later"
+								);
+								setSubmitting(false);
+								return;
 							}
 							imageUri = signS3.split("?")[0];
 						}
@@ -177,8 +177,11 @@ export default function AddStoreScreen({ history }) {
 							name="storeDescription"
 						/>
 
-						<pre>{JSON.stringify(values, null, 2)}</pre>
-						<pre>{JSON.stringify(errors, null, 2)}</pre>
+						{/* <pre>{JSON.stringify(values, null, 2)}</pre>
+						<pre>{JSON.stringify(errors, null, 2)}</pre> */}
+						{errorMessage ? (
+							<p className="message-error">{errorMessage}</p>
+						) : null}
 						<div className="button-container">
 							<Button disabled={isSubmitting} type="submit">
 								add store
@@ -206,17 +209,19 @@ const ImageViewer = ({ images, onClose }) => {
 		onClose("images", updatedImages);
 	};
 	return (
-		<div className="imageViewer">
+		<>
 			{cleanedUpImages.map((image, index) => (
-				<div>
+				<div className="imageViewer">
 					{/* <p>{JSON.stringify(image, null, 2)}</p> */}
-					<img
-						className="image-item"
-						width="50px"
-						height="100px"
-						src={image}
-						alt="image not compatible"
-					/>
+					<div className="image-container">
+						<img
+							className="image-item"
+							width="50px"
+							height="100px"
+							src={image}
+							alt="image not compatible"
+						/>
+					</div>
 					<button
 						className="button"
 						type="button"
@@ -227,7 +232,7 @@ const ImageViewer = ({ images, onClose }) => {
 					</button>
 				</div>
 			))}
-		</div>
+		</>
 	);
 };
 
@@ -260,5 +265,3 @@ const ImagePicker = ({ values, onChangeField }) => {
 		</div>
 	);
 };
-
-const safeKeeping = async () => {};

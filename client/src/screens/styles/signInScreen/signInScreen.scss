@@ -1,3 +1,16 @@
+@mixin respond($breakpoint) {
+	@if ($breakpoint == medium) {
+		@media (max-width: 768px) {
+			@content;
+		}
+	}
+	@if ($breakpoint == small) {
+		@media (max-width: 320px) {
+			@content;
+		}
+	}
+}
+
 .signInScreen-wrapper {
 	display: flex;
 	padding: 0 70px;
@@ -6,6 +19,12 @@
 	flex-direction: row;
 	align-items: center;
 	height: 100vh;
+	@include respond(medium) {
+		padding: 0 30px;
+	}
+	@include respond(small) {
+		padding: 0 10px;
+	}
 
 	.sign-section {
 		h1 {
@@ -13,6 +32,12 @@
 		}
 		p {
 			font-weight: normal;
+		}
+		@include respond(medium) {
+			width: 60%;
+		}
+		@include respond(small) {
+			width: 100%;
 		}
 		.proceedWithoutSigning {
 			display: flex;
@@ -28,9 +53,9 @@
 			gap: 10px;
 			.button-container {
 				margin-left: auto;
+				display: flex;
 			}
 		}
-		// background-color: red;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
@@ -40,6 +65,13 @@
 		height: 460px;
 		margin-left: auto;
 		margin-right: auto;
+		@include respond(medium) {
+			width: 300px;
+			height: 300px;
+		}
+		@include respond(small) {
+			display: none;
+		}
 	}
 }
 

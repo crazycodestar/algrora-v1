@@ -32,11 +32,11 @@ const orderSchema = new Schema({
 		required: true,
 	},
 	uploadTime: {
-		type: String,
+		type: Date,
 		required: [true, "upload time is required"],
 	},
 	updatedTime: {
-		type: String,
+		type: Date,
 		required: [true, "updated time is required"],
 	},
 	meetTime: String,

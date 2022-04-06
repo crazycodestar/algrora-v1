@@ -6,6 +6,7 @@ const Store = require("../schema/Store");
 const User = require("../schema/User");
 
 const { initializePayment, verifyPayment } = require("../paystack");
+const Transaction = require("../schema/Transaction");
 
 router.post("/", async (req, res) => {
 	const { plan, subPlan } = req.body;
@@ -39,9 +40,20 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/callback", async (req, res) => {
-	console.log(req.query);
-	const result = await verifyPayment(req.query.trxref);
-	const { store_id, plan, subPlan } = result;
+	console.log("is paystack working");
+	console.log(req.body);
+	const { trxref } = req.query;
+	const trx = await Transaction.findOne({ reference: trxref });
+	if (trx)
+		return res
+			.json({ status: "failed", message: "transaction alreay processed" })
+			.status(200);
+
+	const result = await verifyPayment(trxref);
+	const data = result.data;
+	const metadata = result.data.metadata;
+
+	const { store_id, plan, subPlan } = result.data.metadata;
 	if (!result) return res.send("failed").status(500);
 	const store = await Store.findById(store_id);
 	const pricing = await Pricing.findById(plan);
@@ -50,9 +62,31 @@ router.get("/callback", async (req, res) => {
 		const subData = pricing.content[0].subData.find(
 			(item) => item.id === subPlan
 		);
+
 		store.clientLimit += subData.amount;
 		store.plan = "basic";
 		await store.save();
+
+		// log transaction
+		const transaction = new Transaction({
+			status: result.status,
+			message: result.message,
+			reference: data.reference,
+			amount: data.amount / 100,
+			paidAt: data.paid_at,
+			userId: metadata.user_id,
+			storeId: metadata.store_id,
+			plan: metadata.plan,
+			subPlan: metadata.subPlan,
+			referrer: metadata.referrer,
+		});
+
+		try {
+			transaction.save();
+		} catch (err) {
+			console.log(err);
+		}
+
 		return res.json({ status: "successful" }).status(200);
 	}
 
