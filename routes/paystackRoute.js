@@ -136,7 +136,7 @@ router.post("/callback", async (req, res) => {
 						subPlan: metadata.subPlan,
 						referrer: metadata.referrer,
 					});
-
+					console.log(transaction);
 					try {
 						transaction.save();
 					} catch (err) {
