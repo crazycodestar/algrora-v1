@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
 router.post("/callback", async (req, res) => {
 	console.log("is paystack working");
 	console.log(req.body);
-	return res.json({ status: "success" }).status(200);
+	return res.send(res.body).status(200);
 	const { trxref } = req.query;
 	const trx = await Transaction.findOne({ reference: trxref });
 	if (trx)
