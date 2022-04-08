@@ -54,7 +54,9 @@ export default function PricingScreen({ history }) {
 		// );
 		// const response = request;
 		// if (response.status === 200) return history.push("/account");
-		return history.push("/account");
+		setTimeout(() => {
+			history.push("/account");
+		}, 3000);
 	};
 
 	const activateStore = async () => {
