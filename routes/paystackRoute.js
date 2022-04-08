@@ -153,6 +153,8 @@ router.post("/callback", async (req, res) => {
 				break;
 		}
 	}
+	console.log("failed");
+	return res.send("failed");
 });
 
 module.exports = router;
