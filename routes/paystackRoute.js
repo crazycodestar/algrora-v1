@@ -96,10 +96,12 @@ router.post("/", async (req, res) => {
 // 	// console.log(req.query);
 // });
 
+const paystackSecret = process.env.PAYSTACK_SECRET;
+
 router.post("/callback", async (req, res) => {
 	//validate event
 	const hash = crypto
-		.createHmac("sha512", secret)
+		.createHmac("sha512", paystackSecret)
 		.update(JSON.stringify(req.body))
 		.digest("hex");
 	if (hash == req.headers["x-paystack-signature"]) {
