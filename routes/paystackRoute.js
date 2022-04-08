@@ -106,8 +106,10 @@ router.post("/callback", async (req, res) => {
 		.digest("hex");
 	if (hash == req.headers["x-paystack-signature"]) {
 		// Do something with event
+		console.log("made it");
 		switch (req.body.event) {
 			case "charge.success":
+				console.log("charge successful");
 				const data = req.body.data;
 				const metadata = data.metadata;
 
