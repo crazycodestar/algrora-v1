@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const crypto = require("crypto");
+
 const Pricing = require("../schema/Pricing");
 const Store = require("../schema/Store");
 const User = require("../schema/User");
@@ -94,7 +96,7 @@ router.post("/", async (req, res) => {
 // 	// console.log(req.query);
 // });
 
-router.post("/callback", function (req, res) {
+router.post("/callback", async (req, res) => {
 	//validate event
 	const hash = crypto
 		.createHmac("sha512", secret)
@@ -144,7 +146,7 @@ router.post("/callback", function (req, res) {
 					return res.json({ status: "successful" }).status(200);
 				}
 				break;
-		
+
 			default:
 				break;
 		}
