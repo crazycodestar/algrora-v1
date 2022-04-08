@@ -107,7 +107,6 @@ router.post("/my/webhook/url", function (req, res) {
 		console.log(event);
 		return res.send(event);
 	}
-	res.send(200);
 });
 
 module.exports = router;
