@@ -39,10 +39,10 @@ router.post("/", async (req, res) => {
 	// res.redirect(response.data.authorization_url);
 });
 
-router.get("/callback", async (req, res) => {
+router.post("/callback", async (req, res) => {
 	console.log("is paystack working");
 	console.log(req.body);
-	return res.json({ status: "success" }).sendStatus(200);
+	return res.json({ status: "success" }).status(200);
 	const { trxref } = req.query;
 	const trx = await Transaction.findOne({ reference: trxref });
 	if (trx)
