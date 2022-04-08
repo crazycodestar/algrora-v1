@@ -94,4 +94,20 @@ router.get("/callback", async (req, res) => {
 	// console.log(req.query);
 });
 
+router.post("/my/webhook/url", function (req, res) {
+	//validate event
+	var hash = crypto
+		.createHmac("sha512", secret)
+		.update(JSON.stringify(req.body))
+		.digest("hex");
+	if (hash == req.headers["x-paystack-signature"]) {
+		// Retrieve the request's body
+		var event = req.body;
+		// Do something with event
+		console.log(event);
+		return res.send(event);
+	}
+	res.send(200);
+});
+
 module.exports = router;
