@@ -42,18 +42,19 @@ export default function PricingScreen({ history }) {
 	}, []);
 
 	const handleSuccess = async (reference) => {
-		console.log(reference);
-		const request = await fetch(
-			`/paystack/callback?trxref=${reference.trxref}`,
-			{
-				headers: {
-					authorization: `bearer ${accountReducer.token}`,
-					"content-type": "application/json",
-				},
-			}
-		);
-		const response = request;
-		if (response.status === 200) return history.push("/account");
+		// console.log(reference);
+		// const request = await fetch(
+		// 	`/paystack/callback?trxref=${reference.trxref}`,
+		// 	{
+		// 		headers: {
+		// 			authorization: `bearer ${accountReducer.token}`,
+		// 			"content-type": "application/json",
+		// 		},
+		// 	}
+		// );
+		// const response = request;
+		// if (response.status === 200) return history.push("/account");
+		return history.push("/account");
 	};
 
 	const activateStore = async () => {
