@@ -41,8 +41,11 @@ const main = async () => {
 	});
 
 	// mongoose
+
+	// "mongodb://localhost:27017/algroraDB"
 	await mongoose.connect(
-		process.env.MONGODB_URI || "mongodb://localhost:27017/algroraDB",
+		process.env.MONGODB_URI ||
+			"mongodb+srv://altech:Altech1234.@algrora-store.t1nhy.mongodb.net/algrora-store?retryWrites=true&w=majority",
 		{
 			useNewUrlParser: true,
 		}
@@ -87,7 +90,7 @@ const main = async () => {
 			const userData = await User.findById(user);
 			userData.activated = true;
 			userData.save();
-			res.redirect("/Success");
+			res.redirect("e/Success");
 		} catch (err) {
 			console.log(err);
 			res.statusCode(401);

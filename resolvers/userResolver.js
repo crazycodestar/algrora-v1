@@ -117,7 +117,7 @@ module.exports.register = async (
 	const emailToken = await jwt.sign({ user: user.id }, email_secret, {
 		expiresIn: 1000,
 	});
-	const url = `http://localhost:5000/confirmation/${emailToken}`;
+	const url = `/confirmation/${emailToken}`;
 	transporter.sendMail(
 		{
 			to: email,

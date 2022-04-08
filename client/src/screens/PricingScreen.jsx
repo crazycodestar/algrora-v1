@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { header, url } from "../config";
 
+import { v4 as uuid } from "uuid";
+
 import Button from "../components/Button";
 import "./styles/pricingScreen/pricingScreen.css";
 
@@ -32,6 +34,7 @@ export default function PricingScreen({ history }) {
 			}
 		`;
 		const { getPricing } = await request(url, query, null, header(token));
+		console.log(getPricing);
 		if (getPricing) {
 			setPricings(JSON.parse(getPricing.plans));
 			setIsNew(getPricing.isNew);
@@ -80,6 +83,7 @@ export default function PricingScreen({ history }) {
 							if (price.pricing)
 								return {
 									plan: {
+										planing: price.plan,
 										plan: price._id,
 										subPlan: null,
 										amount: price.pricing,
@@ -90,17 +94,32 @@ export default function PricingScreen({ history }) {
 							if (clientSize) {
 								return {
 									plan: {
+										planing: price.plan,
 										plan: price._id,
 										subPlan: clientSize._id,
 										amount: clientSize.value,
 									},
 								};
 							}
-							return { amount: 0 };
+							return {
+								plan: { planing: "" },
+								amount: 0,
+							};
 						};
 						const evaluated = evaluatePrice();
+						const isPremium = (plan) => {
+							if (plan == "premium") {
+								return "premium";
+							}
+							return "";
+						};
 						return (
-							<div className={`pricing-wrapper ${index ? "premium" : ""}`}>
+							<div
+								key={uuid()}
+								className={`pricing-wrapper ${isPremium(
+									evaluated.plan.planing
+								)}`}
+							>
 								<h2 className="plan-name">{price.plan}</h2>
 								<p className="plan-description">{price.description}</p>
 								{price.content.map((contentItem) => {
@@ -126,6 +145,7 @@ export default function PricingScreen({ history }) {
 											);
 											break;
 									}
+
 									return (
 										<div className="content-wrapper">
 											<div className="topic-container">
@@ -160,7 +180,7 @@ export default function PricingScreen({ history }) {
 									);
 								})}
 								<div className="button-container">
-									{isNew && evaluated.plan.amount !== 8000 ? (
+									{isNew && evaluated.plan.planing !== "premium" ? (
 										<Button onClick={activateStore}>2 clients free</Button>
 									) : (
 										<PayStackPurchase
