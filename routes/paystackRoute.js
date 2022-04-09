@@ -113,7 +113,6 @@ router.post("/callback", async (req, res) => {
 				const data = req.body.data;
 				const metadata = data.metadata;
 
-				if (!result) return res.send("failed").status(500);
 				const store = await Store.findById(metadata.store_id);
 				const pricing = await Pricing.findById(metadata.plan);
 				if (!store.active) store.activated = true;
