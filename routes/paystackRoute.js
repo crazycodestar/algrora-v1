@@ -127,7 +127,6 @@ router.post("/callback", async (req, res) => {
 
 					// log transaction
 					const transaction = new Transaction({
-						status: data.status,
 						reference: data.reference,
 						amount: data.amount / 100,
 						paidAt: data.paid_at,

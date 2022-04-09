@@ -3,10 +3,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema({
-	status: {
-		type: Boolean,
-		required: true,
-	},
 	reference: {
 		type: String,
 		required: true,
