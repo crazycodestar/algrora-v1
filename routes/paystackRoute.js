@@ -99,6 +99,7 @@ router.post("/", async (req, res) => {
 const paystackSecret = process.env.PAYSTACK_SECRET;
 
 router.post("/callback", async (req, res) => {
+	console.log("calling callback");
 	//validate event
 	const hash = crypto
 		.createHmac("sha512", paystackSecret)
@@ -112,7 +113,6 @@ router.post("/callback", async (req, res) => {
 				console.log("charge successful");
 				const data = req.body.data;
 				const metadata = data.metadata;
-
 				const store = await Store.findById(metadata.store_id);
 				const pricing = await Pricing.findById(metadata.plan);
 				if (!store.active) store.activated = true;
