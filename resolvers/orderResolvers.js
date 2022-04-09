@@ -9,7 +9,6 @@ const crypto = require("crypto");
 module.exports.isOrder = async (_, __, { userData }) => {
 	const user = await User.findById(userData.id);
 	if (!user) return { status: "failed" };
-	// console.log(user);
 
 	return {
 		status: 1,
@@ -35,7 +34,6 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 	// use avaliable clients to activate new orders
 	for (order of orders) {
 		if (order.activated) {
-			console.log("continue");
 			continue;
 		}
 		const toActivate = activatedOrders.find(
@@ -64,8 +62,6 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 // mutations
 
 module.exports.placeOrder = async (_, { orders }, { userData }) => {
-	// console.log("placing order");
-	// console.log(preOrdersList);
 	const user = await User.findById(userData.id);
 	if (!user) return { status: "failed" };
 
@@ -120,7 +116,7 @@ module.exports.placeOrder = async (_, { orders }, { userData }) => {
 	}
 };
 
-const sendNotification = async (orderData, type) => {
+const sendNotification = async (orderData, type, callback) => {
 	if (orderData.lastActive !== type || orderData.read) {
 		if (type == "USER") {
 			const storeUser = await User.findOne({ store: orderData.store });
@@ -132,14 +128,7 @@ const sendNotification = async (orderData, type) => {
 			orderUser.save();
 		}
 	}
-	orderData.read = false;
-	if (type == "USER") {
-		orderData.lastActive = "USER";
-	} else {
-		orderData.lastActive = "STORE";
-	}
-
-	orderData.updatedTime = getTime();
+	return callback();
 };
 
 module.exports.updateOrder = async (
@@ -156,7 +145,15 @@ module.exports.updateOrder = async (
 		if (order[key]) orderData[key] = order[key];
 	}
 	// send notification
-	sendNotification(orderData, type);
+	await sendNotification(orderData, type, () => {
+		orderData.read = false;
+		if (type == "USER") {
+			orderData.lastActive = "USER";
+		} else {
+			orderData.lastActive = "STORE";
+		}
+		orderData.updatedTime = getTime();
+	});
 	try {
 		// save order
 		await orderData.save();
@@ -181,7 +178,7 @@ module.exports.markRead = async (_, { type, ids }, { userData }) => {
 			order.read = true;
 		}
 		// if statement checks who receives the notification
-		if (userData.id === Order.user) {
+		if (userData.id === order.user.toString()) {
 			if (user.unReadOrder > 0) user.unReadOrder--;
 			await user.save();
 		} else {
@@ -206,9 +203,16 @@ module.exports.cancelOrder = async (_, { id, type }, { userData }) => {
 	const order = await Order.findById(id);
 	if (!order) return { status: "failed", message: "invalid order" };
 	// send notification
-	sendNotification(order, type);
+	await sendNotification(order, type, () => {
+		orderData.read = false;
+		if (type == "USER") {
+			orderData.lastActive = "USER";
+		} else {
+			orderData.lastActive = "STORE";
+		}
+		orderData.updatedTime = getTime();
+	});
 	order.status = "CANCEL";
-	// console.log("here", order);
 	try {
 		await order.save();
 		return { status: "success", orders: [order] };
