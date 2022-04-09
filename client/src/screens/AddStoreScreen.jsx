@@ -186,7 +186,11 @@ export default function AddStoreScreen({ history }) {
 							<Button disabled={isSubmitting} type="submit">
 								add store
 							</Button>
-							<Button secondary onClick={history.goBack}>
+							<Button
+								disabled={isSubmitting}
+								secondary
+								onClick={history.goBack}
+							>
 								cancel
 							</Button>
 						</div>

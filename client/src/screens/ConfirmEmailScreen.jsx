@@ -24,6 +24,7 @@ export default function ConfirmEmailScreen({}) {
 	const [userId, setUserId] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 	const [isDisabled, setIsDisabled] = useState(false);
+	const [isSent, setSent] = useState(false);
 
 	// show button timer
 	let queryparmas = useQuery();
@@ -56,6 +57,7 @@ export default function ConfirmEmailScreen({}) {
 		setUserId(id);
 		if (!email) return;
 
+		setSent(true);
 		setValue(email);
 		setIsDisabled(true);
 		const setDisabled = setTimeout(() => {
@@ -68,8 +70,8 @@ export default function ConfirmEmailScreen({}) {
 	}, []);
 
 	const handleResend = async () => {
-		console.log("handling");
 		await activateAccount(value, userId);
+		setSent(true);
 	};
 
 	return (
@@ -79,7 +81,7 @@ export default function ConfirmEmailScreen({}) {
 					<img src={image} alt="email verification" className="image" />
 				</div>
 				<h2>email verification sent</h2>
-				{value ? <p>an email has been sent to {value}</p> : null}
+				{value && isSent ? <p>an email has been sent to {value}</p> : null}
 				<div className="input-details-container">
 					<Input
 						placeholder="email address"

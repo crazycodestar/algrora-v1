@@ -284,7 +284,7 @@ export default function AccountScreen({
 							<h2>{store.name}</h2>
 							<div>
 								<div className="clientLimit-container">
-									<p>clients</p>
+									<p>clientTokens</p>
 									<p>{store.clientLimit}</p>
 								</div>
 								<DropdownMenu

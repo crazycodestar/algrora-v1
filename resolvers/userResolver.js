@@ -55,7 +55,7 @@ module.exports.addUser = async (_, args, { secret }) => {
 	// console.log("adding user");
 	const password = await bcrypt.hash(args.password, 12);
 	const user = new User({
-		username: args.username,
+		username: args.username.toLowerCase(),
 		password: password,
 		emailAddress: args.emailAddress,
 	});

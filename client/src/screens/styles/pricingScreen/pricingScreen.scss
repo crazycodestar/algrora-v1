@@ -11,11 +11,50 @@
 	}
 }
 
+.loader-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 99;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #00000091;
+	.wrapper {
+		gap: 10px;
+		display: flex;
+		flex-direction: column;
+		padding: 30px;
+		width: 400px;
+		background-color: var(--light-colour);
+		border-radius: var(--border-radius);
+		@include respond(small) {
+			width: 100%;
+			box-sizing: border-box;
+		}
+		.processing {
+			display: flex;
+			flex-wrap: wrap;
+			div {
+				flex-grow: 0;
+			}
+			// background-color: red;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}
+
 .pricingScreen {
 	display: flex;
 	flex: 1;
 	flex-direction: column;
 	align-items: center;
+	// position: relative;
+
 	.heading-container {
 		width: 60vw;
 		text-align: center;

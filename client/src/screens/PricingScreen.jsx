@@ -20,6 +20,7 @@ export default function PricingScreen({ history }) {
 	const [clientSize, setClientSize] = useState(null);
 	const [pricings, setPricings] = useState([]);
 	const [isNew, setIsNew] = useState(false);
+	const [completingPurchase, isCompletingPurchase] = useState(false);
 	const accountReducer = useSelector((state) => state.accountReducer);
 
 	useScript("https://js.paystack.co/v1/inline.js");
@@ -42,21 +43,22 @@ export default function PricingScreen({ history }) {
 	}, []);
 
 	const handleSuccess = async (reference) => {
-		// console.log(reference);
-		// const request = await fetch(
-		// 	`/paystack/callback?trxref=${reference.trxref}`,
-		// 	{
-		// 		headers: {
-		// 			authorization: `bearer ${accountReducer.token}`,
-		// 			"content-type": "application/json",
-		// 		},
-		// 	}
-		// );
-		// const response = request;
-		// if (response.status === 200) return history.push("/account");
-		setTimeout(() => {
-			history.push("/account");
-		}, 3000);
+		isCompletingPurchase(true);
+		const request = await fetch(
+			`/paystack/callback?trxref=${reference.trxref}`,
+			{
+				headers: {
+					authorization: `bearer ${accountReducer.token}`,
+					"content-type": "application/json",
+				},
+			}
+		);
+		const response = request;
+		return history.push("/account");
+
+		// setTimeout(() => {
+		// 	history.push("/account");
+		// }, 3000);
 	};
 
 	const activateStore = async () => {
@@ -73,6 +75,33 @@ export default function PricingScreen({ history }) {
 			history.push("/account");
 		}
 	};
+	if (completingPurchase)
+		return (
+			<div className="loader-container">
+				<div className="wrapper">
+					<div className="processing">
+						<div className="empty-container">
+							<div class="lds-ring">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+						</div>
+						<h3>processing purchase...</h3>
+					</div>
+					<p>
+						if purchase isn't instantly displayed purchase kindly be patient
+						with us as it will show later.
+					</p>
+
+					<p className="message-error">
+						and if that dosen't work please message us with the email in the
+						transaction page and we will get back to you as soon as possible
+					</p>
+				</div>
+			</div>
+		);
 	return (
 		<div className="pricingScreen body-container">
 			<div className="heading-container">
@@ -170,7 +199,7 @@ export default function PricingScreen({ history }) {
 																<div>
 																	<div>
 																		<p>{item.key}</p>
-																		{isNew !== 8000 ? <p>+2 free</p> : null}
+																		{isNew ? <p>+2 free</p> : null}
 																	</div>
 																	<span>₦{item.value}</span>
 																</div>
@@ -184,7 +213,7 @@ export default function PricingScreen({ history }) {
 								})}
 								<div className="button-container">
 									{isNew && evaluated.plan.planing !== "premium" ? (
-										<Button onClick={activateStore}>2 clients free</Button>
+										<Button onClick={activateStore}>2 clientTokens free</Button>
 									) : (
 										<PayStackPurchase
 											details={evaluated.plan}
