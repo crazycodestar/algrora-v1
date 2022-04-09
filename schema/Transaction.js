@@ -6,6 +6,8 @@ const transactionSchema = new Schema({
 	reference: {
 		type: String,
 		required: true,
+		index: true,
+		unique: true,
 	},
 	amount: {
 		type: Number,

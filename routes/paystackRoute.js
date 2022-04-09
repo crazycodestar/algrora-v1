@@ -112,6 +112,12 @@ router.post("/callback", async (req, res) => {
 			case "charge.success":
 				console.log("charge successful");
 				const data = req.body.data;
+
+				const isTransaction = Transaction.findOne({
+					reference: data.reference,
+				});
+				if (isTransaction) return;
+
 				const metadata = data.metadata;
 				const store = await Store.findById(metadata.store_id);
 				const pricing = await Pricing.findById(metadata.plan);
