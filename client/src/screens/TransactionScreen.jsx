@@ -19,8 +19,6 @@ export default function TransactionScreen() {
 						reference
 						amount
 						paidAt
-						status
-						message
 						plan {
 							plan
 						}
@@ -38,6 +36,7 @@ export default function TransactionScreen() {
 			{},
 			header(accountReducer.token)
 		);
+		console.log(getTransactions);
 		if (getTransactions.status === "success") {
 			return setTransactions(
 				getTransactions.transactions.map((item) => {

@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
 });
 
 // frontend posting for faster response
-router.get("/callback", async (req, res) => {
+router.get("/quickpay", async (req, res) => {
 	const { trxref } = req.query;
 	const trx = await Transaction.findOne({ reference: trxref });
 	if (trx)

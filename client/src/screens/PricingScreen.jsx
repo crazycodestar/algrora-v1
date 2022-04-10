@@ -45,7 +45,7 @@ export default function PricingScreen({ history }) {
 	const handleSuccess = async (reference) => {
 		isCompletingPurchase(true);
 		const request = await fetch(
-			`/paystack/callback?trxref=${reference.trxref}`,
+			`/paystack/quickpay?trxref=${reference.trxref}`,
 			{
 				headers: {
 					authorization: `bearer ${accountReducer.token}`,

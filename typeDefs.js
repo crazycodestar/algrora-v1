@@ -38,8 +38,6 @@ const typeDefs = gql`
 
 	# rating functionality to be resolved
 	type Transaction {
-		status: Boolean!
-		message: String!
 		reference: String!
 		amount: Int!
 		paidAt: String!
