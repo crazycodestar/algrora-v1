@@ -95,66 +95,70 @@ router.get("/callback", async (req, res) => {
 const paystackSecret = process.env.PAYSTACK_SECRET;
 
 router.post("/callback", async (req, res) => {
-	console.log("calling callback");
-	//validate event
-	const hash = crypto
-		.createHmac("sha512", paystackSecret)
-		.update(JSON.stringify(req.body))
-		.digest("hex");
-	if (hash == req.headers["x-paystack-signature"]) {
-		// Do something with event
-		console.log("made it");
-		switch (req.body.event) {
-			case "charge.success":
-				console.log("charge successful");
-				const data = req.body.data;
+	try {
+		console.log("calling callback");
+		//validate event
+		const hash = crypto
+			.createHmac("sha512", paystackSecret)
+			.update(JSON.stringify(req.body))
+			.digest("hex");
+		if (hash == req.headers["x-paystack-signature"]) {
+			// Do something with event
+			console.log("made it");
+			switch (req.body.event) {
+				case "charge.success":
+					console.log("charge successful");
+					const data = req.body.data;
 
-				const isTransaction = Transaction.findOne({
-					reference: data.reference,
-				});
-				if (isTransaction) return;
-
-				const metadata = data.metadata;
-				const store = await Store.findById(metadata.store_id);
-				const pricing = await Pricing.findById(metadata.plan);
-				if (!store.active) store.activated = true;
-				if (metadata.subPlan) {
-					const subData = pricing.content[0].subData.find(
-						(item) => item.id === metadata.subPlan
-					);
-
-					store.clientLimit += subData.amount;
-					store.plan = "basic";
-					await store.save();
-
-					// log transaction
-					const transaction = new Transaction({
+					const isTransaction = Transaction.findOne({
 						reference: data.reference,
-						amount: data.amount / 100,
-						paidAt: data.paid_at,
-						userId: metadata.user_id,
-						storeId: metadata.store_id,
-						plan: metadata.plan,
-						subPlan: metadata.subPlan,
-						referrer: metadata.referrer,
 					});
-					console.log(transaction);
-					try {
-						transaction.save();
-					} catch (err) {
-						console.log(err);
+					if (isTransaction) return;
+
+					const metadata = data.metadata;
+					const store = await Store.findById(metadata.store_id);
+					const pricing = await Pricing.findById(metadata.plan);
+					if (!store.active) store.activated = true;
+					if (metadata.subPlan) {
+						const subData = pricing.content[0].subData.find(
+							(item) => item.id === metadata.subPlan
+						);
+
+						store.clientLimit += subData.amount;
+						store.plan = "basic";
+						await store.save();
+
+						// log transaction
+						const transaction = new Transaction({
+							reference: data.reference,
+							amount: data.amount / 100,
+							paidAt: data.paid_at,
+							userId: metadata.user_id,
+							storeId: metadata.store_id,
+							plan: metadata.plan,
+							subPlan: metadata.subPlan,
+							referrer: metadata.referrer,
+						});
+						console.log(transaction);
+						try {
+							transaction.save();
+						} catch (err) {
+							console.log(err);
+						}
+
+						return res.json({ status: "successful" }).status(200);
 					}
+					break;
 
-					return res.json({ status: "successful" }).status(200);
-				}
-				break;
-
-			default:
-				break;
+				default:
+					break;
+			}
 		}
+		console.log("failed");
+		return res.send("failed");
+	} catch (err) {
+		console.log(err);
 	}
-	console.log("failed");
-	return res.send("failed");
 });
 
 module.exports = router;
