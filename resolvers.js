@@ -94,8 +94,9 @@ const resolvers = {
 			return results;
 		},
 		getProducts: async () => {
-			// console.log("getting products");
-			return await Product.find({});
+			console.log("getting products");
+			const products = await Product.find({});
+			return products;
 		},
 		getProduct: async (_, { id }) => {
 			return await Product.findById(id);

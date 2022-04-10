@@ -56,6 +56,8 @@ export default function HomeScreen() {
 			}
 		`;
 		const data = await graphqlClient.request(query);
+		console.log("data.getProducts");
+		console.log(data.getProducts);
 		setProducts(data.getProducts);
 
 		setIsLoading(false);
