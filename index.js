@@ -84,20 +84,23 @@ const main = async () => {
 
 	app.use("/paystack", paystack);
 
-	app.get("/confirmation/:emailToken", async (req, res) => {
-		const emailToken = req.params.emailToken;
-		try {
-			const { user } = await jwt.verify(emailToken, email_secret);
-			const userData = await User.findById(user);
-			userData.activated = true;
-			userData.save();
-			res.redirect("e/Success");
-		} catch (err) {
-			console.log(err);
-			res.statusCode(401);
-			res.redirect("/error");
+	app.get(
+		"https://algrorashop.herokuapp.com//confirmation/:emailToken",
+		async (req, res) => {
+			const emailToken = req.params.emailToken;
+			try {
+				const { user } = await jwt.verify(emailToken, email_secret);
+				const userData = await User.findById(user);
+				userData.activated = true;
+				userData.save();
+				res.redirect("https://algrorashop.herokuapp.com//Success");
+			} catch (err) {
+				console.log(err);
+				res.json("activation failed").status(401);
+				// res.redirect("https://algrorashop.herokuapp.com//error");
+			}
 		}
-	});
+	);
 
 	if (process.env.NODE_ENV === "production") {
 		app.use("/", express.static(path.join(__dirname, "/client/build")));

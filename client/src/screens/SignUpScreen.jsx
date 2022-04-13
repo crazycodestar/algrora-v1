@@ -126,9 +126,9 @@ export default function SignInScreen() {
 				</Link>
 				<Formik
 					initialValues={{
-						username: "user_4",
-						emailAddress: "zzq87724@jiooq.com",
-						password: "Password1234..",
+						username: "",
+						emailAddress: "",
+						password: "",
 					}}
 					validationSchema={SignUpSchema}
 					onSubmit={async (values) => {

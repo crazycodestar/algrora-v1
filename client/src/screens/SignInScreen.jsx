@@ -45,8 +45,10 @@ export default function SignInScreen() {
 				</Link>
 				<Formik
 					initialValues={{
-						username: "rober",
-						password: "koblerwer",
+						// username: "rober",
+						username: "",
+						// password: "koblerwer",
+						password: "",
 					}}
 					validationSchema={SignInSchema}
 					onSubmit={async (data, { setSubmitting }) => {

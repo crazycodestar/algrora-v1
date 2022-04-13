@@ -40,6 +40,10 @@
 
 .confirmEmail .mail-container .warning {
   text-align: center;
+  background-color: #df475965;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  margin: 10px 0;
 }
 
 @media (max-width: 768px) {
