@@ -91,7 +91,7 @@ const main = async () => {
 			const userData = await User.findById(user);
 			userData.activated = true;
 			userData.save();
-			res.redirect("https://algrorashop.herokuapp.com/Success");
+			res.redirect("http://algrora.shop/Success");
 		} catch (err) {
 			console.log(err);
 			res.json("activation failed").status(401);

@@ -117,7 +117,7 @@ module.exports.register = async (
 	const emailToken = await jwt.sign({ user: user.id }, email_secret, {
 		expiresIn: 1000,
 	});
-	const url = `https://algrorashop.herokuapp.com/confirmation/${emailToken}`;
+	const url = `http://algrora.shop/confirmation/${emailToken}`;
 	transporter.sendMail(
 		{
 			to: email,
