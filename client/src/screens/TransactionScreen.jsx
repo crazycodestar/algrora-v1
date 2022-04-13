@@ -15,7 +15,7 @@ export default function TransactionScreen() {
 			query GetTransactions {
 				getTransactions {
 					status
-					messages
+					message
 					transactions {
 						reference
 						amount
