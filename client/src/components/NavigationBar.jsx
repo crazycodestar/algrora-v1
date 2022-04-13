@@ -227,7 +227,10 @@ export default function NavigationBar({ onClick }) {
 								)}
 							</div>
 						) : (
-							<div onClick={() => handleOption("signIn")}>
+							<div
+								className="sign-in-button"
+								onClick={() => handleOption("signIn")}
+							>
 								<p>sign in</p>
 							</div>
 						)}

@@ -163,6 +163,12 @@
   }
 }
 
+.navigationBar-container .dropdown-container > div .account-container .sign-in-button {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+}
+
 .navigationBar-container .dropdown-container > div .account-container .details {
   position: relative;
 }

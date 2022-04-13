@@ -4,6 +4,11 @@
 			@content;
 		}
 	}
+	@if ($breakpoint == marginError) {
+		@media (max-width: 480px) {
+			@content;
+		}
+	}
 	@if ($breakpoint == small) {
 		@media (max-width: 320px) {
 			@content;
@@ -22,7 +27,7 @@
 	@include respond(medium) {
 		padding: 0 30px;
 	}
-	@include respond(small) {
+	@include respond(marginError) {
 		padding: 0 10px;
 	}
 
@@ -36,7 +41,7 @@
 		@include respond(medium) {
 			width: 60%;
 		}
-		@include respond(small) {
+		@include respond(marginError) {
 			width: 100%;
 		}
 		.proceedWithoutSigning {
@@ -69,7 +74,7 @@
 			width: 300px;
 			height: 300px;
 		}
-		@include respond(small) {
+		@include respond(marginError) {
 			display: none;
 		}
 	}

@@ -99,6 +99,10 @@
 						margin-left: auto;
 					}
 				}
+				.sign-in-button {
+					box-sizing: border-box;
+					width: 100%;
+				}
 				.details {
 					position: relative;
 					@include respond(medium) {
