@@ -91,6 +91,11 @@ module.exports.register = async (
 	{ transporter, email_secret }
 ) => {
 	const user = await User.findById(id);
+
+	if (user.activated) {
+		return { status: "activated", message: "account already activated" };
+	}
+
 	if (email !== user.emailAddress) {
 		try {
 			user.emailAddress = email;

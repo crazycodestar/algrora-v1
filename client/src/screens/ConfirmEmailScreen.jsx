@@ -19,15 +19,26 @@ function useQuery() {
 }
 
 export default function ConfirmEmailScreen({}) {
-	const accountReducer = useSelector((state) => state.accountReducer);
 	const [value, setValue] = useState("");
 	const [userId, setUserId] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 	const [isDisabled, setIsDisabled] = useState(false);
 	const [isSent, setSent] = useState(false);
+	const [blocked, setBlocked] = useState(false);
 
 	// show button timer
 	let queryparmas = useQuery();
+
+	useEffect(() => {
+		console.log("functioning");
+		let timer;
+		if (!blocked) {
+			timer = setTimeout(() => {
+				setIsDisabled(false);
+			}, 5000);
+		}
+		return clearTimeout(timer);
+	}, [isDisabled]);
 
 	const activateAccount = async (email, id) => {
 		console.log("working");
@@ -47,6 +58,12 @@ export default function ConfirmEmailScreen({}) {
 		console.log(register);
 		if (register.status == "failed") {
 			setErrorMessage(register.message);
+		}
+
+		if (register.status == "activated") {
+			setErrorMessage(register.message);
+			setIsDisabled(false);
+			setBlocked(true);
 		}
 	};
 
@@ -72,6 +89,7 @@ export default function ConfirmEmailScreen({}) {
 	const handleResend = async () => {
 		await activateAccount(value, userId);
 		setSent(true);
+		setIsDisabled(true);
 	};
 
 	return (

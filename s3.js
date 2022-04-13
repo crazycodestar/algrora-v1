@@ -49,7 +49,6 @@ const s3Delete = async (filename) => {
 	};
 	s3.deleteObject(params, (err, data) => {
 		if (err) return console.log("err", err);
-		console.log("data", data);
 	});
 };
 

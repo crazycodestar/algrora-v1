@@ -69,6 +69,7 @@ export default function AddProductScreen({ history }) {
 				enableReinitialize
 				validationSchema={ProductValidationSchema}
 				onSubmit={async (data, { setSubmitting }) => {
+					console.log("submitting");
 					setSubmitting(true);
 					const {
 						productName: name,
@@ -78,7 +79,9 @@ export default function AddProductScreen({ history }) {
 					} = data;
 					const fileData = data.images[0];
 					let imageUri = null;
-					if (fileData) {
+					console.log("before it");
+					if (fileData && typeof fileData !== "string") {
+						// console.log();
 						const query = gql`
 							mutation Mutation($filename: String!, $fileType: String!) {
 								signS3(filename: $filename, fileType: $fileType)
@@ -107,11 +110,13 @@ export default function AddProductScreen({ history }) {
 							imageUri = signS3.split("?")[0];
 						}
 					}
+					console.log("after it");
 					// add product to database or update product
 					let query;
 					let variables = {};
 
 					if (productId) {
+						console.log("updating");
 						query = gql`
 							mutation UpdateProduct(
 								$updateProductId: ID!
@@ -156,7 +161,6 @@ export default function AddProductScreen({ history }) {
 							},
 						};
 					}
-					// return console.log(variables);
 					const { addProduct } = await request(url, query, variables, {
 						Authorization: `bearer ${accountReducer.token}`,
 					});
@@ -183,6 +187,9 @@ export default function AddProductScreen({ history }) {
 								onChangeField={setFieldValue}
 							/>
 						</div>
+						{errors.images && touched.images ? (
+							<p className="message-error">{errors.images}</p>
+						) : null}
 						<div className="name-price-container">
 							<InputValidation
 								placeholder="name"
@@ -214,7 +221,7 @@ export default function AddProductScreen({ history }) {
 							type="text"
 							name="productDescription"
 						/>
-						{/* <pre>{JSON.stringify(errors, null, 2)}</pre> */}
+						<pre>{JSON.stringify(touched, null, 2)}</pre>
 						{errorMessage ? (
 							<p className="message-error">{errorMessage}</p>
 						) : null}
