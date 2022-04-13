@@ -44,8 +44,8 @@ const main = async () => {
 
 	await mongoose.connect(
 		process.env.MONGODB_URI ||
-			"mongodb+srv://altech:Altech1234.@algrora-store.t1nhy.mongodb.net/algrora-store?retryWrites=true&w=majority",
-		// "mongodb://localhost:27017/algroraDB",
+			// "mongodb+srv://altech:Altech1234.@algrora-store.t1nhy.mongodb.net/algrora-store?retryWrites=true&w=majority",
+			"mongodb://localhost:27017/algroraDB",
 		{
 			useNewUrlParser: true,
 		}

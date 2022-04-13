@@ -56,7 +56,8 @@ export default function AddProductScreen({ history }) {
 			productDescription: params.get("productDescription"),
 			productCategory: tags,
 		};
-		// console.log(updateParams);
+		console.log("updateParams");
+		console.log(updateParams);
 		setProductId(params.get("id"));
 		setActiveData(updateParams);
 	}, []);
@@ -251,6 +252,9 @@ const TagPicker = ({ name, values, onChange }) => {
 		`;
 		const { getCategories } = await request("/graphql", query);
 		setCategories(getCategories);
+		return () => {
+			setCategories([]);
+		};
 	}, []);
 
 	const handleClick = (option) => {
@@ -285,15 +289,18 @@ const TagPicker = ({ name, values, onChange }) => {
 	return (
 		<div className="tagPicker">
 			<div className="options">
-				{values.length
+				{values.length && categories.length
 					? values.map((cat) => {
 							const option = categories.find((item) => item.id === cat);
 							return (
 								<div
 									className="option-wrapper"
 									onClick={() => handleRemove(option)}
+									key={option.id}
 								>
 									<p>{option.name}</p>
+									{/* <pre>{JSON.stringify(option, null, 2)}</pre> */}
+									{/* <p>place holder</p> */}
 									<Close fontSize="small" />
 								</div>
 							);

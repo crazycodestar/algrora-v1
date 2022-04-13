@@ -133,6 +133,10 @@ const typeDefs = gql`
 		message: String
 		product: Product
 	}
+	type GetProductMessage {
+		products: [Product!]!
+		isNext: Boolean
+	}
 	type CommentMessage {
 		status: String!
 		message: String
@@ -198,7 +202,7 @@ const typeDefs = gql`
 	}
 	type Query {
 		hello: String
-		getProducts: [Product]
+		getProducts(page: Int!): GetProductMessage!
 		getProduct(id: ID): Product!
 		user: User
 		getStore(id: ID!): StoreMessage!

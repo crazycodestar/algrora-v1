@@ -51,7 +51,6 @@ module.exports.getTransactions = async (_, __, { userData }) => {
 
 // Mutations
 module.exports.addStore = async (_, args, { userData }) => {
-	console.log("adding store");
 	const { name, imageUri, description } = args;
 	const user = await User.findById(userData.id);
 	if (user.store)

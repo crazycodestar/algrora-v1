@@ -108,6 +108,19 @@ export default function PricingScreen({ history }) {
 				<p>pricing</p>
 				<h1>start selling today with plans that suit your wallet</h1>
 			</div>
+			<div className="client-tokens-explanation-container">
+				<h2>what are client tokens ?</h2>
+				<p>
+					a client token is a form of payment in advance. when a client makes an
+					order, we only show you the order after you pay us. So, instead of
+					payment for client everytime you get an order, we have provided these
+					tokens to signify that you have access to that many clients long
+					before any client makes an order. don't worry if you don't have tokens
+					when a client makes an order. we will notify you that you have a
+					client so you can then go own to pay for more tokens to have access to
+					that client.
+				</p>
+			</div>
 			<div className="pricing-container">
 				{pricings &&
 					pricings.map((price, index) => {

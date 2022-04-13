@@ -7,14 +7,11 @@ const User = require("../schema/User");
 const { generateErrorsMessage } = require("../utilities");
 
 module.exports.login = async (parent, args, { secret }) => {
-	console.log("logging in user");
 	let user;
 	user = await User.findOne({ username: args.username });
 	if (!user) {
 		user = await User.findOne({ emailAddress: args.username });
 	}
-	// console.log("testing going on here");
-	// console.log(user);
 	if (!user)
 		return {
 			status: "failed",
@@ -52,7 +49,6 @@ module.exports.login = async (parent, args, { secret }) => {
 };
 
 module.exports.addUser = async (_, args, { secret }) => {
-	// console.log("adding user");
 	const password = await bcrypt.hash(args.password, 12);
 	const user = new User({
 		username: args.username.toLowerCase(),
@@ -94,7 +90,6 @@ module.exports.register = async (
 	{ email, id },
 	{ transporter, email_secret }
 ) => {
-	console.log("mail sending");
 	const user = await User.findById(id);
 	if (email !== user.emailAddress) {
 		try {
@@ -126,12 +121,10 @@ module.exports.register = async (
 		},
 		(err, info) => {
 			if (err) {
-				console.log(err);
 				return {
 					status: "failed",
 				};
 			}
-			console.log("mail sent");
 			return { status: "success" };
 		}
 	);

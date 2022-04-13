@@ -81,6 +81,10 @@ export default function ConfirmEmailScreen({}) {
 					<img src={image} alt="email verification" className="image" />
 				</div>
 				<h2>email verification sent</h2>
+				<p className="warning">
+					please if you do not see an email from{" "}
+					<i>altechbusinesses@gmail.com</i> please look through your spam mail
+				</p>
 				{value && isSent ? <p>an email has been sent to {value}</p> : null}
 				<div className="input-details-container">
 					<Input

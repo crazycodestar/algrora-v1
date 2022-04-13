@@ -11,9 +11,11 @@ import { v4 as uuidv4 } from "uuid";
 export default function SearchScreen({ location }) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [products, setProducts] = useState([]);
+	const [searchTerm, setSearchTerm] = useState("");
 	useEffect(async () => {
 		setIsLoading(true);
 		const searchQuery = new URLSearchParams(location.search);
+		setSearchTerm(searchQuery.get("search"));
 		const query = gql`
 			query Query($search: String!) {
 				search(search: $search) {
@@ -42,16 +44,19 @@ export default function SearchScreen({ location }) {
 			return <p>no Products matching search term</p>;
 		} else {
 			return (
-				<div className="product-wrapper">
-					{products.map((item) => (
-						<Product
-							product={item}
-							key={uuidv4()}
-							style={{
-								marginBottom: 10,
-							}}
-						/>
-					))}
+				<div className="search-container">
+					<h2>search results for "{searchTerm}"</h2>
+					<div className="product-wrapper">
+						{products.map((item) => (
+							<Product
+								product={item}
+								key={uuidv4()}
+								style={{
+									marginBottom: 10,
+								}}
+							/>
+						))}
+					</div>
 				</div>
 			);
 		}

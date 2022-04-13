@@ -10,7 +10,7 @@ const Comment = require("./schema/Comment");
 const Order = require("./schema/Order");
 const Pricing = require("./schema/Pricing");
 
-const { getTime } = require("./utilities");
+const { getTime, paginateResults } = require("./utilities");
 const {
 	addStore,
 	getPricing,
@@ -46,7 +46,6 @@ const resolvers = {
 	Store: {
 		products: async (parent) => {
 			const store = await parent.populate("products");
-			// console.log(product);
 			return store.products;
 		},
 	},
@@ -93,22 +92,28 @@ const resolvers = {
 			const results = Product.find({ name: regex });
 			return results;
 		},
-		getProducts: async () => {
-			console.log("getting products");
-			const products = await Product.find({});
-			console.log(products);
-			return products;
+		getProducts: async (_, { page }) => {
+			const result = await paginateResults(Product, page, 20);
+			const products = result.results.map((item) => ({
+				item,
+				random: Math.random() * 10,
+			}));
+			products.sort((a, b) => {
+				if (a.random > b.random) return 1;
+				if (a.random < b.random) return -1;
+				return 0;
+			});
+			const orderedResults = products.map((item) => item.item);
+			return { isNext: result.isNext, products: orderedResults };
 		},
 		getProduct: async (_, { id }) => {
 			return await Product.findById(id);
 		},
 		user: async (_, __, { userData }) => {
-			// console.log("getting user");
 			return await User.findById(userData.id);
 		},
 		getStore: async (_, { id }) => {
 			// dosen't function properly
-			// console.log("getting store");
 			const storeData = await Store.findById(id);
 			if (!storeData)
 				return {
@@ -141,7 +146,6 @@ const resolvers = {
 		addStore: addStore,
 		initStore,
 		updateStore: async (_, { id, store }, { userData }) => {
-			// console.log("updating store");
 			const user = User.findById(userData.id);
 			if (!user) return { status: "failed" };
 			const storeData = await Store.findById(id);
@@ -170,8 +174,6 @@ const resolvers = {
 			}
 		},
 		addProduct: async (_, args, { userData }) => {
-			// console.log("adding Product");
-			console.log(args);
 			const { imageUri, name, description, price, tags } = args.product;
 			const product = new Product({
 				name,
@@ -211,7 +213,6 @@ const resolvers = {
 			}
 		},
 		updateProduct: async (_, { id, product }, { userData }) => {
-			// console.log("updating product");
 			const user = User.findById(userData.id);
 			if (!user) return { status: "failed" };
 			const productData = await Product.findById(id);
@@ -251,7 +252,6 @@ const resolvers = {
 			const filename = `${imageUriList.at(-2)}/${imageUriList.at(-1)}`;
 			await s3Delete(filename);
 			const store = await Store.findById(product.store);
-			// console.log("product _id", product.id);
 			// clean up store
 			const products = [];
 			for (p of store.products) {

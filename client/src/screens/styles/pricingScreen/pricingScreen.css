@@ -98,6 +98,12 @@
   }
 }
 
+.pricingScreen .client-tokens-explanation-container {
+  padding: 20px;
+  margin: 40px 0;
+  background-color: #df475978;
+}
+
 .pricingScreen .pricing-container {
   display: -webkit-box;
   display: -ms-flexbox;

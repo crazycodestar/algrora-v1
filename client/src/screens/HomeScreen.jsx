@@ -18,7 +18,8 @@ import { useSelector } from "react-redux";
 
 // graphql
 import graphqlClient from "../graphqlClient";
-import { gql } from "graphql-request";
+import request, { gql } from "graphql-request";
+import useProducts from "../useProducts";
 
 const categories = [
 	"all",
@@ -30,50 +31,54 @@ const categories = [
 ];
 
 export default function HomeScreen() {
-	const [products, setProducts] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
-	const accountReducer = useSelector((state) => state.accountReducer);
-	useEffect(async () => {
-		console.log(accountReducer);
-		// fetch("http://localhost:5000/api/home")
-		// 	.then((res) => res.json())
-		// 	.then((data) => {
-		// 		return setProducts(data);
-		// 	})
-		// 	.catch((err) => console.log(err));
-		const query = gql`
-			query Query {
-				getProducts {
-					name
-					price
-					id
-					imageUri
-					store {
-						name
-						imageUri
-					}
-				}
-			}
-		`;
-		const data = await graphqlClient.request(query);
-		console.log("data.getProducts");
-		console.log(data.getProducts);
-		setProducts(data.getProducts);
+	const [page, setPage] = useState(1);
+	// const [products, setProducts] = useState([]);
+	// const [isLoading, setIsLoading] = useState(true);
+	// const [isNext, setIsNext] = useState(false);
+	// const accountReducer = useSelector((state) => state.accountReducer);
+	// useEffect(async () => {
+	// 	console.log(accountReducer);
+	// 	// fetch("http://localhost:5000/api/home")
+	// 	// 	.then((res) => res.json())
+	// 	// 	.then((data) => {
+	// 	// 		return setProducts(data);
+	// 	// 	})
+	// 	// 	.catch((err) => console.log(err));
+	// 	const query = gql`
+	// 		query Query {
+	// 			getProducts {
+	// 				products {
+	// 					name
+	// 					price
+	// 					id
+	// 					imageUri
+	// 					store {
+	// 						name
+	// 						imageUri
+	// 					}
+	// 				}
+	// 				isNext
+	// 			}
+	// 		}
+	// 	`;
 
-		setIsLoading(false);
-	}, []);
+	// 	// const data = await graphqlClient.request(query);
+	// 	const { getProducts } = await request("/graphql", query);
 
-	if (isLoading)
-		return (
-			<div className="empty-container">
-				<div class="lds-ring">
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-				</div>
-			</div>
-		);
+	// 	console.log(getProducts.products);
+	// 	setIsNext(getProducts.isNext);
+	// 	setProducts(getProducts.products);
+	// 	// console.log("data.getProducts");
+	// 	// console.log(data.getProducts);
+
+	// 	setIsLoading(false);
+	// }, []);
+
+	const { isLoading, isNext, products } = useProducts({ page });
+
+	const handleMorePages = () => {
+		if (isNext) setPage(page + 1);
+	};
 
 	if (!products.length)
 		return (
@@ -99,7 +104,25 @@ export default function HomeScreen() {
 							/>
 						))}
 					</div>
+					{isLoading && (
+						<div className="empty-container">
+							<div class="lds-ring">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+						</div>
+					)}
 				</div>
+				{isNext ? (
+					<Button
+						style={{ marginLeft: "auto", marginRight: "auto" }}
+						onClick={handleMorePages}
+					>
+						more products
+					</Button>
+				) : null}
 			</div>
 		</div>
 	);

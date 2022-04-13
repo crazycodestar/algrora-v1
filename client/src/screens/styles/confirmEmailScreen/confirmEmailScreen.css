@@ -17,27 +17,44 @@
 .confirmEmail .mail-container {
   background-color: var(--light-colour);
   width: 40vw;
-  padding: 10px;
-  border-radius: var(--border-radius);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.confirmEmail .mail-container .warning {
+  text-align: center;
 }
 
 @media (max-width: 768px) {
   .confirmEmail .mail-container {
     width: auto;
+    padding: 10px 30px;
     margin: 0 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .confirmEmail .mail-container {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 10px;
   }
 }
 
