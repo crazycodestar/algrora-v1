@@ -85,7 +85,7 @@ const main = async () => {
 	app.use("/paystack", paystack);
 
 	app.get(
-		"https://algrorashop.herokuapp.com//confirmation/:emailToken",
+		"https://algrorashop.herokuapp.com/confirmation/:emailToken",
 		async (req, res) => {
 			const emailToken = req.params.emailToken;
 			try {
@@ -93,7 +93,7 @@ const main = async () => {
 				const userData = await User.findById(user);
 				userData.activated = true;
 				userData.save();
-				res.redirect("https://algrorashop.herokuapp.com//Success");
+				res.redirect("https://algrorashop.herokuapp.com/Success");
 			} catch (err) {
 				console.log(err);
 				res.json("activation failed").status(401);

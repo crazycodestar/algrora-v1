@@ -109,7 +109,11 @@ export default function SignInScreen() {
 								<p className="message-error">{errorMessage}</p>
 							) : null}
 							<div className="button-container">
-								<Button secondary onClick={() => history.push("/signUp")}>
+								<Button
+									type="button"
+									secondary
+									onClick={() => history.push("/signUp")}
+								>
 									sign up
 								</Button>
 								<Button type="submit" disabled={isSubmitting}>

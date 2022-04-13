@@ -8,9 +8,9 @@ const { generateErrorsMessage } = require("../utilities");
 
 module.exports.login = async (parent, args, { secret }) => {
 	let user;
-	user = await User.findOne({ username: args.username });
+	user = await User.findOne({ username: args.username.toLowerCase() });
 	if (!user) {
-		user = await User.findOne({ emailAddress: args.username });
+		user = await User.findOne({ emailAddress: args.username.toLowerCase() });
 	}
 	if (!user)
 		return {
@@ -53,7 +53,7 @@ module.exports.addUser = async (_, args, { secret }) => {
 	const user = new User({
 		username: args.username.toLowerCase(),
 		password: password,
-		emailAddress: args.emailAddress,
+		emailAddress: args.emailAddress.toLowerCase(),
 	});
 	try {
 		const userData = await user.save();
@@ -112,7 +112,7 @@ module.exports.register = async (
 	const emailToken = await jwt.sign({ user: user.id }, email_secret, {
 		expiresIn: 1000,
 	});
-	const url = `/confirmation/${emailToken}`;
+	const url = `https://algrorashop.herokuapp.com/confirmation/${emailToken}`;
 	transporter.sendMail(
 		{
 			to: email,
