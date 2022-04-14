@@ -52,7 +52,7 @@ export default function AddProductScreen({ history }) {
 		const updateParams = {
 			images,
 			productName: params.get("productName"),
-			productPrice: params.get("productPrice"),
+			productPrice: parseInt(params.get("productPrice")),
 			productDescription: params.get("productDescription"),
 			productCategory: tags,
 		};
@@ -161,13 +161,18 @@ export default function AddProductScreen({ history }) {
 							},
 						};
 					}
-					const { addProduct } = await request(url, query, variables, {
-						Authorization: `bearer ${accountReducer.token}`,
-					});
+					const { addProduct, updateProduct } = await request(
+						url,
+						query,
+						variables,
+						{
+							Authorization: `bearer ${accountReducer.token}`,
+						}
+					);
 
 					setSubmitting(false);
-					console.log(addProduct);
-					if (addProduct.status === "success") {
+					const result = addProduct || updateProduct;
+					if (result.status === "success") {
 						history.push("/account");
 					} else {
 						console.log("failed");
