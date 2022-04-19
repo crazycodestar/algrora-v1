@@ -17,5 +17,14 @@
 }
 
 .body-container {
+	flex: 1;
 	margin-top: 40px;
+}
+
+.empty-container {
+	display: flex;
+	flex-grow: 1;
+	width: 100vw;
+	justify-content: center;
+	align-items: center;
 }

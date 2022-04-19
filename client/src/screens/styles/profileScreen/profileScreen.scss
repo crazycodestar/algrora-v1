@@ -1,0 +1,43 @@
+@mixin respond($breakpoint) {
+	@if ($breakpoint == medium) {
+		@media (max-width: 768px) {
+			@content;
+		}
+	}
+	@if ($breakpoint == small) {
+		@media (max-width: 480px) {
+			@content;
+		}
+	}
+}
+
+.profileScreen {
+	padding: 0 70px;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	@include respond(small) {
+		padding: 10px;
+	}
+	.button-container {
+		display: flex;
+		margin-left: auto;
+		gap: 10px;
+		background-color: var(--light-colour);
+		margin-top: 10px;
+	}
+	.user-profile-container,
+	.store-profile-container {
+		display: flex;
+		flex-grow: 1;
+		.profile-body {
+			margin-left: 10px;
+			@include respond(medium) {
+				margin-left: 0;
+			}
+		}
+		@include respond(medium) {
+			flex-wrap: wrap;
+		}
+	}
+}

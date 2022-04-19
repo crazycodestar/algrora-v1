@@ -1,0 +1,84 @@
+.orderScreen .section {
+  background-color: var(--light-colour);
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  -webkit-box-shadow: var(--box-shadow);
+          box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.orderScreen .headings-container {
+  gap: 20px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.orderScreen .details-container {
+  gap: 10px;
+}
+
+.orderScreen .ordersDetails-container {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.orderScreen .ordersDetails-container .orderDetails-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: var(--light-colour);
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.orderScreen .ordersDetails-container .orderDetails-container > p {
+  width: 200px;
+  text-align: right;
+}
+
+@media (max-width: 320px) {
+  .orderScreen .ordersDetails-container .orderDetails-container > p {
+    margin-left: 30px;
+    width: auto;
+    -ms-flex-negative: 1;
+        flex-shrink: 1;
+  }
+}
+
+.orderScreen .ordersDetails-container .orderDetails-container .productDetails-container {
+  width: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+}
+
+.orderScreen .ordersDetails-container .orderDetails-container .productDetails-container .image-container {
+  background-color: var(--background-colour);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.orderScreen .ordersDetails-container .orderDetails-container .productDetails-container .image-container .orderImage {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+/*# sourceMappingURL=OrderScreen.css.map */

@@ -226,7 +226,6 @@ export default function AddProductScreen({ history }) {
 							type="text"
 							name="productDescription"
 						/>
-						<pre>{JSON.stringify(touched, null, 2)}</pre>
 						{errorMessage ? (
 							<p className="message-error">{errorMessage}</p>
 						) : null}

@@ -8,6 +8,7 @@ export default function Button({
 	onClick,
 	style,
 	disabled,
+	type = "button",
 	...others
 }) {
 	const isSecondary = (secondary) => {
@@ -19,6 +20,7 @@ export default function Button({
 			{...others}
 			onClick={onClick}
 			disabled={disabled}
+			type={type}
 			className={`button ${isSecondary(secondary)} ${
 				disabled ? "button-disabled" : ""
 			} `}

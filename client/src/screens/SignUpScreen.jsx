@@ -25,6 +25,8 @@ const SignUpSchema = Yup.object().shape({
 	username: Yup.string().min(2).max(15).required(),
 	emailAddress: Yup.string().email().required(),
 	password: Yup.string().min(8).max(16).required(),
+	tel: Yup.string().min(11).max(11).required(),
+	roomAddress: Yup.string().min(5).required(),
 });
 
 export default function SignInScreen() {
@@ -39,11 +41,15 @@ export default function SignInScreen() {
 				$username: String!
 				$emailAddress: String!
 				$password: String!
+				$tel: String!
+				$roomAddress: String!
 			) {
 				addUser(
 					username: $username
 					emailAddress: $emailAddress
 					password: $password
+					tel: $tel
+					roomAddress: $roomAddress
 				) {
 					status
 					message
@@ -129,6 +135,8 @@ export default function SignInScreen() {
 						username: "",
 						emailAddress: "",
 						password: "",
+						tel: "",
+						roomAddress: "",
 					}}
 					validationSchema={SignUpSchema}
 					onSubmit={async (values) => {
@@ -149,12 +157,22 @@ export default function SignInScreen() {
 								placeholder="email address"
 							/>
 							<InputValidation
+								name="tel"
+								type="text"
+								placeholder="08012345678"
+							/>
+							<InputValidation
+								name="roomAddress"
+								type="text"
+								placeholder="peter A101"
+							/>
+							<InputValidation
 								name="password"
 								type="password"
 								placeholder="password"
 								validate={passwordValidation}
 							/>
-							{/* <pre>{json}</pre> */}
+							<pre>{JSON.stringify(values, null, 2)}</pre>
 							{evaluatePassword(values.password)}
 							{errorMessage ? (
 								<p className="message-error">{errorMessage}</p>

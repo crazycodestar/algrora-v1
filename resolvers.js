@@ -67,6 +67,16 @@ const resolvers = {
 			return user;
 		},
 	},
+	User: {
+		interests: async (parent) => {
+			const interests = await Promise.all(
+				parent.interests.map(async (interest) => {
+					return await Category.findById(interest);
+				})
+			);
+			return interests;
+		},
+	},
 	Order: {
 		user: async (parent) => {
 			const { user } = await parent.populate("user");

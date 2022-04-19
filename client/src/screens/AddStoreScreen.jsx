@@ -71,7 +71,7 @@ export default function AddStoreScreen({ history }) {
 					setSubmitting(true);
 					const fileData = data.images[0];
 					let imageUri = null;
-					if (fileData) {
+					if (fileData && typeof fileData !== "string") {
 						const query = gql`
 							mutation Mutation($filename: String!, $fileType: String!) {
 								signS3(filename: $filename, fileType: $fileType)

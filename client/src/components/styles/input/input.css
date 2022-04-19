@@ -1,5 +1,9 @@
 .input-container {
   width: 100%;
+}
+
+.input-container .sub-container {
+  width: 100%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   display: -webkit-box;
@@ -13,7 +17,7 @@
   padding: 10px;
 }
 
-.input-container .container {
+.input-container .sub-container .container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -26,7 +30,7 @@
   margin-right: 10px;
 }
 
-.input-container .input {
+.input-container .sub-container .input {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -35,19 +39,19 @@
   width: 100%;
 }
 
-.input-container .input::-webkit-input-placeholder {
+.input-container .sub-container .input::-webkit-input-placeholder {
   text-transform: lowercase;
 }
 
-.input-container .input:-ms-input-placeholder {
+.input-container .sub-container .input:-ms-input-placeholder {
   text-transform: lowercase;
 }
 
-.input-container .input::-ms-input-placeholder {
+.input-container .sub-container .input::-ms-input-placeholder {
   text-transform: lowercase;
 }
 
-.input-container .input::placeholder {
+.input-container .sub-container .input::placeholder {
   text-transform: lowercase;
 }
 /*# sourceMappingURL=input.css.map */

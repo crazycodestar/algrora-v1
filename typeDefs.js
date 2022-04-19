@@ -1,5 +1,15 @@
 const { gql } = require("apollo-server-express");
 
+// meetTime: String
+// details: String
+// status: String
+// message: String
+
+// meetTime: String
+// details: String
+// status: String
+// message: String
+
 const typeDefs = gql`
 	type User {
 		id: ID!
@@ -9,6 +19,9 @@ const typeDefs = gql`
 		# password: String!
 		cart: [Product]!
 		store: String
+		interests: [Category]!
+		roomAddress: String
+		tel: String
 	}
 	type Cart {
 		product: Product!
@@ -108,14 +121,11 @@ const typeDefs = gql`
 		product: Product!
 		quantity: Int!
 		store: Store!
+		orderKey: String!
 		uploadTime: String!
 		updatedTime: String!
 		lastActive: String!
 		read: Boolean!
-		meetTime: String
-		details: String
-		status: String
-		message: String
 	}
 	type StoreMessage {
 		status: String!
@@ -172,6 +182,9 @@ const typeDefs = gql`
 	input UserInput {
 		imageUri: String
 		username: String
+		tags: [ID]
+		tel: String
+		roomAddress: String
 	}
 	input ProductInput {
 		imageUri: String
@@ -191,10 +204,7 @@ const typeDefs = gql`
 		quantity: Int!
 	}
 	input OrderDetails {
-		meetTime: String
-		details: String
-		status: String
-		message: String
+		quantity: Int
 	}
 	enum Type {
 		USER
@@ -218,6 +228,8 @@ const typeDefs = gql`
 			username: String!
 			emailAddress: String!
 			password: String!
+			tel: String!
+			roomAddress: String!
 		): UserMessage!
 		addInterests(interests: [ID!]!): String!
 		register(email: String!, id: String!): UserMessage!

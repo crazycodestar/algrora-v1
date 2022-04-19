@@ -131,6 +131,9 @@ export default function NavigationBar({ onClick }) {
 		setMobileDropdown(false);
 		switch (option) {
 			case "My Account":
+				history.push("/profile");
+				break;
+			case "My Store":
 				history.push("/account");
 				break;
 			case "Orders":
@@ -158,8 +161,8 @@ export default function NavigationBar({ onClick }) {
 	};
 
 	const total = [
-		navigationReducer.dropdownOptions[1].count,
 		navigationReducer.dropdownOptions[2].count,
+		navigationReducer.dropdownOptions[3].count,
 	].reduce((a, b) => a + b, 0);
 	return (
 		<div className="navigationBar-container">

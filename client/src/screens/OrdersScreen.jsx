@@ -76,12 +76,8 @@ export default function OrdersScreen({ match: { path }, ...others }) {
 						}
 						uploadTime
 						updatedTime
-						meetTime
 						read
 						lastActive
-						details
-						status
-						message
 					}
 				}
 			}

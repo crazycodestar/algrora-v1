@@ -5,10 +5,12 @@ import StoreMallDirectoryIcon from "@mui/icons-material/StoreMallDirectory";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InboxIcon from "@mui/icons-material/Inbox";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 const initialState = {
 	dropdownOptions: [
-		{ name: "My Account", icon: StoreMallDirectoryIcon },
+		{ name: "My Account", icon: AccountBoxIcon },
+		{ name: "My Store", icon: StoreMallDirectoryIcon },
 		// { name: "Orders" },
 		{ name: "Orders", icon: ShoppingCartIcon, count: 0 },
 		{ name: "Inbox", icon: InboxIcon, count: 0 },
@@ -30,7 +32,7 @@ const navigationReducer = (state = initialState, action) => {
 				};
 			}
 			updatedOptions.splice(
-				1,
+				2,
 				2,
 				{
 					name: "Orders",

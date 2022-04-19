@@ -35,7 +35,11 @@ export default function HomeScreen() {
 	// const [products, setProducts] = useState([]);
 	// const [isLoading, setIsLoading] = useState(true);
 	// const [isNext, setIsNext] = useState(false);
-	// const accountReducer = useSelector((state) => state.accountReducer);
+	const accountReducer = useSelector((state) => state.accountReducer);
+	useEffect(() => {
+		console.log(accountReducer);
+	}, []);
+
 	// useEffect(async () => {
 	// 	console.log(accountReducer);
 	// 	// fetch("http://localhost:5000/api/home")
@@ -80,7 +84,7 @@ export default function HomeScreen() {
 		if (isNext) setPage(page + 1);
 	};
 
-	if (!products.length)
+	if (!isLoading && !products.length)
 		return (
 			<div className="empty-container">
 				<div className="no-results">

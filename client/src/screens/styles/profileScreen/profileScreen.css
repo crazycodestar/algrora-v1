@@ -1,0 +1,60 @@
+.profileScreen {
+  padding: 0 70px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+@media (max-width: 480px) {
+  .profileScreen {
+    padding: 10px;
+  }
+}
+
+.profileScreen .button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  gap: 10px;
+  background-color: var(--light-colour);
+  margin-top: 10px;
+}
+
+.profileScreen .user-profile-container,
+.profileScreen .store-profile-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.profileScreen .user-profile-container .profile-body,
+.profileScreen .store-profile-container .profile-body {
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .profileScreen .user-profile-container .profile-body,
+  .profileScreen .store-profile-container .profile-body {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .profileScreen .user-profile-container,
+  .profileScreen .store-profile-container {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+}
+/*# sourceMappingURL=profileScreen.css.map */

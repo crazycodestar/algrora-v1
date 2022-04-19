@@ -1,12 +1,19 @@
 .avatar-container {
   border-radius: 100%;
+  width: 48px;
+  height: 48px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  overflow: hidden;
+  position: relative;
 }
 
-.avatar-container .avatar {
+.avatar-container .wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-container .wrapper .avatar {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -15,7 +22,7 @@
   margin: 0px !important;
 }
 
-.avatar-container.active::after {
+.avatar-container .wrapper.active::after {
   position: absolute;
   content: "";
   top: -5px;

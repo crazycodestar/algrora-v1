@@ -6,10 +6,13 @@ import { header } from "../config";
 import "./styles/transactionScreen/transactionScreen.css";
 
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import ActivityIndicator from "../components/ActivityIndicator";
+import NoResults from "../components/NoResults";
 
 export default function TransactionScreen() {
 	const accountReducer = useSelector((state) => state.accountReducer);
 	const [transactions, setTransactions] = useState([]);
+	const [isLoading, setLoading] = useState(true);
 	useEffect(async () => {
 		const query = gql`
 			query GetTransactions {
@@ -39,6 +42,7 @@ export default function TransactionScreen() {
 		);
 		console.log(getTransactions);
 		if (getTransactions.status === "success") {
+			setLoading(false);
 			return setTransactions(
 				getTransactions.transactions.map((item) => {
 					const paidAt = new Date(+item.paidAt).toLocaleString(undefined, {
@@ -48,7 +52,30 @@ export default function TransactionScreen() {
 				})
 			);
 		}
+		setLoading(false);
 	}, []);
+
+	const handleTransactionDisplay = () => {
+		if (isLoading)
+			return (
+				<div className="empty-container">
+					<ActivityIndicator />
+				</div>
+			);
+
+		if (!transactions.length)
+			return (
+				<div className="empty-container">
+					<NoResults />
+				</div>
+			);
+		return transactions.map((transaction) => {
+			const breakdown = Object.entries(transaction);
+			return (
+				<TransactionSheet breakdown={breakdown} transaction={transaction} />
+			);
+		});
+	};
 
 	return (
 		<div className="transactionScreen body-container">
@@ -58,19 +85,7 @@ export default function TransactionScreen() {
 				<i>altechbusinesses@gmail.com</i> and we will help you sort out the
 				issue{" "}
 			</p>
-			<div className="transaction-container">
-				{transactions.length
-					? transactions.map((transaction) => {
-							const breakdown = Object.entries(transaction);
-							return (
-								<TransactionSheet
-									breakdown={breakdown}
-									transaction={transaction}
-								/>
-							);
-					  })
-					: null}
-			</div>
+			<div className="transaction-container">{handleTransactionDisplay()}</div>
 		</div>
 	);
 }

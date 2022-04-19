@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Category = require("../schema/Category");
 
+const { s3Delete } = require("../s3");
+
 const User = require("../schema/User");
 
 const { generateErrorsMessage } = require("../utilities");
@@ -54,6 +56,8 @@ module.exports.addUser = async (_, args, { secret }) => {
 		username: args.username.toLowerCase(),
 		password: password,
 		emailAddress: args.emailAddress.toLowerCase(),
+		tel: args.tel,
+		roomAddress: args.roomAddress,
 	});
 	try {
 		const userData = await user.save();
@@ -160,6 +164,7 @@ module.exports.updateUser = async (_, { data }, { userData }) => {
 	const user = await User.findById(userData.id);
 	if (!user) return { status: "failed", message: "user does not exist" };
 
+	console.log(data);
 	if (data.imageUri) {
 		const imageUri = data.imageUri;
 		const imageUriList = imageUri.split("/");

@@ -35,35 +35,35 @@ const orderSchema = new Schema({
 		type: Date,
 		required: [true, "upload time is required"],
 	},
+	read: {
+		type: Boolean,
+		required: true,
+	},
 	updatedTime: {
 		type: Date,
 		required: [true, "updated time is required"],
-	},
-	meetTime: String,
-	details: {
-		type: String,
-		minLength: [10, "details should be more than 10 characters"],
-		maxLength: [400, "details should be less than 400 characters"],
-	},
-	status: {
-		type: String,
-		enum: ["PENDING", "ACCEPTED", "REQUEST ALTERATION", "CANCEL"],
-		default: "PENDING",
 	},
 	lastActive: {
 		type: String,
 		enum: ["USER", "STORE"],
 		required: [true, "sender required"],
 	},
-	read: {
-		type: Boolean,
-		required: true,
-	},
-	message: {
-		type: String,
-		minLength: [10, "details should be more than 10 characters"],
-		maxLength: [400, "details should be less than 400 characters"],
-	},
+	// meetTime: String,
+	// details: {
+	// 	type: String,
+	// 	minLength: [10, "details should be more than 10 characters"],
+	// 	maxLength: [400, "details should be less than 400 characters"],
+	// },
+	// status: {
+	// 	type: String,
+	// 	enum: ["PENDING", "ACCEPTED", "REQUEST ALTERATION", "CANCEL"],
+	// 	default: "PENDING",
+	// },
+	// message: {
+	// 	type: String,
+	// 	minLength: [10, "details should be more than 10 characters"],
+	// 	maxLength: [400, "details should be less than 400 characters"],
+	// },
 });
 
 const Order = mongoose.model("order", orderSchema);

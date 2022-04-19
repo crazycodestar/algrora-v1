@@ -10,9 +10,11 @@ export default function DescriptionInput({
 	placeholder,
 	triggerFocus,
 	onChange,
+	Icon,
 	value,
 	type = "text",
 	onEnter,
+	label,
 	focusMonitor,
 	...others
 }) {
@@ -43,19 +45,27 @@ export default function DescriptionInput({
 		onChange(e);
 	};
 	return (
-		<textarea
-			ref={input}
-			rows={rows}
-			style={style}
-			type={type}
-			onChange={handleInputChange}
-			value={value}
-			className="input-container textarea-container"
-			placeholder={placeholder}
-			{...others}
-			onKeyDown={(e) => {
-				if (e.key === "Enter" && onEnter) onEnter();
-			}}
-		/>
+		<div className="input-container">
+			{label && <p>{label}</p>}
+			<div className="sub-container">
+				<div className="container">
+					{Icon && <Icon sx={{ fontSize: 18 }} />}
+				</div>
+				<textarea
+					ref={input}
+					rows={rows}
+					style={style}
+					type={type}
+					onChange={handleInputChange}
+					value={value}
+					className="input"
+					placeholder={placeholder}
+					{...others}
+					onKeyDown={(e) => {
+						if (e.key === "Enter" && onEnter) onEnter();
+					}}
+				/>
+			</div>
+		</div>
 	);
 }

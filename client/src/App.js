@@ -27,6 +27,8 @@ import CategoryScreen from "./screens/CategoryScreen";
 import ConfirmEmailScreen from "./screens/ConfirmEmailScreen";
 import ActivateSuccessScreen from "./screens/ActivateSuccessScreen";
 import TransactionScreen from "./screens/TransactionScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import OrderScreen from "./screens/OrderScreen";
 
 function App() {
 	const accountReducer = useSelector((state) => state.accountReducer);
@@ -53,6 +55,7 @@ function App() {
 					/>
 					{isAuthenticated ? (
 						<>
+							<Route path="/profile" component={ProfileScreen} />
 							<Route path="/pricing" component={PricingScreen} />
 							<Route
 								path="/account"
@@ -61,8 +64,8 @@ function App() {
 							/>
 							<Route path="/transactions" component={TransactionScreen} />
 							<Route path="/messages" component={MessagingScreen} />
-							<Route path="/orders" component={OrdersScreen} key="orders" />
-							<Route path="/inbox" component={OrdersScreen} key="inbox" />
+							<Route path="/orders" component={OrderScreen} key="orders" />
+							<Route path="/inbox" component={OrderScreen} key="inbox" />
 							<Route path="/addProduct" component={AddProductScreen} />
 							<Route path="/addStore" component={AddStoreScreen} />
 						</>

@@ -41,22 +41,26 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 		);
 		if (toActivate) {
 			order.activated = true;
-			order.save();
 			activatedOrders.push(order);
 			continue;
 		}
 		if (store.clientLimit > 0) {
 			store.clientLimit -= 1;
-			store.save();
+			// store.save();
 			order.activated = true;
-			order.save();
 			activatedOrders.push(order);
 			continue;
 		}
 
 		unPaid += 1;
 	}
-	return { status: "success", orders: activatedOrders, unPaid };
+	try {
+		store.save();
+		order.save();
+		return { status: "success", orders: activatedOrders, unPaid };
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 // mutations
@@ -117,6 +121,11 @@ module.exports.placeOrder = async (_, { orders }, { userData }) => {
 };
 
 const sendNotification = async (orderData, type, callback) => {
+	// if (!orderData.read) {
+	// 	const storeUser = await User.findOne({sotre: orderData.store});
+	// 	storeUser.unReadInbox++;
+	// 	storeUser.save();
+	// }
 	if (orderData.lastActive !== type || orderData.read) {
 		if (type == "USER") {
 			const storeUser = await User.findOne({ store: orderData.store });
@@ -157,7 +166,6 @@ module.exports.updateOrder = async (
 	try {
 		// save order
 		await orderData.save();
-
 		return { status: "success", orders: [orderData] };
 	} catch (err) {
 		const errorMessage = generateErrorsMessage(err);

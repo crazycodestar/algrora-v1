@@ -162,10 +162,10 @@ export default function AccountScreen({
 	const handleOption = async (type, payload) => {
 		switch (type) {
 			case types.addProduct:
-				if (store.products.length >= 5) {
-					setErrorMessage("you have maxed out your product storage");
-					break;
-				}
+				// if (store.products.length >= 5) {
+				// 	setErrorMessage("you have maxed out your product storage");
+				// 	break;
+				// }
 				history.push("/addProduct");
 				break;
 			case types.transactions:

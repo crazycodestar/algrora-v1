@@ -71,6 +71,14 @@ const userSchema = new Schema({
 		type: Number,
 		default: 0,
 	},
+	roomAddress: {
+		type: String,
+		default: "",
+	},
+	tel: {
+		type: String,
+		default: "",
+	},
 });
 
 // userSchema.pre("save", (next) => {
