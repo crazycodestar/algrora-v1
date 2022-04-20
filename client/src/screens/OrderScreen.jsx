@@ -6,10 +6,15 @@ import "./styles/orderScreen/OrderScreen.css";
 import useOrders from "../hooks/useQuery/useOrders";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUnread } from "../actions/navigation";
+import ActivityIndicator from "../components/ActivityIndicator";
+import Button from "../components/Button";
+
+import { useHistory } from "react-router-dom";
+import NoResults from "../components/NoResults";
 
 export default function OrderScreen({ match: { path } }) {
 	const isUser = path === "/orders";
-	const { state, setActive } = useOrders({ isUser });
+	const { loading, state, setActive } = useOrders({ isUser });
 
 	const dispatch = useDispatch();
 	const unread = (data) => dispatch(updateUnread(data));
@@ -65,14 +70,40 @@ export default function OrderScreen({ match: { path } }) {
 		return null;
 	}, [state.userOrders]);
 
+	if (loading)
+		return (
+			<div className="empty-container">
+				<ActivityIndicator />
+			</div>
+		);
+
 	return (
 		<div className="orderScreen body-container content-container">
-			{headers && <RootDisplay headers={headers} onClick={setActive} />}
+			{state.unPaid ? <PendingPayments amount={state.unPaid} /> : null}
+			{headers.length ? (
+				<RootDisplay headers={headers} onClick={setActive} />
+			) : (
+				<div className="empty-container">
+					<NoResults style={{ width: "200px", height: "200px" }} />
+				</div>
+			)}
 			{root && <Details root={root} />}
 			{orders && <Orders orders={orders} />}
 		</div>
 	);
 }
+
+const PendingPayments = ({ amount }) => {
+	const history = useHistory();
+	return (
+		<div className="pendingPayments section">
+			<div>
+				<span>{amount}</span> <p>pending clients</p>
+			</div>
+			<Button onClick={() => history.push("/pricing")}>Buy Tokens</Button>
+		</div>
+	);
+};
 
 const RootDisplay = ({ headers, onClick }) => {
 	return (

@@ -27,8 +27,14 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 	}
 	// store return
 	if (!user.store) return { status: "failed" };
+
+	console.log("made it here");
+
 	const store = await Store.findById(user.store);
 	const orders = await Order.find({ store: user.store });
+
+	if (!orders) return { status: "empty", unPaid: 0, orders: [] };
+
 	const activatedOrders = orders.filter((order) => order.activated);
 	let unPaid = 0;
 	// use avaliable clients to activate new orders
@@ -42,21 +48,33 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 		if (toActivate) {
 			order.activated = true;
 			activatedOrders.push(order);
+			try {
+				await orders.save();
+			} catch (err) {
+				console.log(err);
+			}
 			continue;
 		}
 		if (store.clientLimit > 0) {
 			store.clientLimit -= 1;
 			// store.save();
 			order.activated = true;
+			try {
+				await orders.save();
+			} catch (err) {
+				console.log(err);
+			}
 			activatedOrders.push(order);
 			continue;
 		}
 
 		unPaid += 1;
 	}
+
+	console.log(orders);
+
 	try {
-		store.save();
-		order.save();
+		await store.save();
 		return { status: "success", orders: activatedOrders, unPaid };
 	} catch (err) {
 		console.log(err);

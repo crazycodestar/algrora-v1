@@ -29,6 +29,26 @@
 		gap: 10px;
 	}
 
+	.pendingPayments {
+		justify-content: space-between;
+		align-items: center;
+
+		> div {
+			align-items: center;
+			display: flex;
+		}
+		span {
+			margin-right: 10px;
+			display: flex;
+			padding: 5px;
+			background-color: var(--background-colour);
+			width: 18px;
+			justify-content: center;
+			align-items: center;
+			border-radius: var(--border-radius);
+		}
+	}
+
 	.ordersDetails-container {
 		flex-direction: column;
 		.orderDetails-container {

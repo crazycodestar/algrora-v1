@@ -1,5 +1,5 @@
 import request, { gql } from "graphql-request";
-import React, { useEffect, useReducer, useCallback } from "react";
+import React, { useEffect, useReducer, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 
 import produce from "immer";
@@ -40,6 +40,7 @@ const reducer = produce((state, action) => {
 export default function useOrders({ isUser }) {
 	const [state, dispatch] = useReducer(reducer, {});
 	const { token } = useSelector((state) => state.accountReducer);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(async () => {
 		const query = gql`
@@ -116,6 +117,7 @@ export default function useOrders({ isUser }) {
 				payload: { unPaid: getOrders.unPaid, userOrders: roots },
 			});
 		}
+		setLoading(false);
 	}, []);
 
 	const markRead = async (id) => {
@@ -162,5 +164,5 @@ export default function useOrders({ isUser }) {
 		[state]
 	);
 
-	return { state, setActive };
+	return { loading, state, setActive };
 }
