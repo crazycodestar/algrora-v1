@@ -38,7 +38,7 @@ export default function OrderScreen({ match: { path } }) {
 		}
 	}, []);
 
-	const headers = useMemo(() => {
+	const headers = (() => {
 		console.log("resetting");
 		return Object.entries(state).length
 			? state.userOrders.map(({ root }) => {
@@ -50,25 +50,25 @@ export default function OrderScreen({ match: { path } }) {
 					};
 			  })
 			: null;
-	}, [state.userOrders]);
+	})();
 
-	const root = useMemo(() => {
+	const root = (() => {
 		console.log("root");
 		if (Object.entries(state).length) {
 			const order = state.userOrders.find(({ root }) => root.active);
 			if (order) return order.root;
 		}
 		return null;
-	}, [state.userOrders]);
+	})();
 
-	const orders = useMemo(() => {
+	const orders = (() => {
 		console.log("orders");
 		if (Object.entries(state).length) {
 			const order = state.userOrders.find(({ root }) => root.active);
 			if (order) return order.orders;
 		}
 		return null;
-	}, [state.userOrders]);
+	})();
 
 	if (loading)
 		return (

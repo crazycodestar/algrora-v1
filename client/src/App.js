@@ -20,7 +20,7 @@ import CartScreen from "./screens/CartScreen";
 import StoreScreen from "./screens/StoreScreen";
 import SearchScreen from "./screens/SearchScreen";
 import SignUpScreen from "./screens/SignUpScreen";
-import AdministrativePanel from "./screens/AdministrativePanel";
+import AdminPanel from "./screens/AdminPanel";
 import OrdersScreen from "./screens/OrdersScreen";
 import PricingScreen from "./screens/PricingScreen";
 import CategoryScreen from "./screens/CategoryScreen";
@@ -39,7 +39,7 @@ function App() {
 				<NavigationBar search />
 				<Switch>
 					<Route path="/" exact component={HomeScreen} />
-					<Route path="/Auth" component={AdministrativePanel} />
+					<Route path="/auth" component={AdminPanel} />
 					<Route path="/product/:id" component={ProductDetailScreen} />
 					<Route path="/cart" component={CartScreen} />
 					<Route path="/signIn" component={SignInScreen} />

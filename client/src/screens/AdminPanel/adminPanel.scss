@@ -1,0 +1,17 @@
+.admin-sign-in-container {
+	.content {
+		flex-direction: column;
+		padding: 10px;
+		width: 40vw;
+		align-items: center;
+		display: flex;
+		p {
+			margin-bottom: 50px;
+		}
+		div.form-container {
+			width: 100%;
+			display: flex;
+			gap: 10px;
+		}
+	}
+}

@@ -148,7 +148,7 @@ export default function useOrders({ isUser }) {
 			header(token)
 		);
 
-		console.log(markRead);
+		// console.log(markRead);
 		if (markRead.status == "success") {
 			dispatch({ type: types.MARKREAD, payload: { id } });
 		}
@@ -156,8 +156,8 @@ export default function useOrders({ isUser }) {
 
 	const setActive = useCallback(
 		(id) => {
-			console.log("state");
-			console.log(state);
+			// console.log("state");
+			// console.log(state);
 			markRead(id);
 			dispatch({ type: types.SETACTIVE, payload: { id } });
 		},

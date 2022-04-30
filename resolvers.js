@@ -32,6 +32,7 @@ const {
 	register,
 	addInterests,
 } = require("./resolvers/userResolver");
+const getAdminOrders = require("./resolvers/adminResolvers");
 
 const resolvers = {
 	Product: {
@@ -142,6 +143,7 @@ const resolvers = {
 		isOrder,
 		getPricing,
 		getTransactions,
+		getAdminOrders: getAdminOrders,
 	},
 	Mutation: {
 		addUser: addUser,

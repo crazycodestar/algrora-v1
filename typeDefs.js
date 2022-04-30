@@ -126,6 +126,7 @@ const typeDefs = gql`
 		updatedTime: String!
 		lastActive: String!
 		read: Boolean!
+		activated: Boolean!
 	}
 	type StoreMessage {
 		status: String!
@@ -171,6 +172,7 @@ const typeDefs = gql`
 	}
 	type OrderMessage {
 		status: String!
+		isNext: Boolean
 		unPaid: Int
 		orders: [Order!]
 	}
@@ -212,6 +214,7 @@ const typeDefs = gql`
 	}
 	type Query {
 		hello: String
+		getAdminOrders(page: Int!): OrderMessage!
 		getProducts(page: Int!): GetProductMessage!
 		getProduct(id: ID): Product!
 		user: User

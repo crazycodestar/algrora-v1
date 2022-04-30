@@ -124,6 +124,12 @@ export default function SignInScreen() {
 						</Form>
 					)}
 				</Formik>
+				<Link to="/auth">
+					<div className="proceedWithoutSigning">
+						<p>Employee sign in</p>
+						<LinkIcon sx={{ fontSize: 18 }} color="primary" />
+					</div>
+				</Link>
 			</div>
 			<img className="style-image" src={style_image} />
 		</div>
