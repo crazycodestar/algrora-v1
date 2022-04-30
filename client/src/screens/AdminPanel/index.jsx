@@ -14,7 +14,7 @@ import NoResults from "../../components/NoResults";
 
 export default function AdministrativePanel() {
 	const [isAdmin, setIsAdmin] = useState(false);
-	const [value, setValue] = useState("loremIpsum");
+	const [value, setValue] = useState("");
 
 	const { isNext, state, isLoading } = useAdmin();
 
