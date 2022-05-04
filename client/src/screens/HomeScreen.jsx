@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./styles/homeScreen/homeScreen.css";
 
 import { v4 as uuidv4 } from "uuid";
+import StoreIcon from "@mui/icons-material/Store";
 
 import NavigationBar from "../components/NavigationBar";
 import Product from "../components/Product";
@@ -12,6 +13,7 @@ import Category from "../components/Category";
 import Tabs from "../components/Tabs";
 
 import image1 from "../images/undraw_empty_re_opql.svg";
+import image2 from "../images/undraw_web_shopping_re_owap.svg";
 
 // redux
 import { useSelector } from "react-redux";
@@ -20,6 +22,7 @@ import { useSelector } from "react-redux";
 import graphqlClient from "../graphqlClient";
 import request, { gql } from "graphql-request";
 import useProducts from "../useProducts";
+import { useHistory } from "react-router-dom";
 
 const categories = [
 	"all",
@@ -32,51 +35,20 @@ const categories = [
 
 export default function HomeScreen() {
 	const [page, setPage] = useState(1);
-	// const [products, setProducts] = useState([]);
-	// const [isLoading, setIsLoading] = useState(true);
-	// const [isNext, setIsNext] = useState(false);
+	const [showLeader, setShowLeader] = useState(true);
+
 	const accountReducer = useSelector((state) => state.accountReducer);
+	const history = useHistory();
+
 	useEffect(() => {
 		console.log(accountReducer);
+		const displayLeader = JSON.parse(localStorage.getItem("notShowLeader"));
+		if (
+			displayLeader ||
+			(accountReducer.userData && accountReducer.userData.store)
+		)
+			setShowLeader(false);
 	}, []);
-
-	// useEffect(async () => {
-	// 	console.log(accountReducer);
-	// 	// fetch("http://localhost:5000/api/home")
-	// 	// 	.then((res) => res.json())
-	// 	// 	.then((data) => {
-	// 	// 		return setProducts(data);
-	// 	// 	})
-	// 	// 	.catch((err) => console.log(err));
-	// 	const query = gql`
-	// 		query Query {
-	// 			getProducts {
-	// 				products {
-	// 					name
-	// 					price
-	// 					id
-	// 					imageUri
-	// 					store {
-	// 						name
-	// 						imageUri
-	// 					}
-	// 				}
-	// 				isNext
-	// 			}
-	// 		}
-	// 	`;
-
-	// 	// const data = await graphqlClient.request(query);
-	// 	const { getProducts } = await request("/graphql", query);
-
-	// 	console.log(getProducts.products);
-	// 	setIsNext(getProducts.isNext);
-	// 	setProducts(getProducts.products);
-	// 	// console.log("data.getProducts");
-	// 	// console.log(data.getProducts);
-
-	// 	setIsLoading(false);
-	// }, []);
 
 	const { isLoading, isNext, products } = useProducts({ page });
 
@@ -84,18 +56,24 @@ export default function HomeScreen() {
 		if (isNext) setPage(page + 1);
 	};
 
-	if (!isLoading && !products.length)
-		return (
-			<div className="empty-container">
-				<div className="no-results">
-					<img src={image1} alt="no results" />
-					<h4>no results</h4>
+	const handleCloseLeader = () => {
+		localStorage.setItem("notShowLeader", JSON.stringify(true));
+		setShowLeader(false);
+	};
+
+	const handleProducts = () => {
+		if (!isLoading && !products.length)
+			return (
+				<div className="empty-container">
+					<div className="no-results">
+						<img src={image1} alt="no results" />
+						<h4>no results</h4>
+					</div>
 				</div>
-			</div>
-		);
-	return (
-		<div className="homeScreen body-container">
-			<div className="main-container">
+			);
+
+		return (
+			<>
 				<div className="product-section">
 					<div className="product-wrapper">
 						{products.map((item) => (
@@ -127,7 +105,41 @@ export default function HomeScreen() {
 						more products
 					</Button>
 				) : null}
-			</div>
+			</>
+		);
+	};
+
+	return (
+		<div className="homeScreen body-container">
+			{showLeader && (
+				<div className="leader-container">
+					<div className="details">
+						<h1>set up shop.</h1>
+						<p className="description">
+							Create a store and expand your reach. Creating a store on our
+							platform saves you the stress of a door-to-door salesman. The
+							times of moving from room to room peaching your business over and
+							over again is over. With algrora, simply setup your store with an
+							eyecatching name and description and watch the customers roll in.
+						</p>
+						<div className="button-container">
+							<Button
+								onClick={() => history.push("/addStore")}
+								icon={<StoreIcon fontSize="small" />}
+							>
+								Create
+							</Button>
+							<Button secondary onClick={handleCloseLeader}>
+								no, thanks
+							</Button>
+						</div>
+					</div>
+					<div className="image-container">
+						<img src={image2} alt="setup shop" />
+					</div>
+				</div>
+			)}
+			<div className="main-container">{handleProducts()}</div>
 		</div>
 	);
 }

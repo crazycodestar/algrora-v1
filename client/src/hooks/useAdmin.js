@@ -60,7 +60,8 @@ export default function useAdmin() {
 			page: 1,
 		};
 		const { getAdminOrders } = await request("/graphql", query, variables);
-		dispatch({ type: type.SETVALUES, payload: getAdminOrders.orders });
+		console.log(getAdminOrders);
+		dispatch({ type: type.SETVALUES, payload: [...getAdminOrders.orders] });
 		setIsLoading(false);
 	}, []);
 

@@ -25,6 +25,48 @@
 		padding: 0 10px;
 	}
 
+	.leader-container {
+		@include respond(medium) {
+			.image-container {
+				display: none;
+			}
+		}
+
+		@include respond(small) {
+			padding: 10px;
+		}
+		display: flex;
+		padding: 50px;
+		background-color: var(--background-colour);
+		border-radius: var(--border-radius);
+		margin-bottom: 30px;
+		justify-content: space-between;
+		h1 {
+			margin-bottom: 10px;
+		}
+		p.description {
+			margin-bottom: 20px;
+		}
+		.details {
+			flex-shrink: 1;
+			flex: 1;
+			.button-container {
+				display: flex;
+				gap: 10px;
+			}
+		}
+		.image-container {
+			// width: 500px;
+			height: 250px;
+			flex: 1;
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+			}
+		}
+	}
+
 	.main-container {
 		display: flex;
 		flex-direction: column;

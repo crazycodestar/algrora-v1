@@ -1,4 +1,5 @@
 import dateFormat from "dateformat";
+import { formatDistance } from "date-fns";
 
 export const formatTime = (currentTime) => {
 	if (!currentTime) return null;
@@ -19,6 +20,13 @@ export const formatTime = (currentTime) => {
 export const getTime = () => {
 	const now = new Date().toUTCString();
 	return now;
+};
+
+export const relativeDate = (initialDate) => {
+	const now = Date.now();
+	const starting = new Date(+initialDate);
+
+	return formatDistance(starting, now, { addSuffix: true });
 };
 
 export const generateFilename = (filename, filetype) => {

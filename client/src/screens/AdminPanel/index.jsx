@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import useAdmin from "../../hooks/useAdmin";
 import ActivityIndicator from "../../components/ActivityIndicator";
 import NoResults from "../../components/NoResults";
+import { relativeDate } from "../../utilityFunctions";
 
 // import NavigationBar from "../components/NavigationBar";
 // import SideNavigationBar from "../components/SideNavigationBar";
@@ -50,6 +51,7 @@ export default function AdministrativePanel() {
 		);
 
 	const handleOrders = () => {
+		console.log(state);
 		if (isLoading)
 			return (
 				<div className="empty-container">
@@ -63,7 +65,23 @@ export default function AdministrativePanel() {
 					<NoResults />
 				</div>
 			);
-		return state.orders.map((order) => <OrderListings order={order} />);
+
+		return (
+			<table className="orders-table">
+				<thead>
+					<td>product</td>
+					<td>quantity</td>
+					<td>store</td>
+					<td>activated</td>
+					<td>read</td>
+					<td>uploadTime</td>
+				</thead>
+				{state.orders.map((order) => (
+					<OrderListings order={order} />
+				))}
+			</table>
+		);
+		// return state.orders.map((order) => <OrderListings order={order} />);
 	};
 
 	return (
@@ -75,9 +93,34 @@ export default function AdministrativePanel() {
 }
 
 const OrderListings = ({ order }) => {
+	const {
+		product: { name, price, imageUri },
+		quantity,
+		store: { name: storeName },
+		activated,
+		read,
+		updatedTime,
+	} = order;
+	console.log(read, activated);
 	return (
-		<div>
-			<pre style={{ marginBottom: 30 }}>{JSON.stringify(order, null, 5)}</pre>
-		</div>
+		<tr>
+			<td>
+				<div className="order-wrapper">
+					<div className="image-container">
+						<img src={imageUri} alt={name} />
+					</div>
+					<div className="product-content">
+						<h3>{name}</h3>
+						<p>₦{price}</p>
+					</div>
+				</div>
+			</td>
+			<td>{quantity}</td>
+			<td>{storeName}</td>
+			<td data-status={activated}>{JSON.stringify(activated)}</td>
+			<td data-status={read}>{JSON.stringify(read)}</td>
+			<td>{relativeDate(updatedTime)}</td>
+			{/* <pre style={{ marginBottom: 30 }}>{JSON.stringify(order, null, 5)}</pre> */}
+		</tr>
 	);
 };

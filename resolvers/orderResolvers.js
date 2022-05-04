@@ -28,8 +28,6 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 	// store return
 	if (!user.store) return { status: "failed" };
 
-	console.log("made it here");
-
 	const store = await Store.findById(user.store);
 	const orders = await Order.find({ store: user.store });
 
@@ -46,10 +44,10 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 			(item) => item.orderKey === order.orderKey
 		);
 		if (toActivate) {
-			order.activated = true;
+			order.activated = true; // this isn't working
 			activatedOrders.push(order);
 			try {
-				await orders.save();
+				await order.save();
 			} catch (err) {
 				console.log(err);
 			}
@@ -60,7 +58,7 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 			// store.save();
 			order.activated = true;
 			try {
-				await orders.save();
+				await order.save();
 			} catch (err) {
 				console.log(err);
 			}
@@ -70,8 +68,6 @@ module.exports.getOrders = async (_, { type }, { userData }) => {
 
 		unPaid += 1;
 	}
-
-	console.log(orders);
 
 	try {
 		await store.save();

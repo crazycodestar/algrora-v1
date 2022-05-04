@@ -9,6 +9,7 @@ export default function Button({
 	style,
 	disabled,
 	type = "button",
+	icon,
 	...others
 }) {
 	const isSecondary = (secondary) => {
@@ -31,7 +32,8 @@ export default function Button({
 					<Indicator />
 				</div>
 			)} */}
-			{children}
+			{icon && icon}
+			<p>{children}</p>
 		</button>
 	);
 }
