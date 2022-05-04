@@ -251,7 +251,7 @@ const PayStackPurchase = ({ details, isSecondary, style, onSuccess }) => {
 		// initializePayment(onSuccess);
 		e.preventDefault();
 		const handler = window.PaystackPop.setup({
-			key: "pk_test_0d4628adca1acc7f0260de3bfb1799a314d5ae82",
+			key: "pk_live_1a82592beb69c8d6dfc20d6f91ff3ad59962d841",
 			email: accountReducer.userData.emailAddress,
 			amount: details.amount * 100,
 			metadata: {
